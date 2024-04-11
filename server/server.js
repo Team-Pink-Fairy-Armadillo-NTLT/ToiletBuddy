@@ -67,7 +67,7 @@ app.get('/google/auth', (req, res) => {
     //   })
   
       res.redirect('/')
-  
+      console.log('fetch is ', fetch)
       //const userinfo = google.userinfo('v3');
   
       const apiUrl = "https://www.googleapis.com/oauth2/v2/userinfo"
@@ -100,8 +100,6 @@ if (webpack.mode == "production") {
     //     return res.status(200).sendFile(path.join(__dirname, '../index.html'))
     // }) 
 }
-
-
 
 
 app.listen(3000, () => {console.log('listening on port 3000')})
