@@ -11,7 +11,7 @@ require("dotenv").config()
 app.use(express.json())
 
 
-app.use('/client/',express.static(path.join(__dirname, '../client')));
+//app.use('/client/',express.static(path.join(__dirname, '../client')));
 
 
 const CLIENT_ID = process.env.CLIENT_ID
@@ -90,6 +90,9 @@ app.get('/google/auth', (req, res) => {
   })
 
 app.get('/', (req, res) => {
+    return res.status(200).sendFile(path.join(__dirname, '../index.html'))
+}) 
+app.get('/profile', (req, res) => {
     return res.status(200).sendFile(path.join(__dirname, '../index.html'))
 }) 
 
