@@ -7,6 +7,7 @@ const url = require('url');
 require("dotenv").config()
 
 
+
 app.use(express.json())
 
 
@@ -52,19 +53,23 @@ app.get('/google/auth', (req, res) => {
     if (req.url.startsWith('/google/callback')) {
   
       let q = url.parse(req.url, true).query;
+      //console.log("the code is ", q.code)
   
       // Get access and refresh tokens (if access_type is offline)
       let { tokens } = await oauth2Client.getToken(q.code)
       await oauth2Client.setCredentials(tokens);
+      //console.log(tokens)
 
       //check if in database or add them and then set userID to cookie
-      // res.cookie("accessToken", tokens.access_token)
-      //   Session.create({
-      //     cookieId: tokens.access_token
-      //   })
+    //   res.cookie("accessToken", tokens.access_token)
+    //   Session.create({
+    //     cookieId: tokens.access_token
+    //   })
   
       res.redirect('/')
-    
+  
+      //const userinfo = google.userinfo('v3');
+  
       const apiUrl = "https://www.googleapis.com/oauth2/v2/userinfo"
       fetch(apiUrl,
       {
