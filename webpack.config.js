@@ -48,7 +48,7 @@ module.exports = {
     },
     proxy: [
       {
-        context: [],
+        context: ['/google/auth', '/google/callback'],
         secure: false,
         target: 'http://localhost:3000',
       },

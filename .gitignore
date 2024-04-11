@@ -3,6 +3,10 @@
 
 # dependencies
 node_modules/
+<<<<<<< HEAD
 
 #env
 .env
+=======
+package-lock.json
+>>>>>>> dev
