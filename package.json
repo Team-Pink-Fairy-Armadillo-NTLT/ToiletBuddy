@@ -11,7 +11,9 @@
   },
   "dependencies": {
     "@primer/css": "17.0.1",
+    "dotenv": "^16.4.5",
     "express": "^4.19.2",
+    "googleapis": "^134.0.0",
     "path": "^0.12.7"
   },
   "license": "MIT",
