@@ -18,7 +18,8 @@ app.use('/api', apiRouter);
 app.get('/', (req, res) => {
   return res.status(200).sendFile(path.join(__dirname, '../index.html'))
 }) 
-app.get('/profile', (req, res) => {
+
+app.get('/bathroom', (req, res) => {
   return res.status(200).sendFile(path.join(__dirname, '../index.html'))
 }) 
 
@@ -28,7 +29,6 @@ if (webpack.mode == "production") {
     return res.status(200).sendFile(path.join(__dirname, '../index.html'))
   }) 
 }
-
 app.use((err, req, res, next) => {
   const defaultErr = {
     log: 'Express error handler caught unknown middleware error',
