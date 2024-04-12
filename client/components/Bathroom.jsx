@@ -1,14 +1,20 @@
 import React from 'react';
 let bathroomReviews = ['test']
 import Reviews from './Reviews.jsx';
+import { useParams } from 'react-router-dom';
 //will be a fetch call to our server which then sends back database query result
 const addReview = () =>{
+  const {placeId} = useParams();
+  console.log(placeId);
     if(document.getElementById('review').value.trim()!==''){
-      // fetch('/bathroom',{
-      //   method:'POST',
-      //   body:document.getElementById('review').value,
-      //   headers:{'Content-Type':'application/json'},
-      // })
+      fetch('/api',{
+        method:'POST',
+        body:JSON.stringify({
+          'review':document.getElementById('review').value,
+          'locationId':placeId
+        }),
+        headers:{'Content-Type':'application/json'},
+      })
       console.log(document.getElementById('review').value);
       bathroomReviews.push(document.getElementById('review').value)
       document.getElementById('review').value  = '';

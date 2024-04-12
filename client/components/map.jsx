@@ -36,7 +36,8 @@ function Map() {
 
 
   const clickMarker = () => {
-    navigate(`/bathroom/{locationID}`);
+    console.log(locationID);
+    navigate(`/bathroom/${locationID}`);
   }
 
   return (
