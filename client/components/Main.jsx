@@ -12,9 +12,8 @@ const Main = ()=>{
   return(
     <section id='mainSect'>
       {test}
-      <Link to='/bathroom'><button> test button</button></Link>
       <div id='map'>
-        <Map/>
+        <Map />
       </div>
     </section>
   )
