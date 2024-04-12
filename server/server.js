@@ -20,7 +20,7 @@ app.get('/', (req, res) => {
   return res.status(200).sendFile(path.join(__dirname, '../index.html'))
 }) 
 
-app.use('/bathroom', apiRouter) 
+app.use('/api', apiRouter) 
 
 //if (webpack.mode == "production") {
   app.use('/build', express.static(path.join(__dirname, '../build')));
