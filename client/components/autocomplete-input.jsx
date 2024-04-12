@@ -1,5 +1,4 @@
-import { Combobox, ComboboxInput, ComboboxPopover, ComboboxList, ComboboxOption } from '@reach/combobox';
-import usePlacesAutocomplete, { getGeocode, getLatLng } from 'use-places-autocomplete';
+import { usePlacesAutocomplete } from "react-places-autocomplete";
 
 export default function AutocompleteInput({ setSelected }) {
   const {
@@ -24,22 +23,10 @@ export default function AutocompleteInput({ setSelected }) {
   }
 
   return(
-    <Combobox onSelect={handleSelect}>
-      <ComboboxInput 
-        value={value}
-        onChange={(e) => {setValue(e.target.value)}}
-        placeholder="Enter an address"
-        />
-      <ComboboxPopover>
-        <ComboboxList>
-          {status === "OK" && data.map(({ place_id, description }) => (
-            <ComboboxOption key={place_id} value={description} />
-          ))}
-        </ComboboxList>
-      </ComboboxPopover>
-        
-
+    <div>
       
-    </Combobox>
+
+    </div>
+    
   )
 }

@@ -1,5 +1,7 @@
 import { useLoadScript, GoogleMap, Marker, DirectionsRenderer } from '@react-google-maps/api';
-import AutocompleteInput from './autocomplete-input';
+import { useState } from 'react';
+import React from 'react';
+// import AutocompleteInput from './autocomplete-input';
 
 
 function Map() {
@@ -15,8 +17,8 @@ function Map() {
 
   return (
      
-    <div style={{height:"100vh", width:"100vw", backgroundColor:"blue"}}>
-      <AutocompleteInput setSelected={setPosition} />
+    <div style={{height:"100vh", width:"100vw"}}>
+      {/* <AutocompleteInput setSelected={setPosition} /> */}
       <GoogleMap
         mapContainerStyle={{height:"50vh", width:"50%"}}
         center={position}
@@ -32,4 +34,4 @@ function Map() {
 }
 
 
-export default App;
+export default Map;
