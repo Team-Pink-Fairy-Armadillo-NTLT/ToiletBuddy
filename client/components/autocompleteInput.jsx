@@ -33,11 +33,13 @@ export default function AutocompleteInput({ setSelected, setLocationID}) {
   return(
     <div>
       <input type="text" value={value} onChange={handleChange} placeholder="enter location"/>
-      {status === "OK" && data.map(({ place_id, description }) => (
-        <div key={place_id} onClick={() => handleSelect(description, place_id)}>
-          <p>{description}</p>
+      {status === "OK" && data.map((/*{ place_id, description }*/datum) => {
+        console.log(datum)
+        return (
+        <div key={datum.place_id} onClick={() => handleSelect(datum.description, datum.place_id)}>
+          <p>{datum.description}</p>
         </div>
-      ))}
+      )})}
 
     </div>
     
