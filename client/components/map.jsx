@@ -16,6 +16,10 @@ function Map() {
 
   if(!isLoaded) return <div>'Loading...';</div>
 
+  const clickMarker = () => {
+    console.log('clicked marker')
+  }
+
   return (
      
     <div style={{height:"100vh", width:"100vw"}}>
@@ -26,7 +30,7 @@ function Map() {
         zoom={10}
       >
         
-        <Marker position={position} />
+        <Marker position={position} onClick={clickMarker} />
       </GoogleMap>
       {locationID}
     </div>
