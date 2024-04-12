@@ -1,7 +1,9 @@
 const userController = {}
 
 userController.loginUser = (userData, loginResponse) => {
+    console.log('userData', userData)
     loginResponse.cookie('userAuth',userData.email)
+    console.log('I am in user controller')
     
 
 
