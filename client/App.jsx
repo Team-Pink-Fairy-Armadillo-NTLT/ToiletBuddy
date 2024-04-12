@@ -1,7 +1,7 @@
 import React from 'react'
 import {BrowserRouter,Routes,Route} from 'react-router-dom';
-import Main from '../Components/Main.jsx'
-import Profile from '../Components/Profile.jsx'
+import Main from './components/Main.jsx'
+import Profile from './components/Profile.jsx'
 const App = () =>{
   return (
     <BrowserRouter>

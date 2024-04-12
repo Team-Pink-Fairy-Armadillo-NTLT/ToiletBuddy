@@ -1,5 +1,6 @@
 import React from 'react';
 import {Link} from 'react-router-dom'
+import Map from './map.jsx';
 let loggedIn;
 //loggedIn will be set based off of if they have a cookie or not
 const Main = ()=>{
@@ -11,7 +12,9 @@ const Main = ()=>{
   return(
     <section id='mainSect'>
       {test}
-      <div id='map'></div>
+      <div id='map'>
+        <Map/>
+      </div>
     </section>
   )
 }
