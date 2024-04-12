@@ -1,7 +1,7 @@
 import { useLoadScript, GoogleMap, Marker, DirectionsRenderer } from '@react-google-maps/api';
 import { useState } from 'react';
 import React from 'react';
-// import AutocompleteInput from './autocomplete-input';
+import AutocompleteInput from './autocompleteInput.jsx';
 
 
 function Map() {
@@ -11,6 +11,7 @@ function Map() {
   });
 
   const [position, setPosition] = useState({lat: 53.54992, lng: 10.00678});
+  const [locationID, setLocationID] = useState(null);
   
 
   if(!isLoaded) return <div>'Loading...';</div>
@@ -18,7 +19,7 @@ function Map() {
   return (
      
     <div style={{height:"100vh", width:"100vw"}}>
-      {/* <AutocompleteInput setSelected={setPosition} /> */}
+      <AutocompleteInput setSelected={setPosition} setLocationID={setLocationID} />
       <GoogleMap
         mapContainerStyle={{height:"50vh", width:"50%"}}
         center={position}
@@ -27,6 +28,7 @@ function Map() {
         
         <Marker position={position} />
       </GoogleMap>
+      {locationID}
     </div>
     
 
