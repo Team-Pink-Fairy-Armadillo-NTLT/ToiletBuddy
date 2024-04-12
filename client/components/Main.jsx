@@ -12,7 +12,7 @@ const Main = ()=>{
   return(
     <section id='mainSect'>
       {test}
-      <button onClick={()=>{location.assign('/bathroom')}}> test button</button>
+      <Link to='/bathroom'><button> test button</button></Link>
       <div id='map'>
         <Map/>
       </div>
