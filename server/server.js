@@ -8,9 +8,9 @@ require("dotenv").config()
 const cookieParser = require('cookie-parser');
 
 
-const homepageRouter = require('./routes/homepage.js')
+const bathroomRouter = require('./routes/bathroom.js')
 const userController = require('./controllers/userController');
-const sessionController = require('./controllers/sessionController');
+const reviewController = require('./controllers/reviewController');
 
 
 
@@ -68,20 +68,15 @@ app.get('/google/auth', (req, res) => {
       //add data to database or check database for data
       .then(data => {   
         userController.loginUser(data, res)
-        res.redirect('/homepage')
+        res.redirect('/')
       })
   })
 
-  app.get('/homepage',
-   // sessionController.isLoggedIn,
-    (req, res) => {
+  app.use('/bathroom', bathroomRouter) 
+
+  app.get('/', (req, res) => {
       return res.status(200).sendFile(path.join(__dirname, '../index.html'))
-    }) 
-
-app.get('/', (req, res) => {
-    return res.status(200).sendFile(path.join(__dirname, '../index.html'))
-}) 
-
+  }) 
 
 
 //if (webpack.mode == "production") {

@@ -1,7 +1,7 @@
 import React from 'react';
 let userReviews = ['map']
 //will be a fetch call to our server which then sends back database query result
-const Homepage = ()=>{
+const Bathroom = ()=>{
   return(
     <section id='profileSect'>
       Name
@@ -12,4 +12,4 @@ const Homepage = ()=>{
     </section>
   )
 }
-export default Homepage;
+export default Bathroom;

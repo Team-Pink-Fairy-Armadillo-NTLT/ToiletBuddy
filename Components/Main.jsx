@@ -6,7 +6,7 @@ const Main = ()=>{
   let loginButton = <a href='./google/auth'><button id="signin">Sign in with Google</button></a>;
   //the button will change from sign in to a go to profile button based on whether or not they are signed in
   // if(loggedIn===false){
-  //   test = <button onClick={location.assign('/homepage')}id='homepage'>Go to profile</button>
+  //   test = <button onClick={location.assign('/bathroom')}id='bathroom'>Go to profile</button>
   // }
   return(
     <section id='mainSect'>
