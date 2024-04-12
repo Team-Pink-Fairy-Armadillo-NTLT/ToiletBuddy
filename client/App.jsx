@@ -1,15 +1,15 @@
 import React from 'react'
-import {BrowserRouter,Routes,Route} from 'react-router-dom';
+import {HashRouter,Routes,Route} from 'react-router-dom';
 import Main from './components/Main.jsx'
 import Bathroom from './components/Bathroom.jsx'
 const App = () =>{
   return (
-    <BrowserRouter>
+    <HashRouter>
       <Routes>
         <Route path='/' element={<Main/>}></Route>
         <Route path='/bathroom' element={<Bathroom/>}></Route>
       </Routes>
-    </BrowserRouter>
+    </HashRouter>
 )
 }
 export default App;

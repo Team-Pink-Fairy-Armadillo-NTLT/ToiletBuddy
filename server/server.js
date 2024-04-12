@@ -13,16 +13,10 @@ app.use(express.json());
 
 app.use('/google', googleAuthRouter);
 app.use('/api', apiRouter);
-
 // for now, for testing redirects
 app.get('/', (req, res) => {
   return res.status(200).sendFile(path.join(__dirname, '../index.html'))
 }) 
-
-app.get('/bathroom', (req, res) => {
-  return res.status(200).sendFile(path.join(__dirname, '../index.html'))
-}) 
-
 if (webpack.mode == "production") {
   app.use('/build', express.static(path.join(__dirname, '../build')));
   app.get('/', (req, res) => {

@@ -9,17 +9,18 @@ const addReview = () =>{
       //   headers:{'Content-Type':'application/json'},
       // })
       console.log(document.getElementById('review').value);
+      bathroomReviews.push(document.getElementById('review').value)
       document.getElementById('review').value  = '';
     }
 }
 const Bathroom = ()=>{
   return(
     <section id='bathroomSect'>
-      Name of bathroom
+      Name of bathroom {/* place holder until we can get place name */}
       <br></br>
       <input id='review' placeholder='Add a review'></input> <button onClick={addReview}> Submit review</button>
       <div id='bathroomReviews'>
-        this bathroom's reviews:<br></br> {/* place holder until we can get place name */}
+        this bathroom's reviews:<br></br> 
         {bathroomReviews}
       </div>
     </section>
