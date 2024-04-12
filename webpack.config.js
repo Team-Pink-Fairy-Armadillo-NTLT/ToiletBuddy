@@ -52,7 +52,10 @@ module.exports = {
         secure: false,
         target: 'http://localhost:3000',
       },
-      {context:['/profile'],secure:false,target:'https://localhost:3000'}
+      {
+        context: ['/homepage'],
+        target: 'http://localhost:8080/homepage',
+      }
     ],
     hot: true
   },
