@@ -1,5 +1,6 @@
 import React from 'react';
 let bathroomReviews = ['test']
+import Reviews from './Reviews.jsx';
 //will be a fetch call to our server which then sends back database query result
 const addReview = () =>{
     if(document.getElementById('review').value.trim()!==''){
@@ -20,8 +21,7 @@ const Bathroom = ()=>{
       <br></br>
       <input id='review' placeholder='Add a review'></input> <button onClick={addReview}> Submit review</button>
       <div id='bathroomReviews'>
-        this bathroom's reviews:<br></br> 
-        {bathroomReviews}
+        <Reviews/>
       </div>
     </section>
   )
