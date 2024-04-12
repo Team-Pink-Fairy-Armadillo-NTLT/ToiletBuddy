@@ -19,6 +19,7 @@ CREATE TABLE public.users (
 
 CREATE TABLE public.establishments (
   "_id" serial NOT NULL,
+  "google_maps_id" varchar NOT NULL,
   "name" varchar NOT NULL,
   "address" varchar NOT NULL,
   "city" varchar NOT NULL,
@@ -42,6 +43,8 @@ CREATE TABLE public.reviews (
   "_id" serial NOT NULL,
   "bathroom_id" int NOT NULL,
   "user_id" int NOT NULL,
+  "rating" varchar,
+  "review_text" varchar NOT NULL,
   CONSTRAINT "reviews_pk" PRIMARY KEY ("_id")
 ) WITH (
   OIDS=FALSE
