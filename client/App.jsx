@@ -1,7 +1,7 @@
 import React from 'react'
 import {BrowserRouter,Routes,Route} from 'react-router-dom';
-import Main from './Components/Main.jsx'
-import Bathroom from './Components/Bathroom.jsx'
+import Main from './components/Main.jsx'
+import Bathroom from './components/Bathroom.jsx'
 const App = () =>{
   return (
     <BrowserRouter>

@@ -87,7 +87,7 @@ app.get('/google/auth', (req, res) => {
 app.get('/', (req, res) => {
     return res.status(200).sendFile(path.join(__dirname, '../index.html'))
 }) 
-app.get('/profile', (req, res) => {
+app.get('/bathroom', (req, res) => {
     return res.status(200).sendFile(path.join(__dirname, '../index.html'))
 }) 
 
