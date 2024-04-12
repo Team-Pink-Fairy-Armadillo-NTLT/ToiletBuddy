@@ -7,6 +7,8 @@ const PORT = 3000;
 const app = express();
 
 const googleAuthRouter = require('./routes/googleAuthRouter');
+const bathroomRouter = require('./routes/apiRouter');
+
 const apiRouter = require('./routes/apiRouter');
 
 app.use(express.json());
@@ -19,9 +21,7 @@ app.get('/', (req, res) => {
   return res.status(200).sendFile(path.join(__dirname, '../index.html'))
 }) 
 
-app.get('/bathroom', (req, res) => {
-  return res.status(200).sendFile(path.join(__dirname, '../index.html'))
-}) 
+app.use('/bathroom', apiRouter) 
 
 //if (webpack.mode == "production") {
   app.use('/build', express.static(path.join(__dirname, '../build')));
