@@ -5,26 +5,26 @@ const db = require('../models/appModels');
 const reviewController = {};
 
 reviewController.addReview = async (req, res, next) => {
-    console.log('I am in add review')
+    // console.log('I am in add review')
     const review = req.body;
     const response = jwt.verify(req.cookies.authorization, process.env.SECRET_KEY);
     const { userId } = response;
 
-    //can get username from cookie for post request to add a review
+    // can get username from cookie for post request to add a review
 
-    const getEstablishmentResult = await db.query(queryRepository.getEstablishmentByGoogleId, [req.params.id]);
+    const getEstablishmentParams = [req.params.id]
+    const getEstablishmentResult = await db.query(queryRepository.getEstablishmentByGoogleId, getEstablishmentParams);
     let establishment = getEstablishmentResult.rows.length ? getEstablishmentResult.rows[0] : null;
 
-    let establishmentId; 
-
     if (!establishment) {
-      // placeholder data rn for everything except id
-      const createEstablishmentResult = await db.query(queryRepository.createEstablishmentByGoogleId, [req.params.id, 2, 3, 4, 5, 6, 7, 8]);
+      // placeholder data rn for everything except google maps id
+      const createEstablishmentParams = [req.params.id, 2, 3, 4, 5, 6, 7, 8];
+      const createEstablishmentResult = await db.query(queryRepository.createEstablishmentByGoogleId, createEstablishmentParams);
       const rows = createEstablishmentResult.rows;
       establishment = rows[0];
     }
     
-    establishmentId = establishment._id;
+    const establishmentId = establishment._id;
 
     const createReviewParams = [establishmentId, userId, review.rating, review.text];
     await db.query(queryRepository.createReviewByEstablishmentId, createReviewParams);
@@ -38,7 +38,7 @@ reviewController.getReviews = async (req, res, next) => {
     try {
       const dbResult = await db.query(queryRepository.getReviewsByEstablishmentGoogleId, parameters);
       res.locals.reviews = dbResult.rows;
-      console.log(res.locals.reviews);
+      // console.log(res.locals.reviews);
       return next();
     }
     catch {
