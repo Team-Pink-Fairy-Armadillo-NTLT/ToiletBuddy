@@ -23,6 +23,14 @@ workflow for adding new establishment from scratch:
   - a review needs to be created in the db mapped to that establishment
 */
 
+// check if establishment already exists
+queryRepository.getEstablishmentByGoogleId = `
+  select *
+  from establishments
+  where google_maps_id = $1 
+`;
+
+// if result of previous query is empty, need to create establishment
 // pass in array with pertinent data
 queryRepository.createEstablishmentByGoogleId = `
   insert into 

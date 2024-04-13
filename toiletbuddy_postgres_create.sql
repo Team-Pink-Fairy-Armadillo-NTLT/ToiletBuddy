@@ -43,5 +43,5 @@ CREATE TABLE reviews (
   OIDS=FALSE
 );
 
-ALTER TABLE public.reviews ADD CONSTRAINT "reviews_fk0" FOREIGN KEY ("establishment_id") REFERENCES public.establishments("_id");
-ALTER TABLE public.reviews ADD CONSTRAINT "reviews_fk1" FOREIGN KEY ("user_id") REFERENCES public.users("_id");
+ALTER TABLE reviews ADD CONSTRAINT "reviews_fk0" FOREIGN KEY ("establishment_id") REFERENCES public.establishments("_id");
+ALTER TABLE reviews ADD CONSTRAINT "reviews_fk1" FOREIGN KEY ("user_id") REFERENCES public.users("_id");
