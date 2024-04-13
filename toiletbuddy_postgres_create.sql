@@ -9,7 +9,7 @@ SET xmloption = content;
 SET client_min_messages = warning;
 SET row_security = off;
 
-CREATE TABLE public.users (
+CREATE TABLE users (
   "_id" serial NOT NULL,
   "username" varchar,
   CONSTRAINT "users_pk" PRIMARY KEY ("_id")
@@ -17,8 +17,11 @@ CREATE TABLE public.users (
   OIDS=FALSE
 );
 
-CREATE TABLE public.establishments (
+CREATE TABLE establishments (
   "_id" serial NOT NULL,
+  "google_maps_id" varchar NOT NULL,
+  "latitude" varchar NOT NULL,
+  "longitude" varchar NOT NULL,
   "name" varchar NOT NULL,
   "address" varchar NOT NULL,
   "city" varchar NOT NULL,
@@ -29,24 +32,16 @@ CREATE TABLE public.establishments (
   OIDS=FALSE
 );
 
-CREATE TABLE public.bathrooms (
+CREATE TABLE reviews (
   "_id" serial NOT NULL,
   "establishment_id" int NOT NULL,
-  "short_descr" varchar NOT NULL,
-  CONSTRAINT "bathrooms_pk" PRIMARY KEY ("_id")
-) WITH (
-  OIDS=FALSE
-);
-
-CREATE TABLE public.reviews (
-  "_id" serial NOT NULL,
-  "bathroom_id" int NOT NULL,
   "user_id" int NOT NULL,
+  "rating" varchar,
+  "review_text" varchar NOT NULL,
   CONSTRAINT "reviews_pk" PRIMARY KEY ("_id")
 ) WITH (
   OIDS=FALSE
 );
 
-ALTER TABLE public.reviews ADD CONSTRAINT "reviews_fk0" FOREIGN KEY ("bathroom_id") REFERENCES public.bathrooms("_id");
+ALTER TABLE public.reviews ADD CONSTRAINT "reviews_fk0" FOREIGN KEY ("establishment_id") REFERENCES public.establishments("_id");
 ALTER TABLE public.reviews ADD CONSTRAINT "reviews_fk1" FOREIGN KEY ("user_id") REFERENCES public.users("_id");
-ALTER TABLE public.bathrooms ADD CONSTRAINT "bathrooms_fk0" FOREIGN KEY ("establishment_id") REFERENCES public.establishments("_id");

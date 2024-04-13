@@ -47,7 +47,6 @@ const Main = ()=>{
   return(
     <section id='mainSect'>
       {button}
-      <Link to='/bathroom'><button> test button</button></Link>
       <div id='map'>
         <Map />
       </div>
