@@ -12,9 +12,9 @@ const Main = ()=>{
   return(
     <section id='mainSect'>
       {test}
-      <Link to='/bathroom'><button> test button</button></Link>
+      <Link to='/bathroom'><button id='test-button'> test button</button></Link>
       <div id='map'>
-        <Map/>
+        <Map />
       </div>
     </section>
   )
