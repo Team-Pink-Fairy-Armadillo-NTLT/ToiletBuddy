@@ -25,7 +25,7 @@ workflow for adding new establishment from scratch:
 
 // check if establishment already exists
 queryRepository.getEstablishmentByGoogleId = `
-  select establishment_id
+  select _id
   from establishments
   where google_maps_id = $1 
 `;
@@ -36,8 +36,8 @@ queryRepository.createEstablishmentByGoogleId = `
   insert into 
     establishments (google_maps_id, latitude, longitude, name, address, city, state, zip_code)
   values
-    ($1, $2, $3, $4, $5, $6, $7, $8);
-  select _id from establishments where google_maps_id = $1;
+    ($1, $2, $3, $4, $5, $6, $7, $8)
+  returning _id
 `;
 
 // pass along new or existing establishment_id to next query -> array [new_bathroom_id, user_id, input_rating, input_review_text]
