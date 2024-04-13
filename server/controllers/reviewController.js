@@ -9,7 +9,8 @@ reviewController.addReview = async (req, res, next) => {
     const review = req.body;
     const response = jwt.verify(req.cookies.authorization, process.env.SECRET_KEY);
     const { userId } = response;
-
+    console.log('userId:',userId);
+    console.log('response:',response);
     // can get username from cookie for post request to add a review
 
     const getEstablishmentParams = [req.params.id]

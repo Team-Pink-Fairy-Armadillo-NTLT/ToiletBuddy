@@ -1,25 +1,34 @@
 import React, { useEffect, useState } from 'react';
 import Reviews from './Reviews.jsx';
 import { useParams } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { loginUser, logoutUser} from '../slice.js'
 //will be a fetch call to our server which then sends back database query result
 const Bathroom = ()=>{
-  const addReview = (placeId) =>{
-    console.log(placeId);
-      if(document.getElementById('review').value.trim()!==''){
-        fetch('/api',{
+  const {placeId} = useParams();
+  const [placeName, setPlaceName] = useState('');
+  const [reviews,updateReviews]  = useState([]);
+  const isLoggedIn = useSelector(state => state.bathroom.isLoggedIn);
+  const dispatch = useDispatch();
+  const addReview = (e) =>{
+    e.preventDefault();
+      if(document.getElementById('review').value.trim()!=='' && document.getElementById('rating').value!==''){
+        fetch(`/api/${placeId}`,{
           method:'POST',
           body:JSON.stringify({
-            'review':document.getElementById('review').value,
-            'locationId':placeId
+            'text':e.target.text.value,
+            'rating':e.target.num.value
           }),
           headers:{'Content-Type':'application/json'},
-        })
-        console.log(document.getElementById('review').value);
+        }).then(res=>res.json()).then(res=>{
+          console.log('res',res);
+          if(res.result==='User not logged in'){alert('Please log in to post review')}}).then(res=>getReviews());
         document.getElementById('review').value  = '';
+        document.getElementById('rating').value = '';
       }
   }
 
-  const getReviews = (updateReviews,placeId) => {
+  const getReviews = () => {
     let r = [];
     fetch(`/api/${placeId}`).then(data=>data.json()).then(response=>{
       if(response['data'].length!==0){
@@ -37,9 +46,6 @@ const Bathroom = ()=>{
     })
   }
 
-  const {placeId} = useParams();
-  const [placeName, setPlaceName] = useState('');
-  const [reviews,updateReviews]  = useState([]);
 
   useEffect(()=>{
     fetch(`https://places.googleapis.com/v1/places/${placeId}?fields=id,displayName&key=${process.env.GOOGLE_MAPS_API_KEY}`)
@@ -51,13 +57,13 @@ const Bathroom = ()=>{
 
   return(
     <section id='bathroomSect'>
-<<<<<<< HEAD
       <h1>{placeName}</h1>
-=======
-      {placeName}
->>>>>>> dev
       <br></br>
-      <input id='review' placeholder='Add a review'></input> <button onClick={()=>{addReview(placeId)}}> Submit review</button>
+      <form id='form' onSubmit={(e)=>{addReview(e)}}>
+        <input name='text' id='review' placeholder='Add a review'></input>
+        <input name='num' id='rating' type='number'></input>
+        <input type="submit" value="Submit" />
+      </form>
       <div id='bathroomReviews'>
         {reviews}
       </div>
