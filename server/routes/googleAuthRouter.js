@@ -54,7 +54,7 @@ router.get('/callback', async (req, res) => {
   })
     .then(response => response.json())
     // add data to databse or check databse for data
-    .then(response => console.log(response))
+    // .then(response => console.log(response))
     .then(data => {
       userController.loginUser(data, res)
       res.redirect('/')
