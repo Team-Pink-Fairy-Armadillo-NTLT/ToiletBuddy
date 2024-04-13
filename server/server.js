@@ -29,7 +29,7 @@ userController.logoutUser,
 })
 
 app.get('/verifyuser',
-  userController.verifyUser,
+  userController.checkPermissions,
   (req,res) => {return res.status(200).json({"result":"ok"})}
 )
 

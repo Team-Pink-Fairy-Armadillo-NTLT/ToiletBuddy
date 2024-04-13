@@ -40,20 +40,21 @@ userController.logoutUser = (userData, loginResponse, next) => {
     return next();    
 }
 
-userController.verifyUser = (req, res, next) => {
-    try {
-        const response = jwt.verify(req.cookies.authorization, process.env.SECRET_KEY)
-        const { userId } = response;
-        res.locals.userId = userId;
-        return next();
-    } 
-    catch {
-        return next({
-            log: 'Could not verify user',
-            status: 200,
-            message: { "result": 'User not logged in'},
-        })
-    }
+userController.checkPermissions = (req, res, next) => {
+  try {
+    const response = jwt.verify(req.cookies.authorization, process.env.SECRET_KEY)
+    const { userId } = response;
+    res.locals.userId = userId;
+    return next();
+  } 
+  catch {
+    const status = req.method === 'GET' ? 200 : 403
+    return next({
+      log: 'Could not verify user',
+      status,
+      message: { "result": 'User not logged in'},
+    });
+  }
 }
 
 
