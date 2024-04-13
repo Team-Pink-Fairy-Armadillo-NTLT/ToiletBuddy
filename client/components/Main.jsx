@@ -32,13 +32,9 @@ const Main = ()=>{
     })
   },[]);
 
-
-  //let loggedIn = true;
- //let button = <button id="signin" onClick={signin}>Sign in with Google</button>;
- let button
+ let button;
   //the button will change from sign in to a go to profile button based on whether or not they are signed in
   if(isLoggedIn===true){
-    //button = <button onClick={()=>{location.assign('/bathroom')}}id='bathroomButton'>Log Out</button>
     button = <button onClick={logout} id='bathroomButton'>Log Out</button>
   }
   else{
