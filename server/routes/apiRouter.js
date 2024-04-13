@@ -1,9 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const reviewController = require('../controllers/reviewController')
+const userController = require('../controllers/userController')
 
 
-router.post('/:id', reviewController.addReview, (req, res) => {
+router.post('/:id', userController.verifyUser, reviewController.addReview, (req, res) => {
   return res.sendStatus(200);
 });
 

@@ -41,8 +41,10 @@ userController.logoutUser = (userData, loginResponse, next) => {
 }
 
 userController.verifyUser = (req, res, next) => {
-    try{
+    try {
         const response = jwt.verify(req.cookies.authorization, process.env.SECRET_KEY)
+        const { userId } = response;
+        res.locals.userId = userId;
         return next();
     } 
     catch {
