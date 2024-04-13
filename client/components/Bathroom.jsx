@@ -3,8 +3,7 @@ let bathroomReviews = ['test']
 import Reviews from './Reviews.jsx';
 import { useParams } from 'react-router-dom';
 //will be a fetch call to our server which then sends back database query result
-const addReview = () =>{
-  const {placeId} = useParams();
+const addReview = (placeId) =>{
   console.log(placeId);
     if(document.getElementById('review').value.trim()!==''){
       fetch('/api',{
@@ -20,14 +19,27 @@ const addReview = () =>{
       document.getElementById('review').value  = '';
     }
 }
+const getReviews = async (r,placeId) => {
+  const reviews = {
+    'BillyBobJoe':'this bathroom sucked',
+    'Bob':'This bathroom rocked'
+  }
+  //const test = await fetch(`/api/${placeId}`).then(data=>data.json());
+  for(const [key,val] of Object.entries(reviews)){
+    r.push(<Reviews key = {val}  name={key + ': '} review={val}/>);
+  }
+}
 const Bathroom = ()=>{
+  let reviews = [];
+  const {placeId} = useParams();
+  getReviews(reviews,placeId);
   return(
     <section id='bathroomSect'>
       Name of bathroom {/* place holder until we can get place name */}
       <br></br>
-      <input id='review' placeholder='Add a review'></input> <button onClick={addReview}> Submit review</button>
+      <input id='review' placeholder='Add a review'></input> <button onClick={()=>{addReview(placeId)}}> Submit review</button>
       <div id='bathroomReviews'>
-        <Reviews/>
+        {reviews}
       </div>
     </section>
   )

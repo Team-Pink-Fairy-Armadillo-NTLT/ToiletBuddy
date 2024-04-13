@@ -11,13 +11,13 @@ userController.loginUser = (userData, loginResponse) => {
 
 userController.logoutUser = (userData, loginResponse, next) => {
     loginResponse.clearCookie('authorization');
-    return next()    
+    return next();    
 }
 
 userController.verifyUser = (req, res, next) => {
     try{
         const response = jwt.verify(req.cookies.authorization, process.env.SECRET_KEY)
-        return next()
+        return next();
     } 
     catch {
         return next({

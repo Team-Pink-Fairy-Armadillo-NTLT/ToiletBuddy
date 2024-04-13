@@ -52,7 +52,6 @@ function Map() {
         
         <Marker position={position} onClick={clickMarker} />
       </GoogleMap>
-      {locationID}
     </div>
     
 

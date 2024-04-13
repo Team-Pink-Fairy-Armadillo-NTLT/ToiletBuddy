@@ -1,12 +1,9 @@
 import React from 'react'
-const Reviews = ()=>{
-    const reviews = {
-        'BillyBobJoe: ':'This Bathroom sucked'
-    }
+const Reviews = (props)=>{
     return (
         <section id = 'reviewSect'>
             <div>
-                {Object.keys(reviews)[0]}{Object.values(reviews)[0]}
+                {props.name + props.review}
             </div>
         </section>
     )
