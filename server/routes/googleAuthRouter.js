@@ -64,7 +64,6 @@ router.get('/callback', async (req, res) => {
     // add data to databse or check databse for data
     .then(data => {
       userController.loginUser(data, res)
-      res.redirect('/')
     });
 });
 
