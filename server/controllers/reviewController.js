@@ -12,6 +12,8 @@ reviewController.addReview = async (req, res, next) => {
 
     // can get username from cookie for post request to add a review
 
+    if (!userId) return next({ log: 'Error: could not validate JWT', status: 403, message: { err: 'You are not authorized to perform this operation' } });
+
     const getEstablishmentParams = [req.params.id]
     const getEstablishmentResult = await db.query(queryRepository.getEstablishmentByGoogleId, getEstablishmentParams);
     let establishment = getEstablishmentResult.rows.length ? getEstablishmentResult.rows[0] : null;

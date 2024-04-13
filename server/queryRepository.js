@@ -40,7 +40,7 @@ queryRepository.createEstablishmentByGoogleId = `
   returning _id
 `;
 
-// pass along new or existing establishment_id to next query -> array [new_bathroom_id, user_id, input_rating, input_review_text]
+// pass along new or existing establishment_id to next query -> array [new_establishment_id, user_id, review_rating, review_text]
 queryRepository.createReviewByEstablishmentId = `
   insert into 
     reviews (establishment_id, user_id, rating, review_text)
