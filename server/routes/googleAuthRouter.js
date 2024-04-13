@@ -10,10 +10,19 @@ const router = express.Router();
 const CLIENT_ID = process.env.CLIENT_ID;
 const CLIENT_SECRET = process.env.CLIENT_SECRET;
 
+let callbackURL
+if (webpack.mode == "production") {
+  callbackURL =   'http://localhost:3000/google/callback'
+}
+else{
+  callbackURL =   'http://localhost:8080/google/callback'
+}
+
+
 const oauth2Client = new google.auth.OAuth2(
   CLIENT_ID,
   CLIENT_SECRET,
-  'http://localhost:3000/google/callback'
+  callbackURL
 );
 
 const scopes = [
@@ -32,11 +41,10 @@ const authorizationUrl = oauth2Client.generateAuthUrl({
 });
 
 router.get('/auth', (req, res) => {
-  //console.log("in google auth")
-  //console.log(authorizationUrl)
+  console.log('in the auth')
+  console.log(authorizationUrl)
   //res.writeHead(301, { "Location": authorizationUrl });
-  console.log(authorizationUrl);
-  return res.redirect(authorizationUrl);
+  return res.redirect(301, authorizationUrl);
 });
 
 router.get('/callback', async (req, res) => {
@@ -54,7 +62,6 @@ router.get('/callback', async (req, res) => {
   })
     .then(response => response.json())
     // add data to databse or check databse for data
-    // .then(response => console.log(response))
     .then(data => {
       userController.loginUser(data, res)
       res.redirect('/')
