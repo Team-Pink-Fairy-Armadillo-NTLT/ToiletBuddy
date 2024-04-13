@@ -20,13 +20,13 @@ CREATE TABLE users (
 CREATE TABLE establishments (
   "_id" serial NOT NULL,
   "google_maps_id" varchar NOT NULL,
-  "latitude" varchar NOT NULL,
-  "longitude" varchar NOT NULL,
-  "name" varchar NOT NULL,
-  "address" varchar NOT NULL,
-  "city" varchar NOT NULL,
-  "state" varchar NOT NULL,
-  "zip_code" int NOT NULL,
+  "latitude" varchar,
+  "longitude" varchar,
+  "name" varchar,
+  "address" varchar,
+  "city" varchar,
+  "state" varchar,
+  "zip_code" int,
   CONSTRAINT "establishments_pk" PRIMARY KEY ("_id")
 ) WITH (
   OIDS=FALSE
@@ -34,14 +34,14 @@ CREATE TABLE establishments (
 
 CREATE TABLE reviews (
   "_id" serial NOT NULL,
-  "establishment_id" int NOT NULL,
-  "user_id" int NOT NULL,
+  "establishment_id" int,
+  "user_id" int,
   "rating" varchar,
-  "review_text" varchar NOT NULL,
+  "review_text" varchar,
   CONSTRAINT "reviews_pk" PRIMARY KEY ("_id")
 ) WITH (
   OIDS=FALSE
 );
 
-ALTER TABLE public.reviews ADD CONSTRAINT "reviews_fk0" FOREIGN KEY ("establishment_id") REFERENCES public.establishments("_id");
-ALTER TABLE public.reviews ADD CONSTRAINT "reviews_fk1" FOREIGN KEY ("user_id") REFERENCES public.users("_id");
+ALTER TABLE reviews ADD CONSTRAINT "reviews_fk0" FOREIGN KEY ("establishment_id") REFERENCES public.establishments("_id");
+ALTER TABLE reviews ADD CONSTRAINT "reviews_fk1" FOREIGN KEY ("user_id") REFERENCES public.users("_id");

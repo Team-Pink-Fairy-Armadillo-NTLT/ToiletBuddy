@@ -1,16 +1,18 @@
 // this file is just for now so I can write a bunch of different queries without messing with other files
 
+const queryRepository = {};
+
 // pass in parameters array [ given_googlemaps_id ]
-const getReviewsByEstablishmentGoogleId = `
+queryRepository.getReviewsByEstablishmentGoogleId = `
   select
     reviews._id,
-    establishment_id,
-    user_id,
-    rating
+    establishments._id,
+    rating,
     review_text,
     users.username as username
   from reviews
-    inner join establishments on reviews.establishment_id = establishments.id
+    inner join users on reviews.user_id = users._id
+    inner join establishments on reviews.establishment_id = establishments._id
   where establishments.google_maps_id = $1
 `;
 
@@ -21,8 +23,16 @@ workflow for adding new establishment from scratch:
   - a review needs to be created in the db mapped to that establishment
 */
 
+// check if establishment already exists
+queryRepository.getEstablishmentByGoogleId = `
+  select *
+  from establishments
+  where google_maps_id = $1 
+`;
+
+// if result of previous query is empty, need to create establishment
 // pass in array with pertinent data
-const createEstablishmentByGoogleId = `
+queryRepository.createEstablishmentByGoogleId = `
   insert into 
     establishments (google_maps_id, latitude, longitude, name, address, city, state, zip_code)
   values
@@ -30,10 +40,16 @@ const createEstablishmentByGoogleId = `
 `;
 
 // pass along new establishment_id to next query -> array [new_bathroom_id, user_id, input_rating, input_review_text]
-const createReviewByEstablishmentGoogleId = `
+queryRepository.createReviewByEstablishmentGoogleId = `
   insert into 
     reviews (establishment_id, user_id, rating, review_text)
   values
     ($1, $2, $3, $4)
 `;
+
+queryRepository.getUserId = `SELECT _id FROM users WHERE username = $1`;
+
+queryRepository.insertUser = 'INSERT INTO users (username) VALUES ($1) RETURNING (_id)'
+
+module.exports = queryRepository;
 
