@@ -15,15 +15,15 @@ reviewController.addReview = (req, res, next) => {
 reviewController.getReviews = async (req, res, next) => {
     const parameters = [req.params.id];
 
-    // try {
+    try {
       const dbResult = await db.query(queryRepository.getReviewsByEstablishmentGoogleId, parameters);
       res.locals.reviews = dbResult.rows;
       console.log(res.locals.reviews);
       return next();
-    // }
-    // catch {
-    //   return next({ log: 'Error querying DB: getReviewsByEstablishmentGoogleId', message: { err: 'Could not retreive data. Check server logs for details' } });
-    // }
+    }
+    catch {
+      return next({ log: 'Error querying DB: getReviewsByEstablishmentGoogleId', message: { err: 'Could not retreive data. Check server logs for details' } });
+    }
 }
 
 module.exports = reviewController;
