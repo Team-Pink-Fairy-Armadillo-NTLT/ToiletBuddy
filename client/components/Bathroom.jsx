@@ -19,19 +19,17 @@ const Bathroom = ()=>{
       }
   }
 
-  const getReviews = (updateReviews,placeId,reviews) => {
+  const getReviews = (updateReviews,placeId) => {
     let r = [];
-    const data = fetch(`/api/${placeId}`).then(data=>data.json()).then(data=>{
-      console.log(data['data'].length);
-      if(data['data'].length!==0){
-        for(const val of Object.values(data)[0]){
+    fetch(`/api/${placeId}`).then(data=>data.json()).then(response=>{
+      if(response['data'].length!==0){
+        for(const review of Object.values(response)[0]){
           r.push(
           <Reviews 
-          key = {val['review_text']} 
-          id = {val['_id']} 
-          rating = {val['rating']} 
-          review={val['review_text']} 
-          username={val['username']}
+          key = {review['review_text']} 
+          rating = {review['rating']} 
+          review={review['review_text']} 
+          username={review['username']}
           />);
         }
         updateReviews(r);
@@ -46,9 +44,9 @@ const Bathroom = ()=>{
   useEffect(()=>{
     fetch(`https://places.googleapis.com/v1/places/${placeId}?fields=id,displayName&key=${process.env.GOOGLE_MAPS_API_KEY}`)
     .then(res => res.json())
-    .then(res => { console.log(res); setPlaceName(res.displayName.text)})
+    .then(res => setPlaceName(res.displayName.text))
 
-    getReviews(updateReviews,placeId,reviews);
+    getReviews(updateReviews,placeId);
     }, [])
 
   return(
