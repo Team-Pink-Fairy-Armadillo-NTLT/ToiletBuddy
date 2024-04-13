@@ -42,19 +42,11 @@ function Map() {
 
 
   const clickMarker = () => {
-<<<<<<< HEAD
-    navigate(`/bathroom/${locationID}`);
-  };
-
-  
-  testLocations.forEach((location, index) => {
-    testMarkers.push(<Marker key={index} position={location} onClick={clickMarker} />)
-  });
-=======
     console.log(locationID);
     navigate(`/bathroom/${locationID}`);
   }
->>>>>>> dev
+
+  testLocations.forEach((location, index) => {testMarkers.push(<Marker key={index} position={location} onClick={clickMarker} />);});
 
   return (
      
