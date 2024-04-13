@@ -53,11 +53,7 @@ const Bathroom = ()=>{
 
   return(
     <section id='bathroomSect'>
-<<<<<<< HEAD
-      <h1>{placeName}</h1>
-=======
       {placeName}
->>>>>>> dev
       <br></br>
       <input id='review' placeholder='Add a review'></input> <button onClick={()=>{addReview(placeId)}}> Submit review</button>
       <div id='bathroomReviews'>
