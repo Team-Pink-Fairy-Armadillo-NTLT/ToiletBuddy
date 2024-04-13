@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Reviews from './Reviews.jsx';
 import { useParams } from 'react-router-dom';
+import { Container, Button, FormControl } from 'react-bootstrap';
 //will be a fetch call to our server which then sends back database query result
 const Bathroom = ()=>{
   const addReview = (placeId) =>{
@@ -52,14 +53,14 @@ const Bathroom = ()=>{
     }, [])
 
   return(
-    <section id='bathroomSect'>
-      {placeName}
+    <Container id='bathroomSect'>
+      <h1>{placeName}</h1>
       <br></br>
       <input id='review' placeholder='Add a review'></input> <button onClick={()=>{addReview(placeId)}}> Submit review</button>
       <div id='bathroomReviews'>
         {reviews}
       </div>
-    </section>
+    </Container>
   )
 }
 export default Bathroom;

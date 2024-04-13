@@ -8,8 +8,8 @@ import { Button, Container, Row, Col } from "react-bootstrap";
 
 
 function Map() {
-  // const testLocations = [{lat: 45.46000, lng: -122.73000 }, {lat: 45.47, lng:-122.74}, {lat: 45.48, lng: -122.75}];
-  // const testMarkers = [];
+  const testLocations = [{lat: 45.46000, lng: -122.73000 }, {lat: 45.47, lng:-122.74}, {lat: 45.48, lng: -122.75}];
+  const testMarkers = [];
   
 
   useEffect(() => {
