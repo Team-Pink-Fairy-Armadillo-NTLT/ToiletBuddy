@@ -7,7 +7,7 @@ const reviewController = {};
 reviewController.addReview = (req, res, next) => {
     console.log('I am in add review')
     const response = jwt.verify(req.cookies.authorization, process.env.SECRET_KEY)
-    const username = response.username
+    const userId = response.userId
     //can get username from cookie for post request to add a review
     return next()
 }
