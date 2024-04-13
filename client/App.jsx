@@ -1,7 +1,8 @@
-import React from 'react'
+import React from 'react';
 import {HashRouter,Routes,Route} from 'react-router-dom';
-import Main from './components/Main.jsx'
-import Bathroom from './components/Bathroom.jsx'
+import Main from './components/Main.jsx';
+import Bathroom from './components/Bathroom.jsx';
+import 'bootstrap/dist/css/bootstrap.min.css';
 const App = () =>{
   
   return (

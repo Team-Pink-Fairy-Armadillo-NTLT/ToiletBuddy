@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import React from 'react';
 import AutocompleteInput from './autocompleteInput.jsx';
 import { useNavigate } from 'react-router-dom';
-import { Container } from 'react-bootstrap';
+import { Button, Container, Row, Col } from "react-bootstrap";
 // import { use } from '../../server/routes/googleAuthRouter.js';
 
 
@@ -53,9 +53,9 @@ function Map() {
     <Container>
       <AutocompleteInput setSelected={setPosition} setLocationID={setLocationID} />
       <GoogleMap
-        mapContainerStyle={{height:"75vh", width:"75vw"}}
+        mapContainerStyle={{height:"100%", width:"100%"}}
         center={position}
-        zoom={10}
+        zoom={12}
       >
         <Marker options={{fillColor: 'blue'}} position={position} onClick={clickMarker} />
         
