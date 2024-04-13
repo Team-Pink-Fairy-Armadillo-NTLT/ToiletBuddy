@@ -1,6 +1,7 @@
 // import { usePlacesAutocomplete } from "@react-google-maps/api"
 import usePlacesAutocomplete, { getGeocode, getLatLng } from "use-places-autocomplete";
 import React from "react";
+import { InputGroup, FormControl } from "react-bootstrap";
 
 export default function AutocompleteInput({ setSelected, setLocationID}) {
   console.log('inside AutocompleteInput')
@@ -32,7 +33,13 @@ export default function AutocompleteInput({ setSelected, setLocationID}) {
 
   return(
     <div>
-      <input type="text" value={value} onChange={handleChange} placeholder="enter location"/>
+      <InputGroup style={{marginBottom: '5px', marginTop: '5px'}}>
+        <InputGroup.Text>Find an Establishment</InputGroup.Text>
+        <FormControl
+          value={value}
+          onChange={handleChange}
+          placeholder="Enter location"/>
+      </InputGroup>
       {status === "OK" && data.map((/*{ place_id, description }*/datum) => {
         console.log(datum)
         return (
