@@ -3,7 +3,7 @@ const router = express.Router();
 const reviewController = require('../controllers/reviewController')
 
 
-router.post('/', reviewController.addReview, (req, res) => {
+router.post('/:id', reviewController.addReview, (req, res) => {
   return res.status(200)
 });
 
