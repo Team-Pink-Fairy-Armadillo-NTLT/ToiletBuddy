@@ -10,7 +10,7 @@ router.post('/',
     }
 );
 
-router.get('/', 
+router.get('/:id', 
     reviewController.getReviews,
     (req, res) => {
     return res.status(200)
