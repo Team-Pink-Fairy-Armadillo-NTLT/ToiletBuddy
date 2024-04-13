@@ -1,6 +1,8 @@
-const reviewController = {}
-var jwt = require('jsonwebtoken')
+const jwt = require('jsonwebtoken');
+const queryRepository = require('../queryRepository');
+const db = require('../models/appModels');
 
+const reviewController = {};
 
 reviewController.addReview = (req, res, next) => {
     console.log('I am in add review')
@@ -10,9 +12,17 @@ reviewController.addReview = (req, res, next) => {
     return next();
 }
 
-reviewController.getReviews = (req, res, next) => {
-    console.log('I am in get review')
-    return next();
+reviewController.getReviews = async (req, res, next) => {
+    const parameters = [req.params.id];
+
+    try {
+      const dbResult = await db.query(queryRepository.getReviewsByEstablishmentGoogleId, parameters);
+      res.locals.reviews = dbResult;
+      return next();
+    }
+    catch {
+      return next({ log: 'Error querying DB: getReviewsByEstablishmentGoogleId', message: { err: 'Could not retreive data. Check server logs for details' } });
+    }
 }
 
 module.exports = reviewController;

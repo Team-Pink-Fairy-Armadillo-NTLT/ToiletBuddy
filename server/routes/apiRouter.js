@@ -10,10 +10,10 @@ router.post('/',
     }
 );
 
-router.get('/:placeId', 
+router.get('/:id', 
     reviewController.getReviews,
     (req, res) => {
-      return res.status(200).send(res.locals.review);
+      return res.status(200).send(res.locals.reviews);
     }
 );
 
