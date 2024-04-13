@@ -1,10 +1,27 @@
 import { useLoadScript, GoogleMap, Marker, DirectionsRenderer } from '@react-google-maps/api';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import React from 'react';
 import AutocompleteInput from './autocompleteInput.jsx';
+import { useNavigate } from 'react-router-dom';
+// import { use } from '../../server/routes/googleAuthRouter.js';
 
 
 function Map() {
+  // const currentLocation
+  useEffect(() => {
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        setPosition({
+          lat: position.coords.latitude,
+          lng: position.coords.longitude,
+        });
+      },
+      () => null
+    );
+  }, []);
+
+  const navigate = useNavigate();
+
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: process.env.GOOGLE_MAPS_API_KEY, 
     libraries: ["places"],
@@ -16,8 +33,15 @@ function Map() {
 
   if(!isLoaded) return <div>'Loading...';</div>
 
+<<<<<<< HEAD
   const clickMarker = () => {
     console.log('clicked marker')
+=======
+
+
+  const clickMarker = () => {
+    navigate(`/bathroom/{locationID}`);
+>>>>>>> dev
   }
 
   return (
