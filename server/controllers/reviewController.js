@@ -17,7 +17,8 @@ reviewController.getReviews = async (req, res, next) => {
 
     try {
       const dbResult = await db.query(queryRepository.getReviewsByEstablishmentGoogleId, parameters);
-      res.locals.reviews = dbResult;
+      res.locals.reviews = dbResult.rows;
+      console.log(res.locals.reviews);
       return next();
     }
     catch {

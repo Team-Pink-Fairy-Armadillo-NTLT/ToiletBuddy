@@ -6,13 +6,13 @@ const queryRepository = {};
 queryRepository.getReviewsByEstablishmentGoogleId = `
   select
     reviews._id,
-    establishment_id,
+    establishments._id,
     rating,
     review_text,
     users.username as username
   from reviews
     inner join users on reviews.user_id = users._id
-    inner join establishments on reviews.establishment_id = establishments.id
+    inner join establishments on reviews.establishment_id = establishments._id
   where establishments.google_maps_id = $1
 `;
 

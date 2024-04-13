@@ -3,7 +3,7 @@ const Reviews = (props)=>{
     return (
         <section id = 'reviewSect'>
             <div>
-                {props.name + props.review}
+            {props.username + ': '}<br/>{props.review} <br/>Rating:  {props.rating}
             </div>
         </section>
     )
