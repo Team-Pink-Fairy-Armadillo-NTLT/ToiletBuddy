@@ -21,22 +21,19 @@ app.use(cookieParser())
 app.use('/google', googleAuthRouter);
 app.use('/api', apiRouter);
 
-app.get('/logout', 
-userController.logoutUser,
-(req,res) => {
-  console.log('i got the cookie deleted')
-  return res.sendStatus(200)
-})
-
-app.get('/verifyuser',
-  userController.checkPermissions,
-  (req,res) => {return res.status(200).json({"result":"ok"})}
-)
-
 
 app.get('/', (req, res) => {
   return res.status(200).sendFile(path.join(__dirname, '../index.html'))
-}) 
+});
+
+app.get('/logout', userController.logoutUser, (req,res) => {
+  console.log('i got the cookie deleted');
+  return res.sendStatus(200);
+});
+
+app.get('/verifyuser',userController.verifyUser, (req, res) => {
+  return res.status(200).json({"result":"ok"});
+});
 
 //if (webpack.mode == "production") {
   app.use('/build', express.static(path.join(__dirname, '../build')));

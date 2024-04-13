@@ -40,19 +40,31 @@ userController.logoutUser = (userData, loginResponse, next) => {
     return next();    
 }
 
-userController.checkPermissions = (req, res, next) => {
+userController.verifyUser = (req, res, next) => {
   try {
-    const response = jwt.verify(req.cookies.authorization, process.env.SECRET_KEY)
-    const { userId } = response;
-    res.locals.userId = userId;
+    jwt.verify(req.cookies.authorization, process.env.SECRET_KEY);
     return next();
   } 
   catch {
-    const status = req.method === 'GET' ? 200 : 403
     return next({
-      log: 'Could not verify user',
-      status,
-      message: { "result": 'User not logged in'},
+      log: 'userController.verifyUser: User not logged in but is authorized to access page',
+      status: 200,
+      message: { result: 'You are not logged in but can view the page'},
+    });
+  }
+}
+
+userController.checkPermissions = (req, res, next) => {
+  try {
+    const response = jwt.verify(req.cookies.authorization, process.env.SECRET_KEY)
+    res.locals.userId = response.userId;
+    return next();
+  } 
+  catch {
+    return next({
+      log: 'userController.checkPermissions: JWT validation failed',
+      status: 403,
+      message: { result: 'You are not authorized to perform this action'},
     });
   }
 }
