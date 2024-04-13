@@ -3,14 +3,20 @@ import { useState, useEffect } from 'react';
 import React from 'react';
 import AutocompleteInput from './autocompleteInput.jsx';
 import { useNavigate } from 'react-router-dom';
+import { Container } from 'react-bootstrap';
 // import { use } from '../../server/routes/googleAuthRouter.js';
 
 
 function Map() {
-  // const currentLocation
+  const testLocations = [{lat: 45.46000, lng: -122.73000 }, {lat: 45.47, lng:-122.74}, {lat: 45.48, lng: -122.75}];
+  const testMarkers = [];
+  
+
   useEffect(() => {
+    
     navigator.geolocation.getCurrentPosition(
       (position) => {
+        console.log(position.coords.latitude, position.coords.longitude)
         setPosition({
           lat: position.coords.latitude,
           lng: position.coords.longitude,
@@ -40,21 +46,22 @@ function Map() {
     navigate(`/bathroom/${locationID}`);
   }
 
+  testLocations.forEach((location, index) => {testMarkers.push(<Marker key={index} position={location} onClick={clickMarker} />);});
+
   return (
      
-    <div style={{height:"100vh", width:"100vw"}}>
+    <Container>
       <AutocompleteInput setSelected={setPosition} setLocationID={setLocationID} />
       <GoogleMap
-        mapContainerStyle={{height:"50vh", width:"50%"}}
+        mapContainerStyle={{height:"75vh", width:"75vw"}}
         center={position}
         zoom={10}
       >
+        <Marker options={{fillColor: 'blue'}} position={position} onClick={clickMarker} />
         
-        <Marker position={position} onClick={clickMarker} />
+        {testMarkers}
       </GoogleMap>
-    </div>
-    
-
+    </Container>
   );
 }
 

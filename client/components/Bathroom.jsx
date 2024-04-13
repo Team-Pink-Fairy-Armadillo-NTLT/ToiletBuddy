@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 let bathroomReviews = ['test']
 import Reviews from './Reviews.jsx';
 import { useParams } from 'react-router-dom';
@@ -33,9 +33,18 @@ const Bathroom = ()=>{
   let reviews = [];
   const {placeId} = useParams();
   getReviews(reviews,placeId);
+  const [placeName, setPlaceName] = useState('');
+
+  useEffect(()=>{
+    fetch(`https://places.googleapis.com/v1/places/${placeId}?fields=id,displayName&key=${process.env.GOOGLE_MAPS_API_KEY}`)
+    .then(res => res.json())
+    .then(res => { console.log(res); setPlaceName(res.displayName.text)})
+    }, [])
+  
+
   return(
     <section id='bathroomSect'>
-      Name of bathroom {/* place holder until we can get place name */}
+      {placeName}{/* place holder until we can get place name */}
       <br></br>
       <input id='review' placeholder='Add a review'></input> <button onClick={()=>{addReview(placeId)}}> Submit review</button>
       <div id='bathroomReviews'>
