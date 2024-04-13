@@ -48,5 +48,9 @@ queryRepository.createReviewByEstablishmentId = `
     ($1, $2, $3, $4)
 `;
 
+queryRepository.getUserId = `SELECT _id FROM users WHERE username = $1`;
+
+queryRepository.insertUser = 'INSERT INTO users (username) VALUES ($1) RETURNING (_id)'
+
 module.exports = queryRepository;
 
