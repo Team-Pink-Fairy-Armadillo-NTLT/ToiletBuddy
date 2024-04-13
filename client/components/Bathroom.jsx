@@ -33,7 +33,7 @@ const Bathroom = ()=>{
 
   return(
     <section id='bathroomSect'>
-      {placeName}{/* place holder until we can get place name */}
+      <h1>{placeName}</h1>
       <br></br>
       <input id='review' placeholder='Add a review'></input> <button onClick={addReview}> Submit review</button>
       <div id='bathroomReviews'>

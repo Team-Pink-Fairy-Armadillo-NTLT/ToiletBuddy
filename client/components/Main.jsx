@@ -39,7 +39,7 @@ const Main = ()=>{
   //the button will change from sign in to a go to profile button based on whether or not they are signed in
   if(isLoggedIn===true){
     //button = <button onClick={()=>{location.assign('/bathroom')}}id='bathroomButton'>Log Out</button>
-    button = <Button style={{height: '20px'}} variant='secondary' onClick={logout} id='bathroomButton'>Log Out</Button>
+    button = <Button style={{height: '70%'}} variant='secondary' onClick={logout} id='bathroomButton'>Log Out</Button>
   }
   else{
     button = <Button style={{height: '70%'}} variant='primary' id="signin" onClick={signin}>Sign in with Google</Button>
