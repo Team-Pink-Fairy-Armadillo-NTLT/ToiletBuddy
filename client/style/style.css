@@ -1,17 +1,15 @@
-#map {
-  margin-left: 100px;
+
+#main-header {
   display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: blueviolet;
-};
-
-#test-button {
-  /* background-color: blue; */
-};
-
-h1 {
-  color: red;
-  font-size: 50px;
-  text-align: center;
+  justify-content: space-between;
+  margin: 10px;
 }
+
+#brand {
+  margin-left: 40%;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  font-size: 3rem;
+}
+
+
+

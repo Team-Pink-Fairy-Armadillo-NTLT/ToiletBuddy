@@ -3,7 +3,7 @@ import {Link, useNavigate} from 'react-router-dom'
 import Map from './map.jsx';
 import { useSelector, useDispatch } from 'react-redux';
 import { loginUser, logoutUser} from '../slice.js'
-
+import { Button } from 'react-bootstrap';
 //loggedIn will be set based off of if they have a cookie or not
 const Main = ()=>{
   const dispatch = useDispatch();
@@ -39,18 +39,22 @@ const Main = ()=>{
   //the button will change from sign in to a go to profile button based on whether or not they are signed in
   if(isLoggedIn===true){
     //button = <button onClick={()=>{location.assign('/bathroom')}}id='bathroomButton'>Log Out</button>
-    button = <button onClick={logout} id='bathroomButton'>Log Out</button>
+    button = <Button style={{height: '20px'}} variant='secondary' onClick={logout} id='bathroomButton'>Log Out</Button>
   }
   else{
-    button = <button id="signin" onClick={signin}>Sign in with Google</button>
+    button = <Button style={{height: '70%'}} variant='primary' id="signin" onClick={signin}>Sign in with Google</Button>
   }
   return(
-    <section id='mainSect'>
-      {button}
+    <>
+      <header id='main-header'>
+        <h1 id='brand'>Toilet Buddy</h1>
+        {button}
+      </header>
       <div id='map'>
-        <Map />
+          <Map />
       </div>
-    </section>
+    </>
+
   )
 }
 export default Main;
