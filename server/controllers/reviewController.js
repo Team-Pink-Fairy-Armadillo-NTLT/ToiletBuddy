@@ -9,7 +9,7 @@ reviewController.addReview = (req, res, next) => {
     const response = jwt.verify(req.cookies.authorization, process.env.SECRET_KEY)
     const userId = response.userId
     //can get username from cookie for post request to add a review
-    return next()
+    return next();
 }
 
 reviewController.getReviews = async (req, res, next) => {

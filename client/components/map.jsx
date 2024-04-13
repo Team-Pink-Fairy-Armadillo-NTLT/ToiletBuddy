@@ -61,10 +61,7 @@ function Map() {
         
         {testMarkers}
       </GoogleMap>
-      {locationID}
     </Container>
-    
-
   );
 }
 
