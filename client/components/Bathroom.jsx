@@ -23,10 +23,11 @@ const Bathroom = ()=>{
           }),
           headers:{'Content-Type':'application/json'},
         })
-        .then(res=>res.json())
+        .then(res=> {console.log('testing res',res); return res})
         .then(res=>{
           console.log('res',res);
           if(res.status===403){alert('Please log in to post review');
+          console.log('did I make it here?')
           return res}})
         .then(res=>getReviews());
         document.getElementById('review').value  = '';
