@@ -20,9 +20,8 @@ const Bathroom = ()=>{
             'rating':e.target.num.value
           }),
           headers:{'Content-Type':'application/json'},
-        }).then(res=>res.json()).then(res=>{
-          console.log('res',res);
-          if(res.result==='User not logged in'){alert('Please log in to post review')}}).then(res=>getReviews());
+        }).then(res=>{
+          if(res.status===403){alert('Please log in to post review')}}).then(res=>getReviews());
         document.getElementById('review').value  = '';
         document.getElementById('rating').value = '';
       }
