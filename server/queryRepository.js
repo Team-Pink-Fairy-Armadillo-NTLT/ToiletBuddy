@@ -46,6 +46,7 @@ queryRepository.createReviewByEstablishmentId = `
     reviews (establishment_id, user_id, rating, text, toilet, sink, smell, cleanliness, tp)
   values
     ($1, $2, $3, $4, $5, $6, $7, $8, $9)
+    returning _id
 `;
 
 queryRepository.getUserId = `SELECT _id FROM users WHERE username = $1`;

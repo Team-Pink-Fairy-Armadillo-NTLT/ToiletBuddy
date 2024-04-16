@@ -5,7 +5,7 @@ const db = require('../models/appModels');
 const reviewController = {};
 
 reviewController.addReview = async (req, res, next) => {
-    // console.log('I am in add review')
+    //console.log('I am in add review')
     const { rating, text, name, address, toilet, sink, smell, cleanliness, tp } = req.body;
 <<<<<<< HEAD
     const { placeId: googleId } = req.params;
@@ -13,6 +13,8 @@ reviewController.addReview = async (req, res, next) => {
     const { googleId } = req.params;
 >>>>>>> dev
     const { userId } = res.locals;
+    //console.log('userId', userId)
+    console.log(req.params)
 
     const getEstablishmentParams = [googleId]
     const getEstablishmentResult = await db.query(queryRepository.getEstablishmentByGoogleId, getEstablishmentParams);
@@ -29,13 +31,14 @@ reviewController.addReview = async (req, res, next) => {
     const establishmentId = establishment._id;
 
     const createReviewParams = [establishmentId, userId, rating, text, toilet, sink, smell, cleanliness, tp];
-    await db.query(queryRepository.createReviewByEstablishmentId, createReviewParams);
-
+    const result = await db.query(queryRepository.createReviewByEstablishmentId, createReviewParams);
+    console.log('returning', result)
     return next();
 }
 
 reviewController.getReviews = async (req, res, next) => {
-    const parameters = [req.params.placeId];
+
+    const parameters = [req.params.googleId];
 
     try {
       const dbResult = await db.query(queryRepository.getReviewsByEstablishmentGoogleId, parameters);

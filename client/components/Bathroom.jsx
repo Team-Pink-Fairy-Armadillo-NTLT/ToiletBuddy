@@ -86,15 +86,17 @@ const Bathroom = ()=>{
     fetch(`/api/${placeId}`).then(data=>data.json()).then(response=>{
       console.log('response',response)
       if(response['data'].length!==0){
+        let i = 0
         for(const review of response['data']){
           ratingTotal += parseFloat(review['rating']);
           r.push(
           <Reviews 
-          key = {review['review_text']} 
+          key = {i} 
           rating = {review['rating']} 
-          review={review['review_text']} 
+          review={review['text']} 
           username={review['username']}
           />);
+          i++
         }
         updateReviews(r);
         setAverageRating((ratingTotal/r.length).toFixed(1));
