@@ -10,8 +10,10 @@ const Bathroom = ()=>{
   const [placeName, setPlaceName] = useState('');
   const [reviews,updateReviews]  = useState([]);
   const [averageRating, setAverageRating] = useState(0);
+  const [address, setAddress] = useState('');
   const isLoggedIn = useSelector(state => state.bathroom.isLoggedIn);
   const dispatch = useDispatch();
+  
   const addReview = (e) =>{
     e.preventDefault();
       if(document.getElementById('review').value.trim()!=='' && document.getElementById('rating').value!==''){
@@ -19,7 +21,9 @@ const Bathroom = ()=>{
           method:'POST',
           body:JSON.stringify({
             'text':e.target.text.value,
-            'rating':e.target.num.value
+            'rating':e.target.num.value,
+            'address':address,
+            'name': placeName
           }),
           headers:{'Content-Type':'application/json'},
         })
@@ -60,9 +64,9 @@ const Bathroom = ()=>{
 
 
   useEffect(()=>{
-    fetch(`https://places.googleapis.com/v1/places/${placeId}?fields=id,displayName&key=${process.env.GOOGLE_MAPS_API_KEY}`)
+    fetch(`https://places.googleapis.com/v1/places/${placeId}?fields=id,displayName,formattedAddress&key=${process.env.GOOGLE_MAPS_API_KEY}`)
     .then(res => res.json())
-    .then(res => setPlaceName(res.displayName.text))
+    .then(res => {setPlaceName(res.displayName.text); setAddress(res.formattedAddress)})
 
     getReviews(updateReviews,placeId);
     }, [])
@@ -70,6 +74,7 @@ const Bathroom = ()=>{
   return(
     <>
       <h1 style={{textAlign:'center', fontSize: "50"}}>{placeName}: <span style={{fontSize:'30'}}>Average Rating: {averageRating}</span></h1>
+      <h2 style={{textAlign:'center', fontSize: "20"}}>{address}</h2>
       <div style={{display:'flex', flexDirection:'row'}}>
         <Container style={{flex: '0 0 30%'}} id='bathroomSect'>
           <form id='form' onSubmit={(e)=>{addReview(e)}}>

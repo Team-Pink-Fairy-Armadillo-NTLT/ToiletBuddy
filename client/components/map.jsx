@@ -52,7 +52,7 @@ function Map() {
   return (
      
     <Container>
-      <AutocompleteInput setSelected={setPosition} setLocationID={setLocationID} setMarkerReady={setMarkerReady} />
+      <AutocompleteInput setSelected={setPosition} setLocationID={setLocationID} setMarkerReady={setMarkerReady} setZoom={setZoom} />
       <GoogleMap
         mapContainerStyle={{height:"80%", width:"100%"}}
         center={position}
