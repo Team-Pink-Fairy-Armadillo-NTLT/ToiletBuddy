@@ -7,7 +7,7 @@ const reviewController = {};
 reviewController.addReview = async (req, res, next) => {
     // console.log('I am in add review')
     const { rating, text, name, address, toilet, sink, smell, cleanliness, tp } = req.body;
-    const { placeId: googleId } = req.params;
+    const { googleId } = req.params;
     const { userId } = res.locals;
 
     const getEstablishmentParams = [googleId]
