@@ -8,7 +8,7 @@ queryRepository.getReviewsByEstablishmentGoogleId = `
     reviews._id,
     establishments._id,
     rating,
-    review_text,
+    text,
     users.username as username
   from reviews
     inner join users on reviews.user_id = users._id
@@ -43,9 +43,9 @@ queryRepository.createEstablishmentByGoogleId = `
 // pass along new or existing establishment_id to next query -> array [new_establishment_id, user_id, review_rating, review_text]
 queryRepository.createReviewByEstablishmentId = `
   insert into 
-    reviews (establishment_id, user_id, rating, review_text)
+    reviews (establishment_id, user_id, rating, text, toilet, sink, smell, cleanliness, tp)
   values
-    ($1, $2, $3, $4)
+    ($1, $2, $3, $4, $5, $6, $7, $8, $9)
 `;
 
 queryRepository.getUserId = `SELECT _id FROM users WHERE username = $1`;
