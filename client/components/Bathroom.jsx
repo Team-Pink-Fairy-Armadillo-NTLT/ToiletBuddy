@@ -13,10 +13,11 @@ const Bathroom = ()=>{
   const [reviews,updateReviews]  = useState([]);
   const [averageRating, setAverageRating] = useState(0);
   const [address, setAddress] = useState('');
+  const [imageFile, setImageFile] = useState();
   const isLoggedIn = useSelector(state => state.bathroom.isLoggedIn);
   const dispatch = useDispatch();
   
-  const addReview = (e) =>{
+  const addReview = async (e) =>{
     e.preventDefault();
     let review = e.target.text.value;
     let bathroom = e.target['bathroom(required)'].value;
@@ -25,6 +26,19 @@ const Bathroom = ()=>{
     let smell = e.target.smell.value;
     let cleanliness = e.target.cleanliness.value;
     let TP = e.target.TP.value;
+
+    console.log(e.target)
+
+    console.log(e.target.imageFile.value)
+    //setFile(URL.createObjectURL(e.target.imageFile[0]));
+    let imageByteArray
+    if(imageFile){
+      console.log("i think i have an image")
+      const buffer = await imageFile.arrayBuffer();
+      imageByteArray = new Int8Array(buffer);
+      console.log("image in add review is: ", imageByteArray)
+    }
+
     if(toilet === '') toilet = null;
     if(sink === '') sink = null;
     if(smell === '') smell = null;
@@ -53,7 +67,9 @@ const Bathroom = ()=>{
             'cleanliness':cleanliness,
             'tp':TP,
             'address':address,
-            'name': placeName
+            'name': placeName,
+            'image': imageByteArray
+
           }),
           headers:{'Content-Type':'application/json'},
         })
@@ -71,6 +87,7 @@ const Bathroom = ()=>{
         e.target.smell.value = '';
         e.target.cleanliness.value = '';
         e.target.TP.value = '';
+
     }
   }
 
@@ -98,11 +115,13 @@ const Bathroom = ()=>{
     })
   }
 
-  const [file, setFile] = useState();
-    function handleChange(e) {
+    async function handleChange(e) {
         console.log(e.target.files);
         console.log(e.target.files[0])
-        setFile(URL.createObjectURL(e.target.files[0]));
+        setImageFile(e.target.files[0]);
+        // const buffer = await e.target.files[0].arrayBuffer();
+        // let byteArray = new Int8Array(buffer);
+        //console.log(byteArray)
     }
 
   useEffect(()=>{
@@ -130,8 +149,7 @@ const Bathroom = ()=>{
             <RatingSelect name='TP'/>
             <input type='submit' value='Submit review'></input>
             <h2>Add Image:</h2>
-            <input type="file" onChange={handleChange} />
-            <img src={file} />
+            <input type="file" name="imageFile" onChange={handleChange} />
           </form>
         </Container>
         <Container style={{flex: '0 0 70%', paddingRight:'40px'}} id='bathroomReviews'>

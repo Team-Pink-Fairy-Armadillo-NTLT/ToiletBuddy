@@ -5,7 +5,8 @@ const db = require('../models/appModels');
 const reviewController = {};
 
 reviewController.addReview = async (req, res, next) => {
-    //console.log('I am in add review')
+  console.log('I am in add review')
+  console.log(req.body);
     const { rating, text, name, address, toilet, sink, smell, cleanliness, tp } = req.body;
     const { googleId } = req.params;
     const { userId } = res.locals;
