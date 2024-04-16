@@ -1,9 +1,9 @@
-// import { usePlacesAutocomplete } from "@react-google-maps/api"
+import { Marker } from "@react-google-maps/api"
 import usePlacesAutocomplete, { getGeocode, getLatLng } from "use-places-autocomplete";
 import React from "react";
 import { InputGroup, FormControl } from "react-bootstrap";
 
-export default function AutocompleteInput({ setSelected, setLocationID}) {
+export default function AutocompleteInput({ setSelected, setLocationID, setMarkerReady}) {
   console.log('inside AutocompleteInput')
   const {
     ready,
@@ -26,6 +26,7 @@ export default function AutocompleteInput({ setSelected, setLocationID}) {
       const { lat, lng } = await getLatLng(results[0]);
       setSelected({ lat, lng });
       setLocationID(place_id);
+      setMarkerReady(true);
     } catch (error) {
       console.log("Error: ", error);
     }
