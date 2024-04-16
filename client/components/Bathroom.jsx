@@ -11,6 +11,10 @@ const Bathroom = ()=>{
   const [placeName, setPlaceName] = useState('');
   const [reviews,updateReviews]  = useState([]);
   const [averageRating, setAverageRating] = useState(0);
+  const [address, setAddress] = useState('');
+  const isLoggedIn = useSelector(state => state.bathroom.isLoggedIn);
+  const dispatch = useDispatch();
+  
   const addReview = (e) =>{
     e.preventDefault();
     let review = e.target.text.value;
@@ -32,6 +36,11 @@ const Bathroom = ()=>{
     }else if(bathroom>10 || bathroom<0){
       alert('Please keep your rating between 1 and 10');
     }else{
+      console.log('t',toilet);
+      console.log('sink',sink);
+      console.log('smell',smell);
+      console.log('cleanliness',cleanliness);
+      console.log('TP',TP);
         fetch(`/api/${placeId}`,{
           method:'POST',
           body:JSON.stringify({
@@ -41,7 +50,9 @@ const Bathroom = ()=>{
             'sink':sink,
             'smell':smell,
             'cleanliness':cleanliness,
-            'tp':TP
+            'tp':TP,
+            'address':address,
+            'name': placeName
           }),
           headers:{'Content-Type':'application/json'},
         })
@@ -52,8 +63,13 @@ const Bathroom = ()=>{
           console.log('did I make it here?')
           return res}})
         .then(res=>getReviews());
-        document.getElementById('review').value  = '';
-        document.getElementById('rating').value = '';
+        e.target.text.value  = '';
+        e.target['bathroom(required)'].value = '';
+        e.target.toilet.value = '';
+        e.target.sink.value = '';
+        e.target.smell.value = '';
+        e.target.cleanliness.value = '';
+        e.target.TP.value = '';
     }
   }
 
@@ -81,9 +97,9 @@ const Bathroom = ()=>{
 
 
   useEffect(()=>{
-    fetch(`https://places.googleapis.com/v1/places/${placeId}?fields=id,displayName&key=${process.env.GOOGLE_MAPS_API_KEY}`)
+    fetch(`https://places.googleapis.com/v1/places/${placeId}?fields=id,displayName,formattedAddress&key=${process.env.GOOGLE_MAPS_API_KEY}`)
     .then(res => res.json())
-    .then(res => setPlaceName(res.displayName.text))
+    .then(res => {setPlaceName(res.displayName.text); setAddress(res.formattedAddress)})
 
     getReviews(updateReviews,placeId);
     }, [])
@@ -91,6 +107,7 @@ const Bathroom = ()=>{
   return(
     <>
       <h1 style={{textAlign:'center', fontSize: "50"}}>{placeName}: <span style={{fontSize:'30'}}>Average Rating: {averageRating}</span></h1>
+      <h2 style={{textAlign:'center', fontSize: "20"}}>{address}</h2>
       <div style={{display:'flex', flexDirection:'row'}}>
         <Container style={{flex: '0 0 30%'}} id='bathroomSect'>
           <form id='form' onSubmit={(e)=>{addReview(e)}}>
