@@ -8,19 +8,24 @@ import { Button, Container, Row, Col } from "react-bootstrap";
 
 
 function Map() {
-  const testLocations = [{lat: 45.46000, lng: -122.73000 }, {lat: 45.47, lng:-122.74}, {lat: 45.48, lng: -122.75}];
-  const testMarkers = [];
-  
+  // const testLocations = [{lat: 45.46000, lng: -122.73000 }, {lat: 45.47, lng:-122.74}, {lat: 45.48, lng: -122.75}];
+  // const testMarkers = [];
+  const clickMarker = () => {
+    console.log(locationID);
+    navigate(`/bathroom/${locationID}`);
+  }
 
   useEffect(() => {
     
     navigator.geolocation.getCurrentPosition(
       (position) => {
-        console.log(position.coords.latitude, position.coords.longitude)
+        console.log(position.coords.latitude, position.coords.longitude);
+        // marker.push(<Marker key={0} position={{lat: position.coords.latitude, lng: position.coords.longitude}} onClick={clickMarker} />);
         setPosition({
           lat: position.coords.latitude,
           lng: position.coords.longitude,
-        });
+        })
+        setZoom(12);
       },
       () => null
     );
@@ -35,31 +40,26 @@ function Map() {
 
   const [position, setPosition] = useState({lat: 53.54992, lng: 10.00678});
   const [locationID, setLocationID] = useState(null);
+  const [zoom, setZoom] = useState(2);
+  const [markerReady, setMarkerReady] = useState(false);
   
 
   if(!isLoaded) return <div>'Loading...';</div>
 
 
-
-  const clickMarker = () => {
-    console.log(locationID);
-    navigate(`/bathroom/${locationID}`);
-  }
-
-  testLocations.forEach((location, index) => {testMarkers.push(<Marker key={index} position={location} onClick={clickMarker} />);});
+  // testLocations.forEach((location, index) => {testMarkers.push(<Marker key={index} position={location} onClick={clickMarker} />);});
 
   return (
      
     <Container>
-      <AutocompleteInput setSelected={setPosition} setLocationID={setLocationID} />
+      <AutocompleteInput setSelected={setPosition} setLocationID={setLocationID} setMarkerReady={setMarkerReady} />
       <GoogleMap
-        mapContainerStyle={{height:"100%", width:"100%"}}
+        mapContainerStyle={{height:"80%", width:"100%"}}
         center={position}
-        zoom={12}
+        zoom={zoom}
       >
-        <Marker options={{fillColor: 'blue'}} position={position} onClick={clickMarker} />
+        {markerReady && <Marker options={{fillColor: 'blue'}} position={position} onClick={clickMarker} />}
         
-        {testMarkers}
       </GoogleMap>
     </Container>
   );
