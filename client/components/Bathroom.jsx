@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { loginUser, logoutUser} from '../slice.js'
 import { Container, Col, Row, FormControl, Form } from 'react-bootstrap';
 //will be a fetch call to our server which then sends back database query result
+
 const Bathroom = ()=>{
   const {placeId} = useParams();
   const [placeName, setPlaceName] = useState('');
@@ -58,6 +59,12 @@ const Bathroom = ()=>{
     })
   }
 
+  const [file, setFile] = useState();
+    function handleChange(e) {
+        console.log(e.target.files);
+        console.log(e.target.files[0])
+        setFile(URL.createObjectURL(e.target.files[0]));
+    }
 
   useEffect(()=>{
     fetch(`https://places.googleapis.com/v1/places/${placeId}?fields=id,displayName&key=${process.env.GOOGLE_MAPS_API_KEY}`)
@@ -88,6 +95,9 @@ const Bathroom = ()=>{
               <option value='9'>9</option>
               <option value='10'>10</option>
             </Form.Select>
+            <h2>Add Image:</h2>
+            <input type="file" onChange={handleChange} />
+            <img src={file} />
             <input type='submit' value='Submit'></input>
           </form>
         
