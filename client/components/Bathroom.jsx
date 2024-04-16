@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { loginUser, logoutUser} from '../slice.js'
 import { Container, Col, Row, FormControl, Form } from 'react-bootstrap';
+import RatingSelect from './RatingSelect.jsx';
 //will be a fetch call to our server which then sends back database query result
 const Bathroom = ()=>{
   const {placeId} = useParams();
@@ -16,12 +17,40 @@ const Bathroom = ()=>{
   
   const addReview = (e) =>{
     e.preventDefault();
-      if(document.getElementById('review').value.trim()!=='' && document.getElementById('rating').value!==''){
+    let review = e.target.text.value;
+    let bathroom = e.target['bathroom(required)'].value;
+    let toilet = e.target.toilet.value;
+    let sink = e.target.sink.value;
+    let smell = e.target.smell.value;
+    let cleanliness = e.target.cleanliness.value;
+    let TP = e.target.TP.value;
+    if(toilet === '') toilet = null;
+    if(sink === '') sink = null;
+    if(smell === '') smell = null;
+    if(cleanliness === '') cleanliness = null;
+    if(TP === '') TP = null;
+    if(review.trim()===''){
+      alert('Enter a review');
+    }else if(bathroom===''){
+      alert('Select a bathroom rating');
+    }else if(bathroom>10 || bathroom<0){
+      alert('Please keep your rating between 1 and 10');
+    }else{
+      console.log('t',toilet);
+      console.log('sink',sink);
+      console.log('smell',smell);
+      console.log('cleanliness',cleanliness);
+      console.log('TP',TP);
         fetch(`/api/${placeId}`,{
           method:'POST',
           body:JSON.stringify({
-            'text':e.target.text.value,
-            'rating':e.target.num.value,
+            'text':review,
+            'rating':bathroom,
+            'toilet':toilet,
+            'sink':sink,
+            'smell':smell,
+            'cleanliness':cleanliness,
+            'tp':TP,
             'address':address,
             'name': placeName
           }),
@@ -34,9 +63,14 @@ const Bathroom = ()=>{
           console.log('did I make it here?')
           return res}})
         .then(res=>getReviews());
-        document.getElementById('review').value  = '';
-        document.getElementById('rating').value = '';
-      }
+        e.target.text.value  = '';
+        e.target['bathroom(required)'].value = '';
+        e.target.toilet.value = '';
+        e.target.sink.value = '';
+        e.target.smell.value = '';
+        e.target.cleanliness.value = '';
+        e.target.TP.value = '';
+    }
   }
 
   const getReviews = () => {
@@ -46,7 +80,6 @@ const Bathroom = ()=>{
       console.log('response',response)
       if(response['data'].length!==0){
         for(const review of response['data']){
-          // console.log('rating', review['rating'], 'ratingTotal', ratingTotal, 'length', r.length)
           ratingTotal += parseFloat(review['rating']);
           r.push(
           <Reviews 
@@ -80,22 +113,14 @@ const Bathroom = ()=>{
           <form id='form' onSubmit={(e)=>{addReview(e)}}>
             <FormControl name='text' id='review' placeholder='Add a review' as='textarea' rows={5}></FormControl>
             {/* <FormControl name='num' id='rating' type='number'></FormControl> */}
-            <Form.Select name='num' id='rating'>
-              <option>Select a Rating</option>
-              <option value='1'>1</option>
-              <option value='2'>2</option>
-              <option value='3'>3</option>
-              <option value='4'>4</option>
-              <option value='5'>5</option>
-              <option value='6'>6</option>
-              <option value='7'>7</option>
-              <option value='8'>8</option>
-              <option value='9'>9</option>
-              <option value='10'>10</option>
-            </Form.Select>
-            <input type='submit' value='Submit'></input>
+            <RatingSelect name='bathroom(required)'/>
+            <RatingSelect name='toilet'/>
+            <RatingSelect name='sink'/>
+            <RatingSelect name='smell'/>
+            <RatingSelect name='cleanliness'/>
+            <RatingSelect name='TP'/>
+            <input type='submit' value='Submit review'></input>
           </form>
-        
         </Container>
         <Container style={{flex: '0 0 70%', paddingRight:'40px'}} id='bathroomReviews'>
           {/* <Col> */}
