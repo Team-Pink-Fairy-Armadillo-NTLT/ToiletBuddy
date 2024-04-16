@@ -16,6 +16,18 @@ const Bathroom = ()=>{
   const [imageFile, setImageFile] = useState();
   const isLoggedIn = useSelector(state => state.bathroom.isLoggedIn);
   const dispatch = useDispatch();
+
+  const getFileContents = function(file) {
+    return new Promise((resolve, reject) => {
+      let reader = new FileReader()
+      reader.readAsText(imageFile);
+      reader.onload = function() {
+        console.log("i have loaded the file")
+        const resultString = reader.result;
+        resolve(resultString)
+      };
+    })
+  }
   
   const addReview = async (e) =>{
     e.preventDefault();
@@ -31,12 +43,17 @@ const Bathroom = ()=>{
 
     console.log(e.target.imageFile.value)
     //setFile(URL.createObjectURL(e.target.imageFile[0]));
-    let imageByteArray
+    let reader = new FileReader();
+    let binaryImageString
     if(imageFile){
-      console.log("i think i have an image")
-      const buffer = await imageFile.arrayBuffer();
-      imageByteArray = new Int8Array(buffer);
-      console.log("image in add review is: ", imageByteArray)
+      // console.log(imageFile)
+      // console.log("i think i have an image")
+      // const imageBuffer = await imageFile.arrayBuffer();
+      // const imageArray = new Uint8Array(imageBuffer);
+      // console.log("i am here")
+      // console.log("image in add review is: ", binaryImageString)
+      binaryImageString = await getFileContents(imageFile)
+
     }
 
     if(toilet === '') toilet = null;
@@ -56,6 +73,7 @@ const Bathroom = ()=>{
       console.log('smell',smell);
       console.log('cleanliness',cleanliness);
       console.log('TP',TP);
+      console.log('image', JSON.stringify(binaryImageString))
         fetch(`/api/${placeId}`,{
           method:'POST',
           body:JSON.stringify({
@@ -68,8 +86,7 @@ const Bathroom = ()=>{
             'tp':TP,
             'address':address,
             'name': placeName,
-            'image': imageByteArray
-
+            'image': JSON.stringify(binaryImageString)
           }),
           headers:{'Content-Type':'application/json'},
         })
