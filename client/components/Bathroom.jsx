@@ -82,7 +82,7 @@ const Bathroom = ()=>{
         let i = 0
         for(const review of response['data']){
           ratingTotal += parseFloat(review['rating']);
-          r.push(
+          r.unshift(
           <Reviews 
           key = {i} 
           rating = {review['rating']} 
@@ -108,6 +108,7 @@ const Bathroom = ()=>{
 
   return(
     <>
+    <button id = 'homeB'onClick={()=>{location.assign('/')}}> Back to Home</button>
       <h1 style={{textAlign:'center', fontSize: "50"}}>{placeName}: <span style={{fontSize:'30'}}>Average Rating: {averageRating}</span></h1>
       <h2 style={{textAlign:'center', fontSize: "20"}}>{address}</h2>
       <div style={{display:'flex', flexDirection:'row'}}>
@@ -127,7 +128,7 @@ const Bathroom = ()=>{
         <Container style={{flex: '0 0 70%', paddingRight:'40px'}} id='bathroomReviews'>
           {/* <Col> */}
             {/* <Row xs={2} md={3} lg={4} xl={5}> */}
-            <Row>
+            <Row id = 'r'>
               {reviews}
             </Row>
           {/* </Col> */}
