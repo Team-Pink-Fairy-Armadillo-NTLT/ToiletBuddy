@@ -95,6 +95,11 @@ const Bathroom = ()=>{
           rating = {review['rating']} 
           review={review['text']} 
           username={review['username']}
+          toiletRating={review['toiletRating']}
+          sinkRating={review['sinkRating']}
+          smellRating={review['smellRating']}
+          cleanlinessRating={review['cleanlinessRating']}
+          TPRating={review['TPRating']}
           />);
           i++
         }
