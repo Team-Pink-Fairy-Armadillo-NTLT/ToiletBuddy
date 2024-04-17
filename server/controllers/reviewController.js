@@ -5,9 +5,7 @@ const db = require('../models/appModels');
 const reviewController = {};
 
 reviewController.addReview = async (req, res, next) => {
-  console.log('I am in add review')
-  console.log(req.body);
-    const { rating, text, name, address, toilet, sink, smell, cleanliness, tp } = req.body;
+    const { rating, text, name, address, toilet, sink, smell, cleanliness, tp, image } = req.body;
     const { googleId } = req.params;
     const { userId } = res.locals;
     //console.log('userId', userId)
@@ -30,6 +28,14 @@ reviewController.addReview = async (req, res, next) => {
     const createReviewParams = [establishmentId, userId, rating, text, toilet, sink, smell, cleanliness, tp];
     const result = await db.query(queryRepository.createReviewByEstablishmentId, createReviewParams);
     console.log('returning', result)
+    let reviewId
+    if(result.rows){
+      reviewId = result.rows[0]._id
+    }
+    if(image && reviewId){
+      await db.query(queryRepository.insertReviewImage, [reviewId, image])
+    }
+
     return next();
 }
 

@@ -112,6 +112,7 @@ const Bathroom = ()=>{
           rating = {review['rating']} 
           review={review['text']} 
           username={review['username']}
+          reviewImage={review['image_b64']}
           />);
           i++
         }
