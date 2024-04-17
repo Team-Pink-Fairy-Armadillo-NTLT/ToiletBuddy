@@ -52,7 +52,7 @@ queryRepository.createReviewByEstablishmentId = `
     returning _id
 `;
 
-queryRepository.getUserId = `SELECT _id FROM users WHERE username = $1`;
+queryRepository.getUserId = 'SELECT _id FROM users WHERE username = $1';
 
 queryRepository.insertUser = 'INSERT INTO users (username) VALUES ($1) RETURNING (_id)';
 
