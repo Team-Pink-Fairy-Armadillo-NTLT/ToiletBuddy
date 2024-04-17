@@ -92,14 +92,14 @@ const Bathroom = ()=>{
           r.push(
           <Reviews 
           key = {i} 
-          rating = {review['rating']} 
+          overallRating = {review['rating']} 
           review={review['text']} 
           username={review['username']}
-          toiletRating={review['toiletRating']}
-          sinkRating={review['sinkRating']}
-          smellRating={review['smellRating']}
-          cleanlinessRating={review['cleanlinessRating']}
-          TPRating={review['TPRating']}
+          toiletRating={review['toilet']}
+          sinkRating={review['sink']}
+          smellRating={review['smell']}
+          cleanlinessRating={review['cleanliness']}
+          TPRating={review['tp']}
           />);
           i++
         }
