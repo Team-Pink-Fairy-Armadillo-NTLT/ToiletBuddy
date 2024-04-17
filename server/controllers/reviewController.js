@@ -1,14 +1,14 @@
-const jwt = require('jsonwebtoken');
 const queryRepository = require('../queryRepository');
 const db = require('../models/appModels');
 
 const reviewController = {};
 
 reviewController.addReview = async (req, res, next) => {
-  // console.log('I am in add review')
   const { rating, text, name, address, toilet, sink, smell, cleanliness, tp } = req.body;
   const { googleId } = req.params;
   const { userId } = res.locals;
+  // console.log('userId', userId)
+  // console.log(req.params)
 
   try {
     const getEstablishmentParams = [googleId];
@@ -24,8 +24,8 @@ reviewController.addReview = async (req, res, next) => {
     const establishmentId = establishment._id;
 
     const createReviewParams = [establishmentId, userId, rating, text, toilet, sink, smell, cleanliness, tp];
-    await db.query(queryRepository.createReviewByEstablishmentId, createReviewParams);
-
+    const result = await db.query(queryRepository.createReviewByEstablishmentId, createReviewParams);
+    console.log('returning', result)
     return next();
   }
   catch (err) {
@@ -34,7 +34,7 @@ reviewController.addReview = async (req, res, next) => {
 }
 
 reviewController.getReviews = async (req, res, next) => {
-  const parameters = [req.params.placeId];
+  const parameters = [req.params.googleId];
 
   try {
     const dbResult = await db.query(queryRepository.getReviewsByEstablishmentGoogleId, parameters);

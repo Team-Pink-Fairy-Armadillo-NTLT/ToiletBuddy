@@ -4,22 +4,55 @@ import { useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { loginUser, logoutUser} from '../slice.js'
 import { Container, Col, Row, FormControl, Form } from 'react-bootstrap';
+import RatingSelect from './RatingSelect.jsx';
 //will be a fetch call to our server which then sends back database query result
 const Bathroom = ()=>{
   const {placeId} = useParams();
   const [placeName, setPlaceName] = useState('');
   const [reviews,updateReviews]  = useState([]);
   const [averageRating, setAverageRating] = useState(0);
+  const [address, setAddress] = useState('');
   const isLoggedIn = useSelector(state => state.bathroom.isLoggedIn);
   const dispatch = useDispatch();
+  
   const addReview = (e) =>{
     e.preventDefault();
-      if(document.getElementById('review').value.trim()!=='' && document.getElementById('rating').value!==''){
+    let review = e.target.text.value;
+    let bathroom = e.target['bathroom(required)'].value;
+    let toilet = e.target.toilet.value;
+    let sink = e.target.sink.value;
+    let smell = e.target.smell.value;
+    let cleanliness = e.target.cleanliness.value;
+    let TP = e.target.TP.value;
+    if(toilet === '') toilet = null;
+    if(sink === '') sink = null;
+    if(smell === '') smell = null;
+    if(cleanliness === '') cleanliness = null;
+    if(TP === '') TP = null;
+    if(review.trim()===''){
+      alert('Enter a review');
+    }else if(bathroom===''){
+      alert('Select a bathroom rating');
+    }else if(bathroom>10 || bathroom<0){
+      alert('Please keep your rating between 1 and 10');
+    }else{
+      console.log('t',toilet);
+      console.log('sink',sink);
+      console.log('smell',smell);
+      console.log('cleanliness',cleanliness);
+      console.log('TP',TP);
         fetch(`/api/${placeId}`,{
           method:'POST',
           body:JSON.stringify({
-            'text':e.target.text.value,
-            'rating':e.target.num.value
+            'text':review,
+            'rating':bathroom,
+            'toilet':toilet,
+            'sink':sink,
+            'smell':smell,
+            'cleanliness':cleanliness,
+            'tp':TP,
+            'address':address,
+            'name': placeName
           }),
           headers:{'Content-Type':'application/json'},
         })
@@ -30,9 +63,14 @@ const Bathroom = ()=>{
           console.log('did I make it here?')
           return res}})
         .then(res=>getReviews());
-        document.getElementById('review').value  = '';
-        document.getElementById('rating').value = '';
-      }
+        e.target.text.value  = '';
+        e.target['bathroom(required)'].value = '';
+        e.target.toilet.value = '';
+        e.target.sink.value = '';
+        e.target.smell.value = '';
+        e.target.cleanliness.value = '';
+        e.target.TP.value = '';
+    }
   }
 
   const getReviews = () => {
@@ -41,16 +79,17 @@ const Bathroom = ()=>{
     fetch(`/api/${placeId}`).then(data=>data.json()).then(response=>{
       console.log('response',response)
       if(response['data'].length!==0){
+        let i = 0
         for(const review of response['data']){
-          // console.log('rating', review['rating'], 'ratingTotal', ratingTotal, 'length', r.length)
           ratingTotal += parseFloat(review['rating']);
           r.push(
           <Reviews 
-          key = {review['review_text']} 
+          key = {i} 
           rating = {review['rating']} 
-          review={review['review_text']} 
+          review={review['text']} 
           username={review['username']}
           />);
+          i++
         }
         updateReviews(r);
         setAverageRating((ratingTotal/r.length).toFixed(1));
@@ -60,9 +99,9 @@ const Bathroom = ()=>{
 
 
   useEffect(()=>{
-    fetch(`https://places.googleapis.com/v1/places/${placeId}?fields=id,displayName&key=${process.env.GOOGLE_MAPS_API_KEY}`)
+    fetch(`https://places.googleapis.com/v1/places/${placeId}?fields=id,displayName,formattedAddress&key=${process.env.GOOGLE_MAPS_API_KEY}`)
     .then(res => res.json())
-    .then(res => setPlaceName(res.displayName.text))
+    .then(res => {setPlaceName(res.displayName.text); setAddress(res.formattedAddress)})
 
     getReviews(updateReviews,placeId);
     }, [])
@@ -70,27 +109,20 @@ const Bathroom = ()=>{
   return(
     <>
       <h1 style={{textAlign:'center', fontSize: "50"}}>{placeName}: <span style={{fontSize:'30'}}>Average Rating: {averageRating}</span></h1>
+      <h2 style={{textAlign:'center', fontSize: "20"}}>{address}</h2>
       <div style={{display:'flex', flexDirection:'row'}}>
         <Container style={{flex: '0 0 30%'}} id='bathroomSect'>
           <form id='form' onSubmit={(e)=>{addReview(e)}}>
             <FormControl name='text' id='review' placeholder='Add a review' as='textarea' rows={5}></FormControl>
             {/* <FormControl name='num' id='rating' type='number'></FormControl> */}
-            <Form.Select name='num' id='rating'>
-              <option>Select a Rating</option>
-              <option value='1'>1</option>
-              <option value='2'>2</option>
-              <option value='3'>3</option>
-              <option value='4'>4</option>
-              <option value='5'>5</option>
-              <option value='6'>6</option>
-              <option value='7'>7</option>
-              <option value='8'>8</option>
-              <option value='9'>9</option>
-              <option value='10'>10</option>
-            </Form.Select>
-            <input type='submit' value='Submit'></input>
+            <RatingSelect name='bathroom(required)'/>
+            <RatingSelect name='toilet'/>
+            <RatingSelect name='sink'/>
+            <RatingSelect name='smell'/>
+            <RatingSelect name='cleanliness'/>
+            <RatingSelect name='TP'/>
+            <input type='submit' value='Submit review'></input>
           </form>
-        
         </Container>
         <Container style={{flex: '0 0 70%', paddingRight:'40px'}} id='bathroomReviews'>
           {/* <Col> */}
