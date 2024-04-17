@@ -14,7 +14,7 @@ const apiRouter = require('./routes/apiRouter');
 const userController = require('./controllers/userController');
 const { stat } = require("fs/promises");
 
-app.use(express.json());
+app.use(express.json({ limit: '5Mb' }));
 app.use(cookieParser())
 
 app.use('/google', googleAuthRouter);

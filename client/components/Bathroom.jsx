@@ -17,17 +17,13 @@ const Bathroom = ()=>{
   const isLoggedIn = useSelector(state => state.bathroom.isLoggedIn);
   const dispatch = useDispatch();
 
-  const getFileContents = function(file) {
-    return new Promise((resolve, reject) => {
-      let reader = new FileReader()
-      reader.readAsText(imageFile);
-      reader.onload = function() {
-        console.log("i have loaded the file")
-        const resultString = reader.result;
-        resolve(resultString)
-      };
-    })
-  }
+  const getFileContents =  file => new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = reject;
+  })
+  
   
   const addReview = async (e) =>{
     e.preventDefault();
@@ -39,21 +35,14 @@ const Bathroom = ()=>{
     let cleanliness = e.target.cleanliness.value;
     let TP = e.target.TP.value;
 
-    console.log(e.target)
-
-    console.log(e.target.imageFile.value)
     //setFile(URL.createObjectURL(e.target.imageFile[0]));
-    let reader = new FileReader();
-    let binaryImageString
+    //let reader = new FileReader();
+    let image;
     if(imageFile){
-      // console.log(imageFile)
-      // console.log("i think i have an image")
-      // const imageBuffer = await imageFile.arrayBuffer();
-      // const imageArray = new Uint8Array(imageBuffer);
-      // console.log("i am here")
-      // console.log("image in add review is: ", binaryImageString)
-      binaryImageString = await getFileContents(imageFile)
-
+      image = await getFileContents(imageFile)
+    }
+    else {
+      image = null
     }
 
     if(toilet === '') toilet = null;
@@ -73,7 +62,7 @@ const Bathroom = ()=>{
       console.log('smell',smell);
       console.log('cleanliness',cleanliness);
       console.log('TP',TP);
-      console.log('image', JSON.stringify(binaryImageString))
+      console.log('image', image)
         fetch(`/api/${placeId}`,{
           method:'POST',
           body:JSON.stringify({
@@ -86,7 +75,7 @@ const Bathroom = ()=>{
             'tp':TP,
             'address':address,
             'name': placeName,
-            'image': JSON.stringify(binaryImageString)
+            'image': image
           }),
           headers:{'Content-Type':'application/json'},
         })
