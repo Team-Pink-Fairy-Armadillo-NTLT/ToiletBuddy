@@ -15,12 +15,11 @@ const Bathroom = ()=>{
   const [showModal, setShowModal] = useState(false);
   const isLoggedIn = useSelector(state => state.bathroom.isLoggedIn);
   const dispatch = useDispatch();
-
   const handleClose = () => setShowModal(false);
   const handleShow = () => setShowModal(true);
 
   const signin = () => {
-    window.location.href = window.origin + "/google/auth"
+    location.assign(`/google/auth/${placeId}`);
    }
 
   const addReview = (e) =>{
