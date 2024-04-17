@@ -47,7 +47,7 @@ const Main = ()=>{
         {button}
       </header>
       <div id='map'>
-          <Map />
+          <Map navBar={true}/>
       </div>
     </>
 

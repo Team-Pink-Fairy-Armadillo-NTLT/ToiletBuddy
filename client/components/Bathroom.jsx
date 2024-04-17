@@ -5,6 +5,10 @@ import { useSelector, useDispatch } from 'react-redux';
 import { loginUser, logoutUser} from '../slice.js'
 import { Container, Col, Row, FormControl, Form, Modal, Button } from 'react-bootstrap';
 import RatingSelect from './RatingSelect.jsx';
+// import Map from './map.jsx';
+import { useLoadScript, GoogleMap, Marker, DirectionsRenderer } from '@react-google-maps/api';
+
+
 //will be a fetch call to our server which then sends back database query result
 const Bathroom = ()=>{
   const {placeId} = useParams();
@@ -16,8 +20,13 @@ const Bathroom = ()=>{
   const isLoggedIn = useSelector(state => state.bathroom.isLoggedIn);
   const dispatch = useDispatch();
 
+  const { isLoaded } = useLoadScript({
+    googleMapsApiKey: process.env.GOOGLE_MAPS_API_KEY, 
+    libraries: ["places"],
+  });
+
   const handleClose = () => setShowModal(false);
-  const handleShow = () => setShowModal(true);
+  // const handleShow = () => setShowModal(true);
 
   const signin = () => {
     window.location.href = window.origin + "/google/auth"
@@ -124,6 +133,15 @@ const Bathroom = ()=>{
       <h2 style={{textAlign:'center', fontSize: "20"}}>{address}</h2>
       <div style={{display:'flex', flexDirection:'row'}}>
         <Container style={{flex: '0 0 30%'}} id='bathroomSect'>
+        {/* <GoogleMap
+        mapContainerStyle={{height:"80%", width:"80%"}}
+        center={{lat: 53.54992, lng: 10.00678}}
+        zoom={10}
+        >
+          {<Marker position={{lat: 53.54992, lng: 10.00678}} />}
+        
+        </GoogleMap> */}
+          <h2 style={{textAlign:'center'}}>Add a review</h2>
           <form id='form' onSubmit={(e)=>{addReview(e)}}>
             <FormControl name='text' id='review' placeholder='Add a review' as='textarea' rows={5}></FormControl>
             {/* <FormControl name='num' id='rating' type='number'></FormControl> */}
@@ -133,7 +151,7 @@ const Bathroom = ()=>{
             <RatingSelect name='smell'/>
             <RatingSelect name='cleanliness'/>
             <RatingSelect name='TP'/>
-            <input type='submit' value='Submit review'></input>
+            <Button type='submit' value='Submit review'>Submit review</Button>
           </form>
         </Container>
         <Container style={{flex: '0 0 70%', paddingRight:'40px'}} id='bathroomReviews'>

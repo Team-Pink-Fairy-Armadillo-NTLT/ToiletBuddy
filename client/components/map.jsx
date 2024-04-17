@@ -7,7 +7,7 @@ import { Button, Container, Row, Col } from "react-bootstrap";
 // import { use } from '../../server/routes/googleAuthRouter.js';
 
 
-function Map() {
+function Map({navBar}) {
   // const testLocations = [{lat: 45.46000, lng: -122.73000 }, {lat: 45.47, lng:-122.74}, {lat: 45.48, lng: -122.75}];
   // const testMarkers = [];
   const clickMarker = () => {
@@ -52,7 +52,7 @@ function Map() {
   return (
      
     <Container>
-      <AutocompleteInput setSelected={setPosition} setLocationID={setLocationID} setMarkerReady={setMarkerReady} setZoom={setZoom} />
+      {navBar && <AutocompleteInput setSelected={setPosition} setLocationID={setLocationID} setMarkerReady={setMarkerReady} setZoom={setZoom} />}
       <GoogleMap
         mapContainerStyle={{height:"80%", width:"100%"}}
         center={position}
