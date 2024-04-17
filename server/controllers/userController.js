@@ -1,34 +1,37 @@
-var jwt = require('jsonwebtoken')
+const jwt = require('jsonwebtoken');
 const db = require('../models/appModels');
 const queryRepository = require('../queryRepository');
+const e = require('express');
 
 const userController = {}
 
-userController.loginUser = (userData, loginResponse) => {
+userController.loginUser = (userData, loginResponse,id) => {
   const username = userData.email.substring(0, userData.email.indexOf("@"))
   const values = [username]
-  //const queryString1 = 'SELECT _id FROM users WHERE username = $1'
-  //const queryString2 = 'INSERT INTO users (username) VALUES ($1) RETURNING (_id)'
-  //let response
+  console.log('this is id'+id);
   db.query(queryRepository.getUserId, values)
-  .then (data => {
-    // console.log('data length', data.rows.length)
-    // console.log(data.rows)
-    // console.log("---")
-    if (data.rows.length === 0){
-      db.query(queryRepository.insertUser , values).then(insertData => {
-        const userId = insertData.rows[0]._id
-        const token = jwt.sign({"userId": userId}, process.env.SECRET_KEY)
-        loginResponse.cookie('authorization', token)
-        loginResponse.redirect("/")
-        //console.log('token', token)
-        })
+    .then (data => {
+      if (data.rows.length === 0){
+        db.query(queryRepository.insertUser, values).then(insertData => {
+          const userId = insertData.rows[0]._id
+          const token = jwt.sign({'userId': userId}, process.env.SECRET_KEY)
+          loginResponse.cookie('authorization', token)
+          if(id===undefined){
+            loginResponse.redirect('/')
+          }else{
+            loginResponse.redirect(`/#/bathroom/${id}`);
+          }
+        });
       }
     else {
       const userId = data.rows[0]._id
       const token = jwt.sign({"userId": userId}, process.env.SECRET_KEY)
       loginResponse.cookie('authorization', token)
-      loginResponse.redirect("/")
+      if(id===undefined){
+        loginResponse.redirect('/')
+      }else{
+        loginResponse.redirect(`/#/bathroom/${id}`);
+      }
       //console.log('token', token)
     }
   });

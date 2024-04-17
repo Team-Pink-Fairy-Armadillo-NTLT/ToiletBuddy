@@ -3,7 +3,7 @@ import usePlacesAutocomplete, { getGeocode, getLatLng } from "use-places-autocom
 import React from "react";
 import { InputGroup, FormControl } from "react-bootstrap";
 
-export default function AutocompleteInput({ setSelected, setLocationID, setMarkerReady}) {
+export default function AutocompleteInput({ setSelected, setLocationID, setMarkerReady, setZoom}) {
   console.log('inside AutocompleteInput')
   const {
     ready,
@@ -27,6 +27,7 @@ export default function AutocompleteInput({ setSelected, setLocationID, setMarke
       setSelected({ lat, lng });
       setLocationID(place_id);
       setMarkerReady(true);
+      setZoom(15);
     } catch (error) {
       console.log("Error: ", error);
     }
