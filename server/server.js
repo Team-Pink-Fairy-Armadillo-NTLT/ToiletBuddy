@@ -1,36 +1,30 @@
 const express = require("express");
 const path = require('path');
-const webpack = require('../webpack.config')
-require('dotenv').config()
-var jwt = require('jsonwebtoken')
 const cookieParser = require('cookie-parser');
-
-
-const PORT = 3000;
-const app = express();
+require('dotenv').config();
 
 const googleAuthRouter = require('./routes/googleAuthRouter');
 const apiRouter = require('./routes/apiRouter');
 const userController = require('./controllers/userController');
-const { stat } = require("fs/promises");
+
+const app = express();
+const PORT = 3000;
 
 app.use(express.json());
-app.use(cookieParser())
+app.use(cookieParser());
 
 app.use('/google', googleAuthRouter);
 app.use('/api', apiRouter);
-
 
 app.get('/', (req, res) => {
   return res.status(200).sendFile(path.join(__dirname, '../index.html'))
 });
 
 app.get('/logout', userController.logoutUser, (req,res) => {
-  console.log('i got the cookie deleted');
   return res.sendStatus(200);
 });
 
-app.get('/verifyuser',userController.verifyUser, (req, res) => {
+app.get('/verifyuser', userController.verifyUser, (req, res) => {
   return res.status(200).json({ result: "ok" });
 });
 
