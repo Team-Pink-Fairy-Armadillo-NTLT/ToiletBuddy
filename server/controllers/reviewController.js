@@ -8,6 +8,10 @@ reviewController.addReview = async (req, res, next) => {
   const { googleId } = req.params;
   const { userId } = res.locals;
 
+  if (text.includes('awd')) {
+    return next({ message: 'oh my god stop it'})
+  }
+
   try {
     const getEstablishmentParams = [googleId];
     const getEstablishmentResult = await db.query(queryRepository.getEstablishmentByGoogleId, getEstablishmentParams);

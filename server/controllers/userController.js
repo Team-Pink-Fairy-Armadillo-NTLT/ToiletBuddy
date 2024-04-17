@@ -5,7 +5,7 @@ const queryRepository = require('../queryRepository');
 const userController = {}
 
 userController.loginUser = (userData, loginResponse) => {
-  const username = userData.email.substring(0, userData.email.indexOf("@"))
+  const username = userData.email.substring(0, userData.email.indexOf('@'))
   const values = [username]
   db.query(queryRepository.getUserId, values)
     .then (data => {
@@ -17,14 +17,14 @@ userController.loginUser = (userData, loginResponse) => {
           loginResponse.redirect('/')
         });
       }
-    else {
-      const userId = data.rows[0]._id
-      const token = jwt.sign({"userId": userId}, process.env.SECRET_KEY)
-      loginResponse.cookie('authorization', token)
-      loginResponse.redirect("/")
-      //console.log('token', token)
-    }
-  });
+      else {
+        const userId = data.rows[0]._id
+        const token = jwt.sign({'userId': userId}, process.env.SECRET_KEY)
+        loginResponse.cookie('authorization', token)
+        loginResponse.redirect('/')
+        //console.log('token', token)
+      }
+    });
 }
 
 userController.logoutUser = (userData, loginResponse, next) => {
