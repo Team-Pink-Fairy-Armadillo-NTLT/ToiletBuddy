@@ -3,7 +3,7 @@ import Reviews from './Reviews.jsx';
 import { useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { loginUser, logoutUser} from '../slice.js'
-import { Container, Col, Row, FormControl, Form } from 'react-bootstrap';
+import { Container, Col, Row, FormControl, Form, Modal, Button } from 'react-bootstrap';
 import RatingSelect from './RatingSelect.jsx';
 //will be a fetch call to our server which then sends back database query result
 const Bathroom = ()=>{
@@ -12,9 +12,17 @@ const Bathroom = ()=>{
   const [reviews,updateReviews]  = useState([]);
   const [averageRating, setAverageRating] = useState(0);
   const [address, setAddress] = useState('');
+  const [showModal, setShowModal] = useState(false);
   const isLoggedIn = useSelector(state => state.bathroom.isLoggedIn);
   const dispatch = useDispatch();
-  
+
+  const handleClose = () => setShowModal(false);
+  const handleShow = () => setShowModal(true);
+
+  const signin = () => {
+    window.location.href = window.origin + "/google/auth"
+   }
+
   const addReview = (e) =>{
     e.preventDefault();
     let review = e.target.text.value;
@@ -59,9 +67,8 @@ const Bathroom = ()=>{
         .then(res=> {console.log('testing res',res); return res})
         .then(res=>{
           console.log('res',res);
-          if(res.status===403){alert('Please log in to post review');
-          console.log('did I make it here?')
-          return res}})
+          if(res.status===403){setShowModal(true)};
+          return res})
         .then(res=>getReviews());
         e.target.text.value  = '';
         e.target['bathroom(required)'].value = '';
@@ -85,9 +92,14 @@ const Bathroom = ()=>{
           r.unshift(
           <Reviews 
           key = {i} 
-          rating = {review['rating']} 
+          overallRating = {review['rating']} 
           review={review['text']} 
           username={review['username']}
+          toiletRating={review['toilet']}
+          sinkRating={review['sink']}
+          smellRating={review['smell']}
+          cleanlinessRating={review['cleanliness']}
+          TPRating={review['tp']}
           />);
           i++
         }
@@ -134,6 +146,19 @@ const Bathroom = ()=>{
           {/* </Col> */}
         </Container>
       </div>
+      <Modal size='lg' centered show={showModal} onHide={handleClose}>
+        <Container >
+          <Modal.Header closeButton style={{}}>
+            <Modal.Title >You need to be logged in to write a Review!</Modal.Title>
+          </Modal.Header>
+            <Modal.Body style={{textAlign:'center'}}>Login with your Google account</Modal.Body>
+            <Modal.Footer style={{display:'flex', flexDirection:'row', alignItems:'center', justifyContent:'center' }}>
+              <Button style={{height: '70%'}} variant='primary' id="signin" onClick={signin}>Sign in with Google</Button>
+            </Modal.Footer>
+          
+        </Container>
+      </Modal>
+     
     </>
   )
 }
