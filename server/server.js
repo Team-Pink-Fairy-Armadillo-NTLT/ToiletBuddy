@@ -6,6 +6,7 @@ require('dotenv').config();
 const googleAuthRouter = require('./routes/googleAuthRouter');
 const apiRouter = require('./routes/apiRouter');
 const userController = require('./controllers/userController');
+const errorMessageConstants = require('./constants/errorMessageConstants');
 
 const app = express();
 const PORT = 3000;
@@ -38,7 +39,7 @@ app.use((err, req, res, next) => {
   const defaultErr = {
     log: 'Express error handler caught unknown middleware error',
     status: 500,
-    message: { err: 'An error occurred' }, 
+    message: errorMessageConstants.DEFAULT_ERR, 
   };
   const errorObj = Object.assign(defaultErr, err);
   console.log(errorObj.log);

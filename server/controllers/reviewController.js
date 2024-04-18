@@ -1,5 +1,6 @@
 const queryRepository = require('../queryRepository');
 const db = require('../models/appModels');
+const errorMessageConstants = require('../constants/errorMessageConstants');
 
 const reviewController = {};
 
@@ -10,7 +11,7 @@ reviewController.addReview = async (req, res, next) => {
     //console.log('userId', userId)
 
   if (text.includes('awd')) {
-    return next({ message: 'oh my god stop it'})
+    return next({ message: errorMessageConstants.NO_AWD_ALLOWED })
   }
 
   try {
@@ -28,7 +29,8 @@ reviewController.addReview = async (req, res, next) => {
 
     const createReviewParams = [establishmentId, userId, rating, text, toilet, sink, smell, cleanliness, tp];
     const result = await db.query(queryRepository.createReviewByEstablishmentId, createReviewParams);
-    let reviewId
+
+    let reviewId;
     if(result.rows){
       reviewId = result.rows[0]._id
     }
@@ -39,7 +41,7 @@ reviewController.addReview = async (req, res, next) => {
     return next();
   }
   catch (error) {
-    return next({ log: `addReviews: ${error}`, message: { err: 'Could not add review. Check server logs for details' } });
+    return next({ log: `reviewController.addReviews: ${error}`, message: errorMessageConstants.ADD_REVIEW_ERR });
   }
 }
 
@@ -52,7 +54,34 @@ reviewController.getReviews = async (req, res, next) => {
     return next();
   }
   catch (error) {
-    return next({ log: `getReviews: ${error}`, message: { err: 'Could not retreive data. Check server logs for details' } });
+    return next({ log: `reviewController.getReviews: ${error}`, message: errorMessageConstants.GET_REVIEW_ERR });
+  }
+}
+
+reviewController.getAverageRating = async (req, res, next) => {
+  const parameters = [req.params.googleId];
+
+  try {
+    const getAvgRatingResult = await db.query(queryRepository.getAverageRatingByEstablishmentGoogleId, parameters);
+    const avgRating = getAvgRatingResult[0].avg;
+    res.locals.rating = avgRating;
+    return next();
+  }
+  catch (err) {
+    return next({ log: `reviewController.getAverageRating: ${err}`, message: errorMessageConstants.GET_RATING_ERR });
+  }
+}
+
+reviewController.getImage = async (req, res, next) => {
+  const parameters = [req.params.googleId]
+  try {
+    const getImageResult = await db.query(queryRepository.getImageForReview, parameters);
+    const image = getImageResult[0].image;
+    res.locals.photo = image;
+    return next();
+  }
+  catch (err) {
+    return next({ log: `reviewController.getImage: ${err}`, message: errorMessageConstants.GET_IMAGE_ERR });
   }
 }
 
