@@ -4,20 +4,19 @@ const errorMessageConstants = require('../constants/errorMessageConstants');
 
 const reviewController = {};
 
-reviewController.addReview = async (req, res, next) => {
-    const { rating, text, name, address, toilet, sink, smell, cleanliness, tp, image } = req.body;
-    const { googleId } = req.params;
-    const { userId } = res.locals;
-    //console.log('userId', userId)
+reviewController.validateEstablishment = async (req, res, next) => {
+  const { googleId } = req.params;
+  const { name, address } = req.body;
 
   if (text.includes('awd')) {
-    return next({ message: errorMessageConstants.NO_AWD_ALLOWED })
+    return next({ message: errorMessageConstants.NO_AWD_ALLOWED });
   }
 
   try {
     const getEstablishmentParams = [googleId];
     const getEstablishmentResult = await db.query(queryRepository.getEstablishmentByGoogleId, getEstablishmentParams);
     let establishment = getEstablishmentResult.rows.length ? getEstablishmentResult.rows[0] : null;
+
     if (!establishment) {
       // placeholder data for latitude, longitude, city, state, zip
       const createEstablishmentParams = [googleId, 'testLat', 'testLong', name, address, 'Fakecity', 'FL', 11111];
@@ -25,23 +24,36 @@ reviewController.addReview = async (req, res, next) => {
       const rows = createEstablishmentResult.rows;
       establishment = rows[0];
     }
+
+    res.locals.establishment = establishment;
+    return next();
+  }
+  catch (err) {
+    return next({ log: `reviewController.validateEstablishment: ${err}`, message: errorMessageConstants.ESTABLISHMENT_VALIDATION_ERR });
+  }
+}
+
+reviewController.addReviewAndImage = async (req, res, next) => {
+  const { rating, text, toilet, sink, smell, cleanliness, tp, image } = req.body;
+  const { userId, establishment } = res.locals;
+
+  try {
     const establishmentId = establishment._id;
 
     const createReviewParams = [establishmentId, userId, rating, text, toilet, sink, smell, cleanliness, tp];
     const result = await db.query(queryRepository.createReviewByEstablishmentId, createReviewParams);
 
     let reviewId;
-    if(result.rows){
+    if (result.rows.length) {
       reviewId = result.rows[0]._id
     }
-    if(image && reviewId){
+    if (image && reviewId) {
       await db.query(queryRepository.insertReviewImage, [reviewId, image])
     }
-
     return next();
   }
   catch (error) {
-    return next({ log: `reviewController.addReviews: ${error}`, message: errorMessageConstants.ADD_REVIEW_ERR });
+    return next({ log: `reviewController.addReviewAndImage: ${error}`, message: errorMessageConstants.ADD_REVIEW_ERR });
   }
 }
 
@@ -63,7 +75,7 @@ reviewController.getAverageRating = async (req, res, next) => {
 
   try {
     const getAvgRatingResult = await db.query(queryRepository.getAverageRatingByEstablishmentGoogleId, parameters);
-    const avgRating = getAvgRatingResult[0].avg;
+    const avgRating = getAvgRatingResult.rows[0].avg;
     res.locals.rating = avgRating;
     return next();
   }
@@ -76,7 +88,7 @@ reviewController.getImage = async (req, res, next) => {
   const parameters = [req.params.googleId]
   try {
     const getImageResult = await db.query(queryRepository.getImageForReview, parameters);
-    const image = getImageResult[0].image;
+    const image = getImageResult.rows[0].image;
     res.locals.photo = image;
     return next();
   }
