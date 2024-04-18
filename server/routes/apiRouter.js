@@ -9,7 +9,7 @@ router.post('/:googleId', userController.checkPermissions, addReviewAndImage, (r
   return res.status(200).json({ result: 'ok' });
 });
 
-router.get('/:googleId', validateEstablishment, addReviewAndImage, (req, res) => {
+router.get('/:googleId', (req, res, next)=>{console.log('got to the router'); next()}, validateEstablishment, addReviewAndImage, (req, res) => {
   return res.status(200).json({ data: res.locals.reviews });
 });
 

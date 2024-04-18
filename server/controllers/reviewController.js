@@ -8,9 +8,9 @@ reviewController.validateEstablishment = async (req, res, next) => {
   const { googleId } = req.params;
   const { name, address } = req.body;
 
-  if (text.includes('awd')) {
-    return next({ message: errorMessageConstants.NO_AWD_ALLOWED });
-  }
+  // if (text.includes('awd')) {
+  //   return next({ message: errorMessageConstants.NO_AWD_ALLOWED });
+  // }
 
   try {
     const getEstablishmentParams = [googleId];
@@ -36,7 +36,7 @@ reviewController.validateEstablishment = async (req, res, next) => {
 reviewController.addReviewAndImage = async (req, res, next) => {
   const { rating, text, toilet, sink, smell, cleanliness, tp, image } = req.body;
   const { userId, establishment } = res.locals;
-
+  console.log('req.body', req.body);
   try {
     const establishmentId = establishment._id;
 
@@ -59,9 +59,11 @@ reviewController.addReviewAndImage = async (req, res, next) => {
 
 reviewController.getReviews = async (req, res, next) => {
   const parameters = [req.params.googleId];
+  console.log('parameters', parameters);
 
   try {
     const dbResult = await db.query(queryRepository.getReviewsByEstablishmentGoogleId, parameters);
+    console.log('dbREsult.rows', dbResult.rows);
     res.locals.reviews = dbResult.rows;
     return next();
   }
