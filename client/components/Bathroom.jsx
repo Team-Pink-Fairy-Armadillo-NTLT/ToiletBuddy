@@ -29,7 +29,7 @@ const Bathroom = ()=>{
   // const handleShow = () => setShowModal(true);
 
   const signin = () => {
-    window.location.href = window.origin + "/google/auth"
+    location.assign(`/google/auth/${placeId}`);
    }
 
   const addReview = (e) =>{
@@ -98,7 +98,7 @@ const Bathroom = ()=>{
         let i = 0
         for(const review of response['data']){
           ratingTotal += parseFloat(review['rating']);
-          r.push(
+          r.unshift(
           <Reviews 
           key = {i} 
           overallRating = {review['rating']} 
@@ -129,8 +129,14 @@ const Bathroom = ()=>{
 
   return(
     <>
-      <h1 style={{textAlign:'center', fontSize: "50"}}>{placeName}: <span style={{fontSize:'30'}}>Average Rating: {averageRating}</span></h1>
-      <h2 style={{textAlign:'center', fontSize: "20"}}>{address}</h2>
+      <header className='flex-row'>
+        <Button style={{ margin:'10px',height:'50px', flexGrow:'0', flexShrink:'1'}} variant="primary" id = 'homeB'onClick={()=>{location.assign('/')}}> Back to Home</Button>
+        <div style={{flexGrow:'10'}}>
+          <h1 style={{textAlign:'center', fontSize: "50"}}>{placeName}: </h1>
+          <h1 style={{fontSize:'30', textAlign:'center'}}>Average Rating: {averageRating}</h1>
+          <h2 style={{textAlign:'center', fontSize: "20"}}>{address}</h2>
+        </div>
+      </header>
       <div style={{display:'flex', flexDirection:'row'}}>
         <Container style={{flex: '0 0 30%'}} id='bathroomSect'>
         {/* <GoogleMap
@@ -157,7 +163,7 @@ const Bathroom = ()=>{
         <Container style={{flex: '0 0 70%', paddingRight:'40px'}} id='bathroomReviews'>
           {/* <Col> */}
             {/* <Row xs={2} md={3} lg={4} xl={5}> */}
-            <Row>
+            <Row id = 'r'>
               {reviews}
             </Row>
           {/* </Col> */}

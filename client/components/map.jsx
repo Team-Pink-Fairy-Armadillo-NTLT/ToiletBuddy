@@ -1,4 +1,4 @@
-import { useLoadScript, GoogleMap, Marker, DirectionsRenderer } from '@react-google-maps/api';
+import { useLoadScript, GoogleMap, Marker, InfoWindow } from '@react-google-maps/api';
 import { useState, useEffect } from 'react';
 import React from 'react';
 import AutocompleteInput from './autocompleteInput.jsx';
@@ -42,6 +42,8 @@ function Map({navBar}) {
   const [locationID, setLocationID] = useState(null);
   const [zoom, setZoom] = useState(2);
   const [markerReady, setMarkerReady] = useState(false);
+  const [markerRef, setMarkerRef] = useState(null);
+
   
 
   if(!isLoaded) return <div>'Loading...';</div>
@@ -58,7 +60,12 @@ function Map({navBar}) {
         center={position}
         zoom={zoom}
       >
-        {markerReady && <Marker options={{fillColor: 'blue'}} position={position} onClick={clickMarker} />}
+        {markerReady && 
+        <Marker ref={setMarkerRef} position={position} onClick={clickMarker} >
+            <InfoWindow anchor={markerRef} onCloseClick={()=>{console.log('')}}>
+              
+            </InfoWindow>
+          </Marker>}
         
       </GoogleMap>
     </Container>

@@ -10,11 +10,26 @@
   font-family: Georgia, 'Times New Roman', Times, serif;
   font-size: 3rem;
 }
+#r{
+  overflow-y: scroll;
+  overflow-x: hidden;
+  max-height: 50rem;
+}
+/* #homeB{
+  position: absolute;
+  left:1em;
+  top:0.5em;
+  font-size:37px;
+} */
 
-#flex-row {
+.flex-row {
   display: flex;
   flex-direction: row;
-  background-color: rgb(248, 220, 220);
+  justify-content: space-between;
 }
 
-
+.flex-column {
+  display: flex;
+  flex-direction: column;
+  /* justify-content: space-between; */
+}

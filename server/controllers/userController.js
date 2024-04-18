@@ -1,12 +1,14 @@
 const jwt = require('jsonwebtoken');
 const db = require('../models/appModels');
 const queryRepository = require('../queryRepository');
+const e = require('express');
 
 const userController = {}
 
-userController.loginUser = (userData, loginResponse) => {
-  const username = userData.email.substring(0, userData.email.indexOf('@'))
+userController.loginUser = (userData, loginResponse,id) => {
+  const username = userData.email.substring(0, userData.email.indexOf("@"))
   const values = [username]
+  console.log('this is id'+id);
   db.query(queryRepository.getUserId, values)
     .then (data => {
       if (data.rows.length === 0){
@@ -14,17 +16,25 @@ userController.loginUser = (userData, loginResponse) => {
           const userId = insertData.rows[0]._id
           const token = jwt.sign({'userId': userId}, process.env.SECRET_KEY)
           loginResponse.cookie('authorization', token)
-          loginResponse.redirect('/')
+          if(id===undefined){
+            loginResponse.redirect('/')
+          }else{
+            loginResponse.redirect(`/#/bathroom/${id}`);
+          }
         });
       }
-      else {
-        const userId = data.rows[0]._id
-        const token = jwt.sign({'userId': userId}, process.env.SECRET_KEY)
-        loginResponse.cookie('authorization', token)
+    else {
+      const userId = data.rows[0]._id
+      const token = jwt.sign({"userId": userId}, process.env.SECRET_KEY)
+      loginResponse.cookie('authorization', token)
+      if(id===undefined){
         loginResponse.redirect('/')
-        //console.log('token', token)
+      }else{
+        loginResponse.redirect(`/#/bathroom/${id}`);
       }
-    });
+      //console.log('token', token)
+    }
+  });
 }
 
 userController.logoutUser = (userData, loginResponse, next) => {
