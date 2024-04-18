@@ -79,11 +79,21 @@ queryRepository.getAverageRatingByEstablishmentGoogleId = `
   where establishments.google_maps_id = $1
 `;
 
-queryRepository.getUserId = 'SELECT _id FROM users WHERE username = $1';
+queryRepository.getUserIdByUsername = 'SELECT _id FROM users WHERE username = $1';
 
 queryRepository.insertUser = 'INSERT INTO users (username) VALUES ($1) RETURNING (_id)';
 
 queryRepository.insertReviewImage = 'INSERT INTO review_images (review_id, image_b64) VALUES ($1, $2)'
+
+queryRepository.getImageForReview = `
+  select
+    image_b64 as image
+  from review_images
+    inner join reviews on review_images.review_id = reviews._id
+    inner join establishments on reviews.establishment_id = establishments._id
+  where establishments.google_maps_id = $1
+  limit 1
+`;
 
 module.exports = queryRepository;
 

@@ -29,7 +29,8 @@ reviewController.addReview = async (req, res, next) => {
 
     const createReviewParams = [establishmentId, userId, rating, text, toilet, sink, smell, cleanliness, tp];
     const result = await db.query(queryRepository.createReviewByEstablishmentId, createReviewParams);
-    let reviewId
+
+    let reviewId;
     if(result.rows){
       reviewId = result.rows[0]._id
     }
@@ -57,14 +58,30 @@ reviewController.getReviews = async (req, res, next) => {
   }
 }
 
-reviewController.getAverageRatingAndImage = async (req, res, next) => {
+reviewController.getAverageRating = async (req, res, next) => {
   const parameters = [req.params.googleId];
 
   try {
     const getAvgRatingResult = await db.query(queryRepository.getAverageRatingByEstablishmentGoogleId, parameters);
     const avgRating = getAvgRatingResult[0].avg;
+    res.locals.rating = avgRating;
+    return next();
+  }
+  catch (err) {
+    return next({ log: `reviewController.getAverageRating: ${err}`, message: errorMessageConstants.GET_RATING_ERR });
+  }
+}
 
-    const getImageResult = await db.
+reviewController.getImage = async (req, res, next) => {
+  const parameters = [req.params.googleId]
+  try {
+    const getImageResult = await db.query(queryRepository.getImageForReview, parameters);
+    const image = getImageResult[0].image;
+    res.locals.photo = image;
+    return next();
+  }
+  catch (err) {
+    return next({ log: `reviewController.getImage: ${err}`, message: errorMessageConstants.GET_IMAGE_ERR });
   }
 }
 

@@ -9,7 +9,7 @@ userController.loginUser = (userData, loginResponse,id) => {
   const username = userData.email.substring(0, userData.email.indexOf("@"))
   const values = [username]
   console.log('this is id'+id);
-  db.query(queryRepository.getUserId, values)
+  db.query(queryRepository.getUserIdByUsername, values)
     .then (data => {
       if (data.rows.length === 0){
         db.query(queryRepository.insertUser, values).then(insertData => {
