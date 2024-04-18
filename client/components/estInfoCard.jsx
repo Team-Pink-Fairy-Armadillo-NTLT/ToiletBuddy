@@ -20,17 +20,17 @@ export default function EstInfoCard({ locationID, onClickFunc }) {
     .then(res => res.json())
     .then(res => {
       console.log(res);
-      setAverageRating(res)
+      setAverageRating(res.data)
     })
-  });
+  }, []);
 
   useEffect(() => {
-    fetch(`/api/photo/${locationID}`)
+    fetch(`/api/image/${locationID}`)
     .then(res => res.json())
     .then(res => {
       console.log(res);
-      setPhoto(res)
-  })});
+      setPhoto(res.data)
+  })}, []);
 
   return (
     <>
@@ -38,9 +38,9 @@ export default function EstInfoCard({ locationID, onClickFunc }) {
       <div>{name}</div>
       <div>{address}</div>
       <div>{averageRating}</div>
-      {!averageRating && !photo && 
+      {/* {!averageRating && !photo && 
         <div>Be the first to leave a review!</div>
-      }
+      } */}
       <Button onClick={onClickFunc}>Leave a Review</Button>
 
     </>
