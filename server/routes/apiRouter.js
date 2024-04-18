@@ -3,13 +3,13 @@ const router = express.Router();
 const reviewController = require('../controllers/reviewController');
 const userController = require('../controllers/userController');
 
-const { validateEstablishment, addReviewAndImage, getAverageRating, getImage } = reviewController;
+const { validateEstablishment, createNewEstablishment, getReviews, addReviewAndImage, getAverageRating, getImage } = reviewController;
 
-router.post('/:googleId', userController.checkPermissions, addReviewAndImage, (req, res) => {
+router.post('/:googleId', userController.checkPermissions, validateEstablishment, createNewEstablishment, addReviewAndImage, (req, res) => {
   return res.status(200).json({ result: 'ok' });
 });
 
-router.get('/:googleId', validateEstablishment, addReviewAndImage, (req, res) => {
+router.get('/:googleId', getReviews, (req, res) => {
   return res.status(200).json({ data: res.locals.reviews });
 });
 

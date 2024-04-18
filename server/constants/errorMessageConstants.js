@@ -2,6 +2,8 @@ const errorMessageConstants =
 
   { ADD_REVIEW_ERR: { err: `We couldn\'t post your review. ${this.CHECK_SERVER_LOGS}` },
 
+    CREATE_ESTABLISHMENT_ERR: { err: `We couldn\'t register that establishment in our system at this time. ${this.CHECK_SERVER_LOGS}`},
+
     ESTABLISHMENT_VALIDATION_ERR: { err: `We couldn\'t validate that establishment in our system. ${this.CHECK_SERVER_LOGS}` },
     
     GET_REVIEW_ERR: { err: `We couldn\'t retrieve reviews for this establishment. ${this.CHECK_SERVER_LOGS}` },
