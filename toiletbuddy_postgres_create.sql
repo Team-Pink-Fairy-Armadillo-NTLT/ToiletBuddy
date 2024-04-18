@@ -43,5 +43,13 @@ CREATE TABLE reviews (
   OIDS=FALSE
 );
 
+CREATE TABLE review_images (
+  "review_id" INT,
+  "image_b64" TEXT,
+  CONSTRAINT "review_images_pk" PRIMARY KEY ("review_id")
+) WITH (
+  OIDS=FALSE
+);
+
 ALTER TABLE reviews ADD CONSTRAINT "reviews_fk0" FOREIGN KEY ("establishment_id") REFERENCES public.establishments("_id");
 ALTER TABLE reviews ADD CONSTRAINT "reviews_fk1" FOREIGN KEY ("user_id") REFERENCES public.users("_id");
