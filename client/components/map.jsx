@@ -4,6 +4,7 @@ import React from 'react';
 import AutocompleteInput from './autocompleteInput.jsx';
 import { useNavigate } from 'react-router-dom';
 import { Button, Container, Row, Col } from "react-bootstrap";
+import EstInfoCard from './estInfoCard.jsx';
 // import { use } from '../../server/routes/googleAuthRouter.js';
 
 
@@ -61,9 +62,9 @@ function Map({navBar}) {
         zoom={zoom}
       >
         {markerReady && 
-        <Marker ref={setMarkerRef} position={position} onClick={clickMarker} >
+        <Marker ref={setMarkerRef} position={position} >
             <InfoWindow anchor={markerRef} onCloseClick={()=>{console.log('')}}>
-              
+              <EstInfoCard locationID={locationID} onClickFunc={clickMarker} />
             </InfoWindow>
           </Marker>}
         
