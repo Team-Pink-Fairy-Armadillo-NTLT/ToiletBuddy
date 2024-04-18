@@ -7,8 +7,7 @@ const userController = require('../controllers/userController');
 
 const router = express.Router();
 
-const CLIENT_ID = process.env.CLIENT_ID;
-const CLIENT_SECRET = process.env.CLIENT_SECRET;
+const { CLIENT_ID, CLIENT_SECRET } = process.env;
 
 const callbackURL = webpack.mode === 'production'
 ? 'http://localhost:3000/google/callback'
@@ -19,6 +18,8 @@ const oauth2Client = new google.auth.OAuth2(
   CLIENT_SECRET,
   callbackURL
 );
+
+const GOOGLE_OAUTH_URL = "https://www.googleapis.com/oauth2/v2/userinfo"
 
 router.get('/auth/:placeId', (req, res) => {
   // console.log('in the auth')
@@ -48,15 +49,15 @@ router.get('/callback', async (req, res) => {
   // Get access and refresh tokens (if access_type is offline)
   const { tokens } = await oauth2Client.getToken(q.code)
   await oauth2Client.setCredentials(tokens);
-  const apiUrl = "https://www.googleapis.com/oauth2/v2/userinfo";
-  fetch(apiUrl,
+  
+  fetch(GOOGLE_OAUTH_URL,
   {
     headers: {
-      'Authorization': 'Bearer ' + tokens.access_token
+      Authorization: `Bearer ${tokens.access_token}`
     }
   })
     .then(response => response.json())
-    // add data to databse or check database for data
+    // add data to database or check database for data
     .then(data => {
       userController.loginUser(data, res, state);
     });
