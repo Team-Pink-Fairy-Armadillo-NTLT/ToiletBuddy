@@ -1,7 +1,6 @@
 import React from 'react';
 import { Card, ListGroup, ProgressBar } from 'react-bootstrap';
 
-
 const Reviews = ({ username, 
     overallRating, 
     review, 
@@ -9,7 +8,9 @@ const Reviews = ({ username,
     sinkRating, 
     smellRating, 
     cleanlinessRating, 
-    TPRating })=>{
+    TPRating,
+    reviewImage
+ })=>{
     
     const progBarColor = (rating) => {
         if(rating < 4){
@@ -63,7 +64,8 @@ const Reviews = ({ username,
                 </ListGroup>
                 <Card.Body>
                     <blockquote className='blockquote mb-0'>
-                        <p>"{review}"</p>       
+                        <p>"{review}"</p>
+                        <img src={reviewImage}/>             
                         <footer className='blockquote-footer'>{username}</footer>       
                     </blockquote>
                 </Card.Body>

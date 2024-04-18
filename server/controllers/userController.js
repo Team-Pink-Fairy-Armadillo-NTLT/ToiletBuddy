@@ -57,6 +57,7 @@ userController.verifyUser = (req, res, next) => {
 }
 
 userController.checkPermissions = (req, res, next) => {
+  console.log('i am checking permissions')
   try {
     const response = jwt.verify(req.cookies.authorization, process.env.SECRET_KEY)
     res.locals.userId = response.userId;

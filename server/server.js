@@ -10,8 +10,8 @@ const userController = require('./controllers/userController');
 const app = express();
 const PORT = 3000;
 
-app.use(express.json());
-app.use(cookieParser());
+app.use(express.json({ limit: '10Mb' }));
+app.use(cookieParser())
 
 app.use('/google', googleAuthRouter);
 app.use('/api', apiRouter);

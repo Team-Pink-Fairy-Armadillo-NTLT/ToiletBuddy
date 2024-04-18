@@ -4,9 +4,10 @@ const db = require('../models/appModels');
 const reviewController = {};
 
 reviewController.addReview = async (req, res, next) => {
-  const { rating, text, name, address, toilet, sink, smell, cleanliness, tp } = req.body;
-  const { googleId } = req.params;
-  const { userId } = res.locals;
+    const { rating, text, name, address, toilet, sink, smell, cleanliness, tp, image } = req.body;
+    const { googleId } = req.params;
+    const { userId } = res.locals;
+    //console.log('userId', userId)
 
   if (text.includes('awd')) {
     return next({ message: 'oh my god stop it'})
@@ -26,7 +27,15 @@ reviewController.addReview = async (req, res, next) => {
     const establishmentId = establishment._id;
 
     const createReviewParams = [establishmentId, userId, rating, text, toilet, sink, smell, cleanliness, tp];
-    await db.query(queryRepository.createReviewByEstablishmentId, createReviewParams);
+    const result = await db.query(queryRepository.createReviewByEstablishmentId, createReviewParams);
+    let reviewId
+    if(result.rows){
+      reviewId = result.rows[0]._id
+    }
+    if(image && reviewId){
+      await db.query(queryRepository.insertReviewImage, [reviewId, image])
+    }
+
     return next();
   }
   catch (error) {

@@ -10,6 +10,7 @@ import { useLoadScript, GoogleMap, Marker, DirectionsRenderer } from '@react-goo
 
 
 //will be a fetch call to our server which then sends back database query result
+
 const Bathroom = ()=>{
   const {placeId} = useParams();
   const [placeName, setPlaceName] = useState('');
@@ -18,6 +19,8 @@ const Bathroom = ()=>{
   const [address, setAddress] = useState('');
   const [showModal, setShowModal] = useState(false);
   const isLoggedIn = useSelector(state => state.bathroom.isLoggedIn);
+  const [imageFile, setImageFile] = useState();
+
   const dispatch = useDispatch();
 
   const { isLoaded } = useLoadScript({
@@ -28,11 +31,18 @@ const Bathroom = ()=>{
   const handleClose = () => setShowModal(false);
   // const handleShow = () => setShowModal(true);
 
+  const getFileContents =  file => new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = reject;
+  })
+
   const signin = () => {
     location.assign(`/google/auth/${placeId}`);
    }
 
-  const addReview = (e) =>{
+  const addReview = async (e) =>{
     e.preventDefault();
     let review = e.target.text.value;
     let bathroom = e.target['bathroom(required)'].value;
@@ -41,6 +51,17 @@ const Bathroom = ()=>{
     let smell = e.target.smell.value;
     let cleanliness = e.target.cleanliness.value;
     let TP = e.target.TP.value;
+
+    //setFile(URL.createObjectURL(e.target.imageFile[0]));
+    //let reader = new FileReader();
+    let image;
+    if(imageFile){
+      image = await getFileContents(imageFile)
+    }
+    else {
+      image = null
+    }
+
     if(toilet === '') toilet = null;
     if(sink === '') sink = null;
     if(smell === '') smell = null;
@@ -58,6 +79,7 @@ const Bathroom = ()=>{
       console.log('smell',smell);
       console.log('cleanliness',cleanliness);
       console.log('TP',TP);
+      console.log('image', image)
         fetch(`/api/${placeId}`,{
           method:'POST',
           body:JSON.stringify({
@@ -69,7 +91,8 @@ const Bathroom = ()=>{
             'cleanliness':cleanliness,
             'tp':TP,
             'address':address,
-            'name': placeName
+            'name': placeName,
+            'image': image
           }),
           headers:{'Content-Type':'application/json'},
         })
@@ -86,6 +109,8 @@ const Bathroom = ()=>{
         e.target.smell.value = '';
         e.target.cleanliness.value = '';
         e.target.TP.value = '';
+        e.target.imageFile.value = ''
+
     }
   }
 
@@ -104,6 +129,7 @@ const Bathroom = ()=>{
           overallRating = {review['rating']} 
           review={review['text']} 
           username={review['username']}
+          reviewImage={review['image_b64']}
           toiletRating={review['toilet']}
           sinkRating={review['sink']}
           smellRating={review['smell']}
@@ -118,6 +144,14 @@ const Bathroom = ()=>{
     })
   }
 
+    async function handleChange(e) {
+        console.log(e.target.files);
+        console.log(e.target.files[0])
+        setImageFile(e.target.files[0]);
+        // const buffer = await e.target.files[0].arrayBuffer();
+        // let byteArray = new Int8Array(buffer);
+        //console.log(byteArray)
+    }
 
   useEffect(()=>{
     fetch(`https://places.googleapis.com/v1/places/${placeId}?fields=id,displayName,formattedAddress&key=${process.env.GOOGLE_MAPS_API_KEY}`)
@@ -157,7 +191,9 @@ const Bathroom = ()=>{
             <RatingSelect name='smell'/>
             <RatingSelect name='cleanliness'/>
             <RatingSelect name='TP'/>
-            <Button type='submit' value='Submit review'>Submit review</Button>
+            <input type='submit' value='Submit review'></input>
+            <h2>Add Image:</h2>
+            <input type="file" name="imageFile" onChange={handleChange} />
           </form>
         </Container>
         <Container style={{flex: '0 0 70%', paddingRight:'40px'}} id='bathroomReviews'>
