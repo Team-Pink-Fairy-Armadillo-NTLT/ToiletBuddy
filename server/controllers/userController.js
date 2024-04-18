@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken');
 const db = require('../models/appModels');
 const queryRepository = require('../queryRepository');
+const errorMessageConstants = require('../constants/errorMessageConstants');
 
 const userController = {}
 
@@ -41,7 +42,7 @@ userController.verifyUser = (req, res, next) => {
     return next({
       log: 'userController.verifyUser: User not logged in but is authorized to access page',
       status: 200,
-      message: { result: 'You are not logged in but can view the page'},
+      message: errorMessageConstants.USER_READONLY_ACCESS,
     });
   }
 }
@@ -52,11 +53,11 @@ userController.checkPermissions = (req, res, next) => {
     res.locals.userId = response.userId;
     return next();
   } 
-  catch {
+  catch (err) {
     return next({
-      log: 'userController.checkPermissions: JWT validation failed',
+      log: `userController.checkPermissions: ${err}`,
       status: 403,
-      message: { result: 'You are not authorized to perform this action'},
+      message: errorMessageConstants.USER_NOT_AUTHORIZED,
     });
   }
 }

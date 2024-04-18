@@ -52,6 +52,14 @@ queryRepository.createReviewByEstablishmentId = `
     returning _id
 `;
 
+queryRepository.getAverageRatingByEstablishmentGoogleId = `
+  select 
+    AVG(rating)
+  from reviews 
+    inner join establishments on reviews.establishment_id = establishments._id
+  where establishments.google_maps_id = $1
+`;
+
 queryRepository.getUserId = 'SELECT _id FROM users WHERE username = $1';
 
 queryRepository.insertUser = 'INSERT INTO users (username) VALUES ($1) RETURNING (_id)';
