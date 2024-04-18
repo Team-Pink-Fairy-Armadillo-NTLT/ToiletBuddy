@@ -6,26 +6,12 @@ const reviewController = {};
 
 reviewController.validateEstablishment = async (req, res, next) => {
   const { googleId } = req.params;
-  const { name, address } = req.body;
-
-  // if (text.includes('awd')) {
-  //   return next({ message: errorMessageConstants.NO_AWD_ALLOWED });
-  // }
 
   try {
     const getEstablishmentParams = [googleId];
     const getEstablishmentResult = await db.query(queryRepository.getEstablishmentByGoogleId, getEstablishmentParams);
-    let establishment = getEstablishmentResult.rows.length ? getEstablishmentResult.rows[0] : null;
+    res.locals.establishment = getEstablishmentResult.rows.length ? getEstablishmentResult.rows[0] : null;
 
-    if (!establishment) {
-      // placeholder data for latitude, longitude, city, state, zip
-      const createEstablishmentParams = [googleId, 'testLat', 'testLong', name, address, 'Fakecity', 'FL', 11111];
-      const createEstablishmentResult = await db.query(queryRepository.createEstablishmentByGoogleId, createEstablishmentParams);
-      const rows = createEstablishmentResult.rows;
-      establishment = rows[0];
-    }
-
-    res.locals.establishment = establishment;
     return next();
   }
   catch (err) {
@@ -33,10 +19,36 @@ reviewController.validateEstablishment = async (req, res, next) => {
   }
 }
 
+reviewController.createNewEstablishment = async (req, res, next) => {
+  const { googleId } = req.params;
+  const { name, address } = req.body;
+  const { establishment } = res.locals;
+
+  if (establishment) return next();
+
+  try {
+    // placeholder data for latitude, longitude, city, state, zip
+    const createEstablishmentParams = [googleId, 'testLat', 'testLong', name, address, 'Fakecity', 'FL', 11111];
+    const createEstablishmentResult = await db.query(queryRepository.createEstablishmentByGoogleId, createEstablishmentParams);
+    const rows = createEstablishmentResult.rows;
+    res.locals.establishment = rows[0];
+    return next();
+  }
+  catch (err) {
+    return next({ log: `reviewController.createNewEstablishment: ${err}`, message: errorMessageConstants.CREATE_ESTABLISHMENT_ERR });
+  }
+}
+
 reviewController.addReviewAndImage = async (req, res, next) => {
   const { rating, text, toilet, sink, smell, cleanliness, tp, image } = req.body;
   const { userId, establishment } = res.locals;
-  console.log('req.body', req.body);
+
+  console.log(req.body);
+
+  if (text.includes('awd')) {
+    return next({ message: errorMessageConstants.NO_AWD_ALLOWED });
+  }
+
   try {
     const establishmentId = establishment._id;
 
@@ -52,8 +64,8 @@ reviewController.addReviewAndImage = async (req, res, next) => {
     }
     return next();
   }
-  catch (error) {
-    return next({ log: `reviewController.addReviewAndImage: ${error}`, message: errorMessageConstants.ADD_REVIEW_ERR });
+  catch (err) {
+    return next({ log: `reviewController.addReviewAndImage: ${err}`, message: errorMessageConstants.ADD_REVIEW_ERR });
   }
 }
 
