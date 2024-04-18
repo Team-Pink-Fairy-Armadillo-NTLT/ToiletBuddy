@@ -29,7 +29,7 @@ const Main = ()=>{
       if(res.result === "ok"){
         dispatch(loginUser())
       }
-    })
+    });
   },[]);
 
  let button;
@@ -38,19 +38,19 @@ const Main = ()=>{
     button = <Button style={{height: '70%'}} variant='secondary' onClick={logout} id='bathroomButton'>Log Out</Button>
   }
   else{
-    button = <Button style={{height: '70%'}} variant='primary' id="signin" onClick={signin}>Sign in with Google</Button>
+    button = <Button style={{height: '70%'}} variant='primary' id="bathroomButton" onClick={signin}>Sign in with Google</Button>
   }
   return(
-    <>
+    <div id='main'>
       <header id='main-header'>
-        <h1 id='brand'>Toilet Buddy</h1>
+        <h1 id='brand'>Toilet Buddy</h1> <img id='toilet'src="https://www.freepnglogos.com/uploads/toilet-png/cartoon-toilet-images-clipart-download-best-cartoon-toilet-images-clipart-clipartmagm-25.png"></img>
         {button}
       </header>
       <div id='map'>
+        <h1 id = 'infoH'>How to use:</h1>
           <Map />
       </div>
-    </>
-
+    </div>
   )
 }
 export default Main;
