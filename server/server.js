@@ -6,7 +6,7 @@ require('dotenv').config();
 const googleAuthRouter = require('./routes/googleAuthRouter');
 const apiRouter = require('./routes/apiRouter');
 const userController = require('./controllers/userController');
-const errorMessageConstants = require('./constants/errorMessages');
+const errorMessageConstants = require('./constants/errorMessageConstants');
 
 const app = express();
 const PORT = 3000;
@@ -47,4 +47,3 @@ app.use((err, req, res, next) => {
 })
 
 app.listen(PORT, () => { console.log(`listening on port ${PORT}...`); });
-
