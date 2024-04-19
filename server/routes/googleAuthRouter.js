@@ -46,6 +46,7 @@ router.get('/auth/:placeId?', (req, res) => {
     include_granted_scopes: true,
     state:placeId
   });
+  console.log(authorizationUrl)
   return res.redirect(301, authorizationUrl);
 });
 
