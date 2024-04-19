@@ -24,6 +24,7 @@ const GOOGLE_OAUTH_URL = "https://www.googleapis.com/oauth2/v2/userinfo"
 router.get('/auth/:placeId', (req, res) => {
   // console.log('in the auth')
   const placeId = req.params.placeId;
+  console.log('google auth get id',placeId)
   const scopes = [
   "https://www.googleapis.com/auth/userinfo.email",
   "https://www.googleapis.com/auth/userinfo.profile"
@@ -45,6 +46,7 @@ router.get('/auth/:placeId', (req, res) => {
 router.get('/callback', async (req, res) => {
   // Handle the OAuth 2.0 server response
   const { code, state } = req.query;
+  console.log(state);
   const q = url.parse(req.url, true).query;
   // Get access and refresh tokens (if access_type is offline)
   const { tokens } = await oauth2Client.getToken(q.code)

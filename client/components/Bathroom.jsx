@@ -30,6 +30,7 @@ const Bathroom = ()=>{
   })
 
   const signin = () => {
+    console.log('signinID',placeId)
     location.assign(`/google/auth/${placeId}`);
    }
 
@@ -132,6 +133,7 @@ const Bathroom = ()=>{
     fetch(`https://places.googleapis.com/v1/places/${placeId}?fields=id,displayName,formattedAddress&key=${process.env.GOOGLE_MAPS_API_KEY}`)
     .then(res => res.json())
     .then(res => {setPlaceName(res.displayName.text); setAddress(res.formattedAddress)})
+    console.log(placeId);
     getReviews(updateReviews,placeId);
     }, []);
 
@@ -149,14 +151,15 @@ const Bathroom = ()=>{
   }
   return(
     <>
+    <button style={{height: '50px', fontSize:'20px', marginLeft:'40px'}} id = 'homeB'onClick={()=>{location.assign('/')}}> Back to Home</button>
     <div id ='d'>{button}</div>
-    <button id = 'homeB'onClick={()=>{location.assign('/')}}> Back to Home</button>
+    {/* <button id = 'homeB'onClick={()=>{location.assign('/')}}> Back to Home</button> */}
       <h1 style={{textAlign:'center', fontSize: "50"}}>{placeName}: <span style={{fontSize:'30'}}>Average Rating: {averageRating}</span></h1>
       <h2 style={{textAlign:'center', fontSize: "20"}}>{address}</h2>
       <div style={{display:'flex', flexDirection:'row'}}>
-        <Container style={{flex: '0 0 30%'}} id='bathroomSect'>
+        <Container style={{flex: '0 0 30%', marginTop: '200px'}} id='bathroomSect'>
           <form id='form' onSubmit={(e)=>{addReview(e)}}>
-            <FormControl name='text' id='review' placeholder='Add a review' as='textarea' rows={5}></FormControl>
+            <FormControl name='text' id='review' placeholder='Add a review' as='textarea' rows={5} style={{backgroundColor:'f8f9fa', fontSize:'20px'}}></FormControl>
             {/* <FormControl name='num' id='rating' type='number'></FormControl> */}
             <RatingSelect name='bathroom(required)'/>
             <RatingSelect name='toilet'/>
@@ -188,7 +191,7 @@ const Bathroom = ()=>{
           </Modal.Header>
             <Modal.Body style={{textAlign:'center'}}>Login with your Google account</Modal.Body>
             <Modal.Footer style={{display:'flex', flexDirection:'row', alignItems:'center', justifyContent:'center' }}>
-              <Button style={{height: '70%'}} variant='primary' id="signin" onClick={signin}>Sign in with Google</Button>
+              <Button style={{height: '70%'}} variant='primary' id="signins" onClick={signin}>Sign in with Google</Button>
             </Modal.Footer>
           
         </Container>

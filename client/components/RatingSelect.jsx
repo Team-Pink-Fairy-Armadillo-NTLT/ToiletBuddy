@@ -2,7 +2,7 @@ import React from 'react';
 import { Container, Col, Row, FormControl, Form } from 'react-bootstrap';
 const RatingSelect = ({name})=>{
     return (
-        <Form.Select name={name} id='rating'> 
+        <Form.Select name={name} id='rating' style={{backgroundColor:'f8f9fa', fontSize:'20px'}}> 
               <option value=''selected disabled>{name} Rating</option>
               <option value='1'>1</option>
               <option value='2'>2</option>
