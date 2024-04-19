@@ -16,6 +16,7 @@ const Bathroom = ()=>{
   const [showModal, setShowModal] = useState(false);
   const isLoggedIn = useSelector(state => state.bathroom.isLoggedIn);
   const [imageFile, setImageFile] = useState();
+  let button;
 
   const dispatch = useDispatch();
   const handleClose = () => setShowModal(false);
@@ -29,8 +30,15 @@ const Bathroom = ()=>{
   })
 
   const signin = () => {
+    console.log('signinID',placeId)
     location.assign(`/google/auth/${placeId}`);
    }
+
+   const logout = () => {
+    console.log("trying to logout");
+    fetch('/logout')
+    .then(dispatch(logoutUser()));
+  }
 
   const addReview = async (e) =>{
     e.preventDefault();
@@ -41,22 +49,15 @@ const Bathroom = ()=>{
     let smell = e.target.smell.value;
     let cleanliness = e.target.cleanliness.value;
     let TP = e.target.TP.value;
-
-    //setFile(URL.createObjectURL(e.target.imageFile[0]));
-    //let reader = new FileReader();
     let image;
-    if(imageFile){
-      image = await getFileContents(imageFile)
-    }
-    else {
-      image = null
-    }
 
+    image = imageFile ? await getFileContents(imageFile) : null;
     if(toilet === '') toilet = null;
     if(sink === '') sink = null;
     if(smell === '') smell = null;
     if(cleanliness === '') cleanliness = null;
     if(TP === '') TP = null;
+
     if(review.trim()===''){
       alert('Enter a review');
     }else if(bathroom===''){
@@ -64,12 +65,6 @@ const Bathroom = ()=>{
     }else if(bathroom>10 || bathroom<0){
       alert('Please keep your rating between 1 and 10');
     }else{
-      console.log('t',toilet);
-      console.log('sink',sink);
-      console.log('smell',smell);
-      console.log('cleanliness',cleanliness);
-      console.log('TP',TP);
-      console.log('image', image)
         fetch(`/api/${placeId}`,{
           method:'POST',
           body:JSON.stringify({
@@ -92,15 +87,7 @@ const Bathroom = ()=>{
           if(res.status===403){setShowModal(true)};
           return res})
         .then(res=>getReviews());
-        e.target.text.value  = '';
-        e.target['bathroom(required)'].value = '';
-        e.target.toilet.value = '';
-        e.target.sink.value = '';
-        e.target.smell.value = '';
-        e.target.cleanliness.value = '';
-        e.target.TP.value = '';
-        e.target.imageFile.value = ''
-
+        ['text', 'bathroom(required)', 'toilet', 'sink', 'smell', 'cleanliness', 'TP'].forEach(field => e.target[field].value = '');
     }
   }
 
@@ -108,9 +95,9 @@ const Bathroom = ()=>{
     let r = [];
     let ratingTotal = 0;
     fetch(`/api/${placeId}`).then(data=>data.json()).then(response=>{
-      console.log('response',response)
       if(response['data'].length!==0){
-        let i = 0
+        document.getElementById('rev').innerHTML = '';
+        let i = 0;
         for(const review of response['data']){
           ratingTotal += parseFloat(review['rating']);
           r.unshift(
@@ -130,30 +117,43 @@ const Bathroom = ()=>{
         }
         updateReviews(r);
         setAverageRating((ratingTotal/r.length).toFixed(1));
+      }else{
+        document.getElementById('rev').innerHTML = 'No reviews yet'
       }
     })
   }
 
-    async function handleChange(e) {
-        console.log(e.target.files);
-        console.log(e.target.files[0])
-        setImageFile(e.target.files[0]);
-        // const buffer = await e.target.files[0].arrayBuffer();
-        // let byteArray = new Int8Array(buffer);
-        //console.log(byteArray)
-    }
+  async function handleChange(e) {
+    console.log(e.target.files);
+    console.log(e.target.files[0]);
+    setImageFile(e.target.files[0]);
+  }
 
   useEffect(()=>{
     fetch(`https://places.googleapis.com/v1/places/${placeId}?fields=id,displayName,formattedAddress&key=${process.env.GOOGLE_MAPS_API_KEY}`)
     .then(res => res.json())
     .then(res => {setPlaceName(res.displayName.text); setAddress(res.formattedAddress)})
-
+    console.log(placeId);
     getReviews(updateReviews,placeId);
-    }, [])
+    }, []);
 
+  useEffect(() => {
+    fetch('/verifyuser')
+    .then((res) => res.json())
+    .then(res => {if(res.result === "ok") dispatch(loginUser())});
+  },[]);
+
+  if(isLoggedIn===true){
+    button = <Button variant='secondary' onClick={logout} id='signinL'>Log Out</Button>
+  }
+  else{
+    button = <Button variant='primary' id="signin" onClick={signin}>Sign in with Google</Button>
+  }
   return(
     <>
     <button style={{height: '50px', fontSize:'20px', marginLeft:'40px'}} id = 'homeB'onClick={()=>{location.assign('/')}}> Back to Home</button>
+    <div id ='d'>{button}</div>
+    {/* <button id = 'homeB'onClick={()=>{location.assign('/')}}> Back to Home</button> */}
       <h1 style={{textAlign:'center', fontSize: "50"}}>{placeName}: <span style={{fontSize:'30'}}>Average Rating: {averageRating}</span></h1>
       <h2 style={{textAlign:'center', fontSize: "20"}}>{address}</h2>
       <div style={{display:'flex', flexDirection:'row'}}>
@@ -167,14 +167,17 @@ const Bathroom = ()=>{
             <RatingSelect name='smell'/>
             <RatingSelect name='cleanliness'/>
             <RatingSelect name='TP'/>
-            <h5>Add Image:</h5>
+            <br/>
+            <h2>Add Image:</h2>
             <input type="file" name="imageFile" onChange={handleChange} />
+            <br/><br/><br/>
             <input type='submit' value='Submit review'></input>
           </form>
         </Container>
         <Container style={{flex: '0 0 70%', paddingRight:'40px'}} id='bathroomReviews'>
           {/* <Col> */}
             {/* <Row xs={2} md={3} lg={4} xl={5}> */}
+            <h1 id = 'rev' style={{position:'relative', left:'10em'}}></h1>
             <Row id = 'r'>
               {reviews}
             </Row>
@@ -188,7 +191,7 @@ const Bathroom = ()=>{
           </Modal.Header>
             <Modal.Body style={{textAlign:'center'}}>Login with your Google account</Modal.Body>
             <Modal.Footer style={{display:'flex', flexDirection:'row', alignItems:'center', justifyContent:'center' }}>
-              <Button style={{height: '70%'}} variant='primary' id="signin" onClick={signin}>Sign in with Google</Button>
+              <Button style={{height: '70%'}} variant='primary' id="signins" onClick={signin}>Sign in with Google</Button>
             </Modal.Footer>
           
         </Container>
