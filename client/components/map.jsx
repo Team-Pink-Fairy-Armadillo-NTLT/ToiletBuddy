@@ -1,9 +1,10 @@
-import { useLoadScript, GoogleMap, Marker, DirectionsRenderer } from '@react-google-maps/api';
+import { useLoadScript, GoogleMap, Marker, InfoWindow } from '@react-google-maps/api';
 import { useState, useEffect } from 'react';
 import React from 'react';
 import AutocompleteInput from './autocompleteInput.jsx';
 import { useNavigate } from 'react-router-dom';
 import { Button, Container, Row, Col } from "react-bootstrap";
+import EstInfoCard from './estInfoCard.jsx';
 // import { use } from '../../server/routes/googleAuthRouter.js';
 
 
@@ -42,6 +43,8 @@ function Map() {
   const [locationID, setLocationID] = useState(null);
   const [zoom, setZoom] = useState(2);
   const [markerReady, setMarkerReady] = useState(false);
+  const [markerRef, setMarkerRef] = useState(null);
+
   
 
   if(!isLoaded) return <div>'Loading...';</div>
@@ -58,7 +61,12 @@ function Map() {
         center={position}
         zoom={zoom}
       >
-        {markerReady && <Marker options={{fillColor: 'blue'}} position={position} onClick={clickMarker} />}
+        {markerReady && 
+        <Marker ref={setMarkerRef} position={position} onClick={clickMarker} >
+            <InfoWindow anchor={markerRef} onCloseClick={()=>{console.log('')}}>
+              <EstInfoCard locationID={locationID} onClickFunc={clickMarker} />
+            </InfoWindow>
+          </Marker>}
         
       </GoogleMap>
     </Container>

@@ -4,7 +4,6 @@
   justify-content: space-between;
   margin: 10px;
 }
-
 #brand {
   margin-left: 40%;
   font-family: Georgia, 'Times New Roman', Times, serif;
@@ -15,11 +14,58 @@
   overflow-x: hidden;
   max-height: 50rem;
 }
-#homeB{
+/* #homeB{
   position: absolute;
   left:1em;
   top:0.5em;
   font-size:37px;
+} */
+
+.flex-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+#signin{
+  position: relative;
+  left:106.113em;
+  top:0.65em;
+}
+#signinL{
+  position: relative;
+  left:111.173em;
+  top:0.65em;
+}
+#toilet{
+  position: absolute;
+  top:-69.9em;
+  left:-9em;
+  scale:0.03;
+}
+#main{
+  background-color: gray;
+  position: relative;
+  width: 100vw;
+  height:100vh;
+  overflow: hidden;
+}
+#map{
+  border: 2px solid black;
+  scale:.99;
+}
+#infoH{
+  position: absolute;
+  left: 27px;
 }
 
+#card-address {
+  font-size: medium;
+}
 
+#card-name {
+  font-size:large;
+}
+
+#card-rating {
+  font-size: medium;
+}
