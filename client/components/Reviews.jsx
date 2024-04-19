@@ -31,10 +31,19 @@ const Reviews = ({ username,
             return 'rgb(219, 255, 219)';
         }
     }
+    const overallRatingColor = (rating) => {
+        if(rating < 4){
+            return '#ED7E8B';
+        } else if(rating < 7){
+            return 'fae588';
+        } else {
+            return 'rgb(219, 255, 219)';
+        }
+    }
 
     return (
-            <Card className='m-2 '>
-                <Card.Header >Total Rating : <span style={{fontSize: "30"}}>{overallRating}</span>/10</Card.Header>
+            <Card className='m-2' style={{backgroundColor:'f8f9fa'}}>
+                <Card.Header style={{backgroundColor:overallRatingColor(parseFloat(overallRating))}}>Total Rating : <span style={{fontSize: "30"}}>{overallRating}</span>/10</Card.Header>
                 <ListGroup>
                     {toiletRating && 
                         <ListGroup.Item style={{backgroundColor:backgroundColor(parseFloat(toiletRating))}} className='flex-row'>
@@ -64,9 +73,11 @@ const Reviews = ({ username,
                 </ListGroup>
                 <Card.Body>
                     <blockquote className='blockquote mb-0'>
-                        <p>"{review}"</p>
-                        <img src={reviewImage}/>             
-                        <footer className='blockquote-footer'>{username}</footer>       
+                        <div style={{display:'flex', flexDirection:'row', justifyContent:'space-evenly', marginTop:'25px'}}>
+                        <p style={{fontSize: "25", alignContent:'center'}}>"{review}"</p>
+                        {reviewImage && <img src={reviewImage} width="30%" height="200px"/>}
+                        </div>
+                        <footer className='text-muted'>{username}</footer>       
                     </blockquote>
                 </Card.Body>
             </Card>    

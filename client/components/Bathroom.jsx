@@ -163,27 +163,13 @@ const Bathroom = ()=>{
 
   return(
     <>
-      <header className='flex-row'>
-        <Button style={{ margin:'10px',height:'50px', flexGrow:'0', flexShrink:'1'}} variant="primary" id = 'homeB'onClick={()=>{location.assign('/')}}> Back to Home</Button>
-        <div style={{flexGrow:'10'}}>
-          <h1 style={{textAlign:'center', fontSize: "50"}}>{placeName}: </h1>
-          <h1 style={{fontSize:'30', textAlign:'center'}}>Average Rating: {averageRating}</h1>
-          <h2 style={{textAlign:'center', fontSize: "20"}}>{address}</h2>
-        </div>
-      </header>
+    <button style={{height: '50px', fontSize:'20px', marginLeft:'40px'}} id = 'homeB'onClick={()=>{location.assign('/')}}> Back to Home</button>
+      <h1 style={{textAlign:'center', fontSize: "50"}}>{placeName}: <span style={{fontSize:'30'}}>Average Rating: {averageRating}</span></h1>
+      <h2 style={{textAlign:'center', fontSize: "20"}}>{address}</h2>
       <div style={{display:'flex', flexDirection:'row'}}>
-        <Container style={{flex: '0 0 30%'}} id='bathroomSect'>
-        {/* <GoogleMap
-        mapContainerStyle={{height:"80%", width:"80%"}}
-        center={{lat: 53.54992, lng: 10.00678}}
-        zoom={10}
-        >
-          {<Marker position={{lat: 53.54992, lng: 10.00678}} />}
-        
-        </GoogleMap> */}
-          <h2 style={{textAlign:'center'}}>Add a review</h2>
+        <Container style={{flex: '0 0 30%', marginTop: '200px'}} id='bathroomSect'>
           <form id='form' onSubmit={(e)=>{addReview(e)}}>
-            <FormControl name='text' id='review' placeholder='Add a review' as='textarea' rows={5}></FormControl>
+            <FormControl name='text' id='review' placeholder='Add a review' as='textarea' rows={5} style={{backgroundColor:'f8f9fa', fontSize:'20px'}}></FormControl>
             {/* <FormControl name='num' id='rating' type='number'></FormControl> */}
             <RatingSelect name='bathroom(required)'/>
             <RatingSelect name='toilet'/>
@@ -191,9 +177,9 @@ const Bathroom = ()=>{
             <RatingSelect name='smell'/>
             <RatingSelect name='cleanliness'/>
             <RatingSelect name='TP'/>
-            <input type='submit' value='Submit review'></input>
-            <h2>Add Image:</h2>
+            <h5>Add Image:</h5>
             <input type="file" name="imageFile" onChange={handleChange} />
+            <input type='submit' value='Submit review'></input>
           </form>
         </Container>
         <Container style={{flex: '0 0 70%', paddingRight:'40px'}} id='bathroomReviews'>

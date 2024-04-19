@@ -1,4 +1,4 @@
-const errorMessageConstants = 
+const errorMessages = 
 
   { ADD_REVIEW_ERR: { err: `We couldn\'t post your review. ${this.CHECK_SERVER_LOGS}` },
 
@@ -23,4 +23,4 @@ const errorMessageConstants =
     CHECK_SERVER_LOGS: 'Check server logs for details.'
   };
 
-module.exports = errorMessageConstants;
+module.exports = errorMessages;
