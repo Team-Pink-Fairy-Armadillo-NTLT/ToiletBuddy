@@ -28,7 +28,7 @@ export default function EstInfoCard({ locationID, onClickFunc }) {
     fetch(`/api/image/${locationID}`)
     .then(res => res.json())
     .then(res => {
-      console.log(res);
+      console.log('image', res.data);
       setPhoto(res.data)
   })}, []);
 
