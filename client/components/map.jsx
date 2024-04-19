@@ -8,7 +8,7 @@ import EstInfoCard from './estInfoCard.jsx';
 // import { use } from '../../server/routes/googleAuthRouter.js';
 
 
-function Map({navBar}) {
+function Map() {
   // const testLocations = [{lat: 45.46000, lng: -122.73000 }, {lat: 45.47, lng:-122.74}, {lat: 45.48, lng: -122.75}];
   // const testMarkers = [];
   const clickMarker = () => {
@@ -55,7 +55,7 @@ function Map({navBar}) {
   return (
      
     <Container>
-      {navBar && <AutocompleteInput setSelected={setPosition} setLocationID={setLocationID} setMarkerReady={setMarkerReady} setZoom={setZoom} />}
+      <AutocompleteInput setSelected={setPosition} setLocationID={setLocationID} setMarkerReady={setMarkerReady} setZoom={setZoom} />
       <GoogleMap
         mapContainerStyle={{height:"80%", width:"100%"}}
         center={position}
