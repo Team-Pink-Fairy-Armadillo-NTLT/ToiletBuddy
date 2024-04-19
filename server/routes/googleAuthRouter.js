@@ -7,9 +7,9 @@ const userController = require('../controllers/userController');
 
 const router = express.Router();
 
-const { CLIENT_ID, CLIENT_SECRET } = process.env;
+const { CLIENT_ID, CLIENT_SECRET, MODE } = process.env;
 
-const baseUrl = webpack.mode == "production" ? "https://tsa2snumdz.us-east-2.awsapprunner.com" : 'http://localhost:8080'
+const baseUrl = MODE == "production" ? "https://rvawjxfwhe.us-east-2.awsapprunner.com" : 'http://localhost:8080'
 const callbackURL = baseUrl + "/google/callback"
 
 // const callbackURL = webpack.mode === 'production'
