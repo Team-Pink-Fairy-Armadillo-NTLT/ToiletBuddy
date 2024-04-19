@@ -43,7 +43,7 @@ export default function AutocompleteInput({ setSelected, setLocationID, setMarke
           placeholder="Enter location"/>
       </InputGroup>
       {status === "OK" && data.map((/*{ place_id, description }*/datum) => {
-        console.log(datum)
+        // console.log(datum)
         return (
         <div key={datum.place_id} onClick={() => handleSelect(datum.description, datum.place_id)}>
           <p>{datum.description}</p>

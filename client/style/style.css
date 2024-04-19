@@ -14,11 +14,17 @@
   overflow-x: hidden;
   max-height: 50rem;
 }
-#homeB{
+/* #homeB{
   position: absolute;
   left:1em;
   top:0.5em;
   font-size:37px;
+} */
+
+.flex-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
 #signin{
   position: relative;
@@ -52,3 +58,14 @@
   left: 27px;
 }
 
+#card-address {
+  font-size: medium;
+}
+
+#card-name {
+  font-size:large;
+}
+
+#card-rating {
+  font-size: medium;
+}

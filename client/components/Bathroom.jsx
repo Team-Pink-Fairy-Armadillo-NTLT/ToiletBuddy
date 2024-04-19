@@ -5,6 +5,10 @@ import { useSelector, useDispatch } from 'react-redux';
 import { loginUser, logoutUser} from '../slice.js'
 import { Container, Col, Row, FormControl, Form, Modal, Button } from 'react-bootstrap';
 import RatingSelect from './RatingSelect.jsx';
+// import Map from './map.jsx';
+import { useLoadScript, GoogleMap, Marker, DirectionsRenderer } from '@react-google-maps/api';
+
+
 //will be a fetch call to our server which then sends back database query result
 
 const Bathroom = ()=>{
@@ -19,8 +23,14 @@ const Bathroom = ()=>{
   let button;
 
   const dispatch = useDispatch();
+
+  const { isLoaded } = useLoadScript({
+    googleMapsApiKey: process.env.GOOGLE_MAPS_API_KEY, 
+    libraries: ["places"],
+  });
+
   const handleClose = () => setShowModal(false);
-  const handleShow = () => setShowModal(true);
+  // const handleShow = () => setShowModal(true);
 
   const getFileContents =  file => new Promise((resolve, reject) => {
     const reader = new FileReader();
