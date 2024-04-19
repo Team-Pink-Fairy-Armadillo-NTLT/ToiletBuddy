@@ -9,12 +9,12 @@ const router = express.Router();
 
 const { CLIENT_ID, CLIENT_SECRET } = process.env;
 
-// const baseUrl = webpack.mode == "production" ? "https://tsa2snumdz.us-east-2.awsapprunner.com" : 'http://localhost:8080'
-// const callbackURL = baseUrl + "/google/callback"
+const baseUrl = webpack.mode == "production" ? "https://tsa2snumdz.us-east-2.awsapprunner.com" : 'http://localhost:8080'
+const callbackURL = baseUrl + "/google/callback"
 
-const callbackURL = webpack.mode === 'production'
-? 'http://localhost:3000/google/callback'
-: 'http://localhost:8080/google/callback';
+// const callbackURL = webpack.mode === 'production'
+// ? 'http://localhost:3000/google/callback'
+// : 'http://localhost:8080/google/callback';
 
 
 const oauth2Client = new google.auth.OAuth2(
