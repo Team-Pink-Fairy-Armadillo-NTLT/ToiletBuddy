@@ -41,35 +41,24 @@ const Reviews = ({ username,
         }
     }
 
+    const makeItem = (name,string) =>{
+        return (name &&
+            <ListGroup.Item style={{backgroundColor:backgroundColor(parseFloat(name))}} className='flex-row'>
+                <div>{string}: {name}/10</div>
+                <ProgressBar style={{backgroundColor:'white'}} variant={progBarColor(parseFloat(name))} now={parseFloat(name)*10}/>
+            </ListGroup.Item>
+        )
+    }
+
     return (
             <Card className='m-2' style={{backgroundColor:'f8f9fa'}}>
                 <Card.Header style={{backgroundColor:overallRatingColor(parseFloat(overallRating))}}>Total Rating : <span style={{fontSize: "30"}}>{overallRating}</span>/10</Card.Header>
                 <ListGroup>
-                    {toiletRating && 
-                        <ListGroup.Item style={{backgroundColor:backgroundColor(parseFloat(toiletRating))}} className='flex-row'>
-                            <div>Toilet: {toiletRating}/10</div>
-                            <ProgressBar style={{backgroundColor:'white'}} variant={progBarColor(parseFloat(toiletRating))} now={parseFloat(toiletRating)*10}/>
-                        </ListGroup.Item>}
-                    {sinkRating && 
-                        <ListGroup.Item style={{backgroundColor:backgroundColor(parseFloat(sinkRating))}} className='flex-row'>
-                            <div>Sink: {sinkRating}/10 </div>
-                            <ProgressBar style={{backgroundColor:'white'}} variant={progBarColor(parseFloat(sinkRating))} now={parseFloat(sinkRating)*10}/>
-                        </ListGroup.Item>}
-                    {smellRating && 
-                        <ListGroup.Item style={{backgroundColor:backgroundColor(parseFloat(smellRating))}}>
-                            <div> Smell: {smellRating}/10</div>
-                            <ProgressBar style={{backgroundColor:'white'}} variant={progBarColor(parseFloat(smellRating))} now={parseFloat(smellRating)*10}/>
-                        </ListGroup.Item>}
-                    {cleanlinessRating && 
-                        <ListGroup.Item style={{backgroundColor:backgroundColor(parseFloat(cleanlinessRating))}}>
-                            <div>Cleanliness: {cleanlinessRating}/10</div>
-                            <ProgressBar style={{backgroundColor:'white'}} variant={progBarColor(parseFloat(cleanlinessRating))} now={parseFloat(cleanlinessRating)*10}/>
-                        </ListGroup.Item>}
-                    {TPRating && 
-                        <ListGroup.Item style={{backgroundColor:backgroundColor(parseFloat(TPRating))}}>
-                            <div>TP: {TPRating}/10</div>
-                            <ProgressBar style={{backgroundColor:'white'}} variant={progBarColor(parseFloat(TPRating))} now={parseFloat(TPRating)*10}/>
-                        </ListGroup.Item>}
+                    {makeItem(toiletRating,'Toilet')}
+                    {makeItem(sinkRating,'Sink')}
+                    {makeItem(smellRating,'Smell')}
+                    {makeItem(cleanlinessRating,'Cleanliness')}
+                    {makeItem(TPRating,'TP')}
                 </ListGroup>
                 <Card.Body>
                     <blockquote className='blockquote mb-0'>
