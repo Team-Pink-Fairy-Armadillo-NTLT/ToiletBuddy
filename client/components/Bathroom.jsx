@@ -153,13 +153,13 @@ const Bathroom = ()=>{
 
   return(
     <>
-    <button id = 'homeB'onClick={()=>{location.assign('/')}}> Back to Home</button>
+    <button style={{height: '50px', fontSize:'20px', marginLeft:'40px'}} id = 'homeB'onClick={()=>{location.assign('/')}}> Back to Home</button>
       <h1 style={{textAlign:'center', fontSize: "50"}}>{placeName}: <span style={{fontSize:'30'}}>Average Rating: {averageRating}</span></h1>
       <h2 style={{textAlign:'center', fontSize: "20"}}>{address}</h2>
       <div style={{display:'flex', flexDirection:'row'}}>
-        <Container style={{flex: '0 0 30%'}} id='bathroomSect'>
+        <Container style={{flex: '0 0 30%', marginTop: '200px'}} id='bathroomSect'>
           <form id='form' onSubmit={(e)=>{addReview(e)}}>
-            <FormControl name='text' id='review' placeholder='Add a review' as='textarea' rows={5}></FormControl>
+            <FormControl name='text' id='review' placeholder='Add a review' as='textarea' rows={5} style={{backgroundColor:'f8f9fa', fontSize:'20px'}}></FormControl>
             {/* <FormControl name='num' id='rating' type='number'></FormControl> */}
             <RatingSelect name='bathroom(required)'/>
             <RatingSelect name='toilet'/>
@@ -167,9 +167,9 @@ const Bathroom = ()=>{
             <RatingSelect name='smell'/>
             <RatingSelect name='cleanliness'/>
             <RatingSelect name='TP'/>
-            <input type='submit' value='Submit review'></input>
-            <h2>Add Image:</h2>
+            <h5>Add Image:</h5>
             <input type="file" name="imageFile" onChange={handleChange} />
+            <input type='submit' value='Submit review'></input>
           </form>
         </Container>
         <Container style={{flex: '0 0 70%', paddingRight:'40px'}} id='bathroomReviews'>
