@@ -31,6 +31,7 @@ app.get('/verifyuser', userController.verifyUser, (req, res) => {
 
 //if (webpack.mode == "production") {
 app.use('/build', express.static(path.join(__dirname, '../build')));
+app.use('/client/',express.static(path.join(__dirname, '../client')));
 // app.get('/', (req, res) => {
 //   return res.status(200).sendFile(path.join(__dirname, '../index.html'))
 // }) 
