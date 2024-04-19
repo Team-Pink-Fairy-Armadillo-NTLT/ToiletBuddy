@@ -43,12 +43,8 @@ const Main = ()=>{
         {button}
       </header>
       <div id='map'>
-<<<<<<< HEAD
-          <Map navBar={true}/>
-=======
         <h1 id = 'infoH'>How to use:</h1>
           <Map />
->>>>>>> dev
       </div>
     </div>
   )

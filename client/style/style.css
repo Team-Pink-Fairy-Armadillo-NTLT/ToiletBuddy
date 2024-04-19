@@ -26,14 +26,6 @@
   flex-direction: row;
   justify-content: space-between;
 }
-<<<<<<< HEAD
-
-.flex-column {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-=======
 #signin{
   position: relative;
   left:106.113em;
@@ -64,7 +56,6 @@
 #infoH{
   position: absolute;
   left: 27px;
->>>>>>> dev
 }
 
 #card-address {
