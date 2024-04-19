@@ -62,7 +62,7 @@ function Map({navBar}) {
         zoom={zoom}
       >
         {markerReady && 
-        <Marker ref={setMarkerRef} position={position} >
+        <Marker ref={setMarkerRef} position={position} onClick={clickMarker} >
             <InfoWindow anchor={markerRef} onCloseClick={()=>{console.log('')}}>
               <EstInfoCard locationID={locationID} onClickFunc={clickMarker} />
             </InfoWindow>

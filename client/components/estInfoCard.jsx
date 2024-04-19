@@ -33,16 +33,19 @@ export default function EstInfoCard({ locationID, onClickFunc }) {
   })}, []);
 
   return (
-    <>
-      {photo && <img src={photo} alt="Establishment" />}
-      <div>{name}</div>
-      <div>{address}</div>
-      <div>{averageRating}</div>
-      {/* {!averageRating && !photo && 
-        <div>Be the first to leave a review!</div>
-      } */}
-      <Button onClick={onClickFunc}>Leave a Review</Button>
+    
+      <div className="flex-column" >
+        {photo && <img style={{height:'100px', width:'100px', flexGrow:'0'}} src={photo} alt="Establishment" />}
 
-    </>
+        <h1 >{name}</h1>
+        <h2 id="card-address">{address}</h2>
+        {averageRating && <div id="card-rating">Averge rating: {Number(averageRating).toFixed(1)}</div>}
+        {!averageRating && !photo && 
+          <h1>Be the first to leave a review!</h1>
+        }
+        <br />
+        <Button onClick={onClickFunc}>Leave a Review</Button>
+      </div>
+      
   )
 }

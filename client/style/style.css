@@ -31,5 +31,18 @@
 .flex-column {
   display: flex;
   flex-direction: column;
-  /* justify-content: space-between; */
+  justify-content: center;
+  align-items: center;
+}
+
+#card-address {
+  font-size: medium;
+}
+
+#card-name {
+  font-size:large;
+}
+
+#card-rating {
+  font-size: medium;
 }
