@@ -9,10 +9,11 @@ const router = express.Router();
 
 const { CLIENT_ID, CLIENT_SECRET, MODE } = process.env;
 
-console.log("The mode is ", MODE)
+console.log("The mode is:", MODE)
+console.log(MODE)
 const baseUrl = MODE == "production" ? "https://rvawjxfwhe.us-east-2.awsapprunner.com" : 'http://localhost:8080'
 const callbackURL = baseUrl + "/google/callback"
-
+console.log("Call back url: ",callbackURL)
 
 // const callbackURL = webpack.mode === 'production'
 // ? 'http://localhost:3000/google/callback'
