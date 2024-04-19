@@ -13,7 +13,10 @@ const { CLIENT_ID, CLIENT_SECRET, MODE } = process.env;
 // const callbackURL = baseUrl + "/google/callback"
 
 if (MODE == 'production') {
-  alert('you are in production mode')
+  console.log('you are in production mode')
+}
+else {
+  console.log('you are in dev mode')
 }
 
 // const callbackURL = webpack.mode === 'production'
