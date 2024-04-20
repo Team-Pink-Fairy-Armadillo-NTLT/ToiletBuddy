@@ -43,7 +43,7 @@ const Main = ()=>{
         {button}
       </header>
       <div id='map'>
-        <h1 id = 'infoH'>How to use:</h1>
+        {/* <h1 id = 'infoH'>How to use:</h1> */}
         
           <Map />
       </div>
