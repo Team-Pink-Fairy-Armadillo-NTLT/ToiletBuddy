@@ -39,7 +39,7 @@ export default function EstInfoCard({ locationID, onClickFunc }) {
 
         <h1 >{name}</h1>
         <h2 id="card-address">{address}</h2>
-        {averageRating && <div id="card-rating">Averge rating: {Number(averageRating).toFixed(1)}</div>}
+        {averageRating && <div id="card-rating">Average rating: {Number(averageRating).toFixed(1)}</div>}
         {!averageRating && !photo && 
           <h1>Be the first to leave a review!</h1>
         }

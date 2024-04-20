@@ -154,10 +154,10 @@ const Bathroom = ()=>{
   },[]);
 
   if(isLoggedIn===true){
-    button = <Button variant='secondary' style={{height: '50%', alignSelf: 'center'}} onClick={logout} >Log Out</Button>
+    button = <Button variant='secondary' style={{height: '50%', alignSelf: 'center', marginRight:'20px'}} onClick={logout} >Log Out</Button>
   }
   else{
-    button = <Button variant='primary' style={{height: '50%', alignSelf: 'center'}} onClick={signin}>Sign in with Google</Button>
+    button = <Button variant='primary' style={{height: '50%', alignSelf: 'center', marginRight:'20px'}} onClick={signin}>Sign in with Google</Button>
   }
   return(
     <>
@@ -173,14 +173,15 @@ const Bathroom = ()=>{
       <header className='flex-row'>
         <Button style={{height: '50%', fontSize:'20px', marginLeft:'40px', alignSelf:'center'}} variant='secondary' id = 'homeB'onClick={()=>{location.assign('/')}}> Back to Home</Button>
         <div>
-          <h1 style={{textAlign:'center', fontSize: "50"}}>{placeName}: <span style={{fontSize:'30'}}>Average Rating: {averageRating}</span></h1>
-          <h2 style={{textAlign:'center', fontSize: "20"}}>{address}</h2>
+          <h1 style={{textAlign:'center', fontSize: "50"}}>{placeName} </h1>
+          <h2 style={{fontSize:'30', textAlign:'center'}}>Average Rating: {averageRating}/10</h2>
+          <h2 style={{textAlign:'center', fontSize: "20", textAlign:'center'}}>{address}</h2>
         </div>
         {button}
       </header>
 
       <div style={{display:'flex', flexDirection:'row'}}>
-        <Container style={{flex: '0 0 30%', marginTop: '20px'}} id='bathroomSect'>
+        <Container style={{flex: '1 0.5 10%', marginTop: '17.5px'}} id='bathroomSect'>
           <form id='form' onSubmit={(e)=>{addReview(e)}}>
             <FormControl name='text' id='review' placeholder='Add a review' as='textarea' rows={5} style={{backgroundColor:'f8f9fa', fontSize:'20px'}}></FormControl>
             {/* <FormControl name='num' id='rating' type='number'></FormControl> */}
@@ -193,11 +194,11 @@ const Bathroom = ()=>{
             <br/>
             <h2>Add Image:</h2>
             <input type="file" name="imageFile" onChange={handleChange} />
-            <br/><br/><br/>
-            <input type='submit' value='Submit review'></input>
+            <br/><br/>
+            <Button type='submit' value='Submit review'>Submit review</Button>
           </form>
         </Container>
-        <Container style={{flex: '0 0 70%', marginRight:'10px'}} id='bathroomReviews'>
+        <Container style={{flex: '1 0 60%', marginRight:'0px'}} id='bathroomReviews'>
           {/* <Col> */}
             {/* <Row xs={2} md={3} lg={4} xl={5}> */}
             <h1 id = 'rev' style={{position:'relative', left:'10em'}}></h1>
