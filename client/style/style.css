@@ -59,19 +59,3 @@
   position: absolute;
   left: 27px;
 }
-
-#card-address {
-  font-size: medium;
-}
-
-#card-name {
-  font-size:large;
-}
-
-#card-rating {
-  font-size: medium;
-}
-
-#signin {
-  align-self: center;
-}
