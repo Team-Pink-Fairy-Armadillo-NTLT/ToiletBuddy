@@ -200,7 +200,7 @@ const Bathroom = ()=>{
         <Container style={{flex: '0 0 70%', marginRight:'10px'}} id='bathroomReviews'>
           {/* <Col> */}
             {/* <Row xs={2} md={3} lg={4} xl={5}> */}
-            {/* <h1 id = 'rev' style={{position:'relative', left:'10em'}}></h1> */}
+            <h1 id = 'rev' style={{position:'relative', left:'10em'}}></h1>
             <Row id = 'r'>
               {reviews}
             </Row>

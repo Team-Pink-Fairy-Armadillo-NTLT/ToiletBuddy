@@ -38,10 +38,6 @@
   top:0.65em;
 }
 #toilet{
-  /* position: absolute; */
-  /* top:-69.9em; */
-  /* left:-9em; */
-  /* scale:0.03; */
   height: 60px;
 }
 #main{
@@ -50,14 +46,6 @@
   width: 100vw;
   height:100vh;
   overflow: hidden;
-}
-#map{
-  border: 2px solid black;
-  scale:.99;
-}
-#infoH{
-  position: absolute;
-  left: 27px;
 }
 
 #card-address {
