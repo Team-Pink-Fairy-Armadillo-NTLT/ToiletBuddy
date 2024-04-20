@@ -127,8 +127,6 @@ const Bathroom = ()=>{
         }
         updateReviews(r);
         setAverageRating((ratingTotal/r.length).toFixed(1));
-      }else{
-        document.getElementById('rev').innerHTML = 'No reviews yet'
       }
     })
   }
@@ -202,7 +200,7 @@ const Bathroom = ()=>{
           {/* <Col> */}
             {/* <Row xs={2} md={3} lg={4} xl={5}> */}
             <Row id = 'r'>
-            <h1 id = 'rev' style={{textAlign:'center', marginTop:'5%'}}></h1>
+            <h1 id = 'rev' style={{textAlign:'center', marginTop:'5%'}}>{reviews.length == [] && "No Reviews Yet"}</h1>
               {reviews}
             </Row>
           {/* </Col> */}
