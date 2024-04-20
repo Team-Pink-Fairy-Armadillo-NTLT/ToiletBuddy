@@ -24,13 +24,13 @@ export default function EstInfoCard({ locationID, onClickFunc }) {
     })
   }, []);
 
-  useEffect(() => {
-    fetch(`/api/image/${locationID}`)
-    .then(res => res.json())
-    .then(res => {
-      console.log('image', res.data);
-      setPhoto(res.data)
-  })}, []);
+  // useEffect(() => {
+  //   fetch(`/api/image/${locationID}`)
+  //   .then(res => res.json())
+  //   .then(res => {
+  //     console.log('image', res.data);
+  //     setPhoto(res.data)
+  // })}, []);
 
   return (
     
