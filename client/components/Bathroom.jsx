@@ -20,6 +20,7 @@ const Bathroom = ()=>{
   const [showModal, setShowModal] = useState(false);
   const isLoggedIn = useSelector(state => state.bathroom.isLoggedIn);
   const [imageFile, setImageFile] = useState();
+  const [hasFetchedReviews, setHasFetchedReviews] = useState(false)
   let button;
 
   const dispatch = useDispatch();
@@ -105,6 +106,7 @@ const Bathroom = ()=>{
     let r = [];
     let ratingTotal = 0;
     fetch(`/api/${placeId}`).then(data=>data.json()).then(response=>{
+      setHasFetchedReviews(true);
       if(response['data'].length!==0){
         // document.getElementById('rev').innerHTML = '';
         let i = 0;
@@ -200,7 +202,7 @@ const Bathroom = ()=>{
           {/* <Col> */}
             {/* <Row xs={2} md={3} lg={4} xl={5}> */}
             <Row id = 'r'>
-            <h1 id = 'rev' style={{textAlign:'center', marginTop:'5%'}}>{reviews.length == [] && "No Reviews Yet"}</h1>
+            <h1 id = 'rev' style={{textAlign:'center', marginTop:'5%'}}>{reviews.length == [] && hasFetchedReviews && "No Reviews Yet"}</h1>
               {reviews}
             </Row>
           {/* </Col> */}
