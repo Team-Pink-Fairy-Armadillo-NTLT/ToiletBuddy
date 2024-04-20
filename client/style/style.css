@@ -24,6 +24,7 @@
 .flex-row {
   display: flex;
   flex-direction: row;
+  width: 100%;
   justify-content: space-between;
 }
 #signin{
@@ -37,10 +38,11 @@
   top:0.65em;
 }
 #toilet{
-  position: absolute;
-  top:-69.9em;
-  left:-9em;
-  scale:0.03;
+  /* position: absolute; */
+  /* top:-69.9em; */
+  /* left:-9em; */
+  /* scale:0.03; */
+  height: 60px;
 }
 #main{
   background-color: gray;
@@ -68,4 +70,8 @@
 
 #card-rating {
   font-size: medium;
+}
+
+#signin {
+  align-self: center;
 }

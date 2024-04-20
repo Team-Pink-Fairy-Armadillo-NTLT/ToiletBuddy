@@ -106,7 +106,7 @@ const Bathroom = ()=>{
     let ratingTotal = 0;
     fetch(`/api/${placeId}`).then(data=>data.json()).then(response=>{
       if(response['data'].length!==0){
-        document.getElementById('rev').innerHTML = '';
+        // document.getElementById('rev').innerHTML = '';
         let i = 0;
         for(const review of response['data']){
           ratingTotal += parseFloat(review['rating']);
@@ -154,20 +154,33 @@ const Bathroom = ()=>{
   },[]);
 
   if(isLoggedIn===true){
-    button = <Button variant='secondary' onClick={logout} id='signinL'>Log Out</Button>
+    button = <Button variant='secondary' style={{height: '50%', alignSelf: 'center'}} onClick={logout} >Log Out</Button>
   }
   else{
-    button = <Button variant='primary' id="signin" onClick={signin}>Sign in with Google</Button>
+    button = <Button variant='primary' style={{height: '50%', alignSelf: 'center'}} onClick={signin}>Sign in with Google</Button>
   }
   return(
     <>
-    <button style={{height: '50px', fontSize:'20px', marginLeft:'40px'}} id = 'homeB'onClick={()=>{location.assign('/')}}> Back to Home</button>
-    <div id ='d'>{button}</div>
-    {/* <button id = 'homeB'onClick={()=>{location.assign('/')}}> Back to Home</button> */}
-      <h1 style={{textAlign:'center', fontSize: "50"}}>{placeName}: <span style={{fontSize:'30'}}>Average Rating: {averageRating}</span></h1>
-      <h2 style={{textAlign:'center', fontSize: "20"}}>{address}</h2>
+      {/* <header className='flex-row'>
+        <Button style={{height: '50%', fontSize:'20px', marginLeft:'40px', alignSelf:'center'}} variant='secondary' id = 'homeB'onClick={()=>{location.assign('/')}}> Back to Home</Button>
+        <div>
+          <h1 style={{textAlign:'center', fontSize: "50"}}>{placeName}: <span style={{fontSize:'30'}}>Average Rating: {averageRating}</span></h1>
+          <h2 style={{textAlign:'center', fontSize: "20"}}>{address}</h2>
+        </div>
+        {/* {button} */}
+        {/* <Button variant='primary' id='signin'  onClick={signin}>Sign in with Google</Button> */}
+      {/* </header> */} 
+      <header className='flex-row'>
+        <Button style={{height: '50%', fontSize:'20px', marginLeft:'40px', alignSelf:'center'}} variant='secondary' id = 'homeB'onClick={()=>{location.assign('/')}}> Back to Home</Button>
+        <div>
+          <h1 style={{textAlign:'center', fontSize: "50"}}>{placeName}: <span style={{fontSize:'30'}}>Average Rating: {averageRating}</span></h1>
+          <h2 style={{textAlign:'center', fontSize: "20"}}>{address}</h2>
+        </div>
+        {button}
+      </header>
+
       <div style={{display:'flex', flexDirection:'row'}}>
-        <Container style={{flex: '0 0 30%', marginTop: '200px'}} id='bathroomSect'>
+        <Container style={{flex: '0 0 30%', marginTop: '20px'}} id='bathroomSect'>
           <form id='form' onSubmit={(e)=>{addReview(e)}}>
             <FormControl name='text' id='review' placeholder='Add a review' as='textarea' rows={5} style={{backgroundColor:'f8f9fa', fontSize:'20px'}}></FormControl>
             {/* <FormControl name='num' id='rating' type='number'></FormControl> */}
@@ -184,10 +197,10 @@ const Bathroom = ()=>{
             <input type='submit' value='Submit review'></input>
           </form>
         </Container>
-        <Container style={{flex: '0 0 70%', paddingRight:'40px'}} id='bathroomReviews'>
+        <Container style={{flex: '0 0 70%', marginRight:'10px'}} id='bathroomReviews'>
           {/* <Col> */}
             {/* <Row xs={2} md={3} lg={4} xl={5}> */}
-            <h1 id = 'rev' style={{position:'relative', left:'10em'}}></h1>
+            {/* <h1 id = 'rev' style={{position:'relative', left:'10em'}}></h1> */}
             <Row id = 'r'>
               {reviews}
             </Row>
@@ -206,7 +219,7 @@ const Bathroom = ()=>{
           
         </Container>
       </Modal>
-     
+      
     </>
   )
 }
