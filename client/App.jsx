@@ -4,6 +4,9 @@ import Main from './components/Main.jsx';
 import Bathroom from './components/Bathroom.jsx';
 import 'bootstrap/dist/css/bootstrap.min.css';
 const App = () =>{
+
+  // console.log('googleMapsApiKey:',  process.env.GOOGLE_MAPS_API_KEY)
+  console.log('MODE', process.env.NODE_ENV)
   
   return (
     <HashRouter>

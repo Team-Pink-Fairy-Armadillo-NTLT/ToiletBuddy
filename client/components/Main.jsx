@@ -39,11 +39,12 @@ const Main = ()=>{
   return(
     <div id='main'>
       <header id='main-header'>
-        <h1 id='brand'>Toilet Buddy</h1> <img id='toilet'src="https://www.freepnglogos.com/uploads/toilet-png/cartoon-toilet-images-clipart-download-best-cartoon-toilet-images-clipart-clipartmagm-25.png"></img>
+        <h1 id='brand'>Toilet Buddy <img id='toilet'src="https://www.freepnglogos.com/uploads/toilet-png/cartoon-toilet-images-clipart-download-best-cartoon-toilet-images-clipart-clipartmagm-25.png"></img></h1> 
         {button}
       </header>
       <div id='map'>
-        <h1 id = 'infoH'>How to use:</h1>
+        {/* <h1 id = 'infoH'>How to use:</h1> */}
+        
           <Map />
       </div>
     </div>

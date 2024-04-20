@@ -71,6 +71,7 @@ reviewController.addReviewAndImage = async (req, res, next) => {
 
 reviewController.getReviews = async (req, res, next) => {
   const parameters = [req.params.googleId];
+  console.log('parameters', parameters);
 
   try {
     const dbResult = await db.query(queryRepository.getReviewsByEstablishmentGoogleId, parameters);
