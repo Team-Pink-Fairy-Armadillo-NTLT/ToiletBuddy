@@ -12,7 +12,7 @@
 #r{
   overflow-y: scroll;
   overflow-x: hidden;
-  max-height: 50rem;
+  max-height: 37rem;
 }
 /* #homeB{
   position: absolute;
@@ -51,10 +51,10 @@
   height:100vh;
   overflow: hidden;
 }
-#map{
+/* #map{
   border: 2px solid black;
   scale:.99;
-}
+} */
 #infoH{
   position: absolute;
   left: 27px;
