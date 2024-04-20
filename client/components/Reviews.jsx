@@ -57,11 +57,6 @@ const Reviews = ({ username,
                     {makeItem(smellRating,'Smell')}
                     {makeItem(cleanlinessRating,'Cleanliness')}
                     {makeItem(TPRating,'TP')}
-                    {makeItem(toiletRating,'Toilet')}
-                    {makeItem(sinkRating,'Sink')}
-                    {makeItem(smellRating,'Smell')}
-                    {makeItem(cleanlinessRating,'Cleanliness')}
-                    {makeItem(TPRating,'TP')}
                 </ListGroup>
                 <Card.Body>
                     <blockquote className='blockquote mb-0'>
