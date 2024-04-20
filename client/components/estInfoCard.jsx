@@ -31,7 +31,7 @@ export default function EstInfoCard({ locationID, onClickFunc }) {
       console.log('image', res.data);
       setPhoto(res.data)
   })}, []);
-
+//hi
   return (
     
       <div className="flex-column" >
