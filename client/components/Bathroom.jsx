@@ -201,8 +201,8 @@ const Bathroom = ()=>{
         <Container style={{flex: '1 0 60%', marginRight:'0px'}} id='bathroomReviews'>
           {/* <Col> */}
             {/* <Row xs={2} md={3} lg={4} xl={5}> */}
-            <h1 id = 'rev' style={{position:'relative', left:'10em'}}></h1>
             <Row id = 'r'>
+            <h1 id = 'rev' style={{textAlign:'center', marginTop:'5%'}}></h1>
               {reviews}
             </Row>
           {/* </Col> */}
