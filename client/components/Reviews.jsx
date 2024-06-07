@@ -40,20 +40,23 @@ const Reviews = ({ username,
             return 'rgb(219, 255, 219)';
         }
     }
-
     const makeItem = (name,string) =>{
-        return (name &&
+        return (name && 
             <ListGroup.Item style={{backgroundColor:backgroundColor(parseFloat(name))}} className='flex-row'>
                 <div>{string}: {name}/10</div>
                 <ProgressBar style={{backgroundColor:'white'}} variant={progBarColor(parseFloat(name))} now={parseFloat(name)*10}/>
             </ListGroup.Item>
         )
     }
-
     return (
             <Card className='m-2' style={{backgroundColor:'f8f9fa'}}>
                 <Card.Header style={{backgroundColor:overallRatingColor(parseFloat(overallRating))}}>Total Rating : <span style={{fontSize: "30"}}>{overallRating}</span>/10</Card.Header>
                 <ListGroup>
+                    {makeItem(toiletRating,'Toilet')}
+                    {makeItem(sinkRating,'Sink')}
+                    {makeItem(smellRating,'Smell')}
+                    {makeItem(cleanlinessRating,'Cleanliness')}
+                    {makeItem(TPRating,'TP')}
                     {makeItem(toiletRating,'Toilet')}
                     {makeItem(sinkRating,'Sink')}
                     {makeItem(smellRating,'Smell')}

@@ -1,7 +1,7 @@
-const queries = {};
+const queryRepository = {};
 
 // requires array: [google_maps_id]
-queries.getReviewsByEstablishmentGoogleId = `
+queryRepository.getReviewsByEstablishmentGoogleId = `
   select
     reviews._id,
     establishments._id,
@@ -46,7 +46,7 @@ workflow for adding new establishment from scratch:
 */
 
 // requires array: [google_maps_id]
-queries.getEstablishmentByGoogleId = `
+queryRepository.getEstablishmentByGoogleId = `
   select _id
   from establishments
   where google_maps_id = $1 
@@ -54,7 +54,7 @@ queries.getEstablishmentByGoogleId = `
 
 // if result of previous query is empty, need to create establishment
 // pass in array with pertinent data
-queries.createEstablishmentByGoogleId = `
+queryRepository.createEstablishmentByGoogleId = `
   insert into 
     establishments (google_maps_id, latitude, longitude, name, address, city, state, zip_code)
   values
@@ -63,7 +63,7 @@ queries.createEstablishmentByGoogleId = `
 `;
 
 // pass along new or existing establishment_id to next query -> array [new_establishment_id, user_id, ...review_components]
-queries.createReviewByEstablishmentId = `
+queryRepository.createReviewByEstablishmentId = `
   insert into 
     reviews (establishment_id, user_id, rating, text, toilet, sink, smell, cleanliness, tp)
   values
@@ -71,7 +71,7 @@ queries.createReviewByEstablishmentId = `
     returning _id
 `;
 
-queries.getAverageRatingByEstablishmentGoogleId = `
+queryRepository.getAverageRatingByEstablishmentGoogleId = `
   select 
     AVG(rating)
   from reviews 
@@ -79,13 +79,13 @@ queries.getAverageRatingByEstablishmentGoogleId = `
   where establishments.google_maps_id = $1
 `;
 
-queries.getUserIdByUsername = 'SELECT _id FROM users WHERE username = $1';
+queryRepository.getUserIdByUsername = 'SELECT _id FROM users WHERE username = $1';
 
-queries.insertUser = 'INSERT INTO users (username) VALUES ($1) RETURNING (_id)';
+queryRepository.insertUser = 'INSERT INTO users (username) VALUES ($1) RETURNING (_id)';
 
-queries.insertReviewImage = 'INSERT INTO review_images (review_id, image_b64) VALUES ($1, $2)'
+queryRepository.insertReviewImage = 'INSERT INTO review_images (review_id, image_b64) VALUES ($1, $2)'
 
-queries.getImageForReview = `
+queryRepository.getImageForReview = `
   select
     image_b64 as image
   from review_images
@@ -95,5 +95,4 @@ queries.getImageForReview = `
   limit 1
 `;
 
-module.exports = queries;
-
+module.exports = queryRepository;
